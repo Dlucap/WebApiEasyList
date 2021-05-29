@@ -6,7 +6,6 @@ namespace WebApiEasyList.Data
   {
     public int Id { get; set; }
     public int IdCompra { get; set; }
-    public Compra Compra { get; set; }
     public int IdProduto { get; set; }
     public string RecCreatedBy { get; set; }
     public DateTime RecCreatedOn { get; set; }

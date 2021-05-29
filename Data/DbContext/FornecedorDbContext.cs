@@ -26,6 +26,10 @@ namespace WebApiEasyList.Data
          .HasMaxLength(80);
 
       modelBuilder.Entity<Fornecedor>()
+    .Property(p => p.NomeFantasia)
+     .HasMaxLength(80);
+
+      modelBuilder.Entity<Fornecedor>()
       .Property(p => p.Cnpj)
        .HasMaxLength(14);
 
@@ -51,7 +55,19 @@ namespace WebApiEasyList.Data
       modelBuilder.Entity<Fornecedor>()
         .Property(p => p.Numero)
          .HasPrecision(5);
-            
+
+      modelBuilder.Entity<Fornecedor>()
+          .Property(p => p.RecCreatedBy);
+
+      modelBuilder.Entity<Fornecedor>()
+            .Property(p => p.RecCreatedOn);
+
+      modelBuilder.Entity<Fornecedor>()
+            .Property(p => p.RecModifiedBy);
+
+      modelBuilder.Entity<Fornecedor>()
+            .Property(p => p.RecModifiedOn);
+
     }
   }
 }

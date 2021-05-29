@@ -51,7 +51,8 @@ namespace WebApiEasyList.Migrations.FornecedorDb
                         .HasColumnType("varchar(80) CHARACTER SET utf8mb4");
 
                     b.Property<string>("NomeFantasia")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasMaxLength(80)
+                        .HasColumnType("varchar(80) CHARACTER SET utf8mb4");
 
                     b.Property<int>("Numero")
                         .HasPrecision(5)

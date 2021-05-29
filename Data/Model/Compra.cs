@@ -8,8 +8,7 @@ namespace WebApiEasyList.Data
   {
     public int Id { get; set; }
     public int IdFornecedor { get; set; }
-    public int IdItmCompra { get; set; }
-    public IList<ItmCompra> ItemCompra { get; set; }
+    public List<ItmCompra> ItemCompra { get; set; }
     public DateTime DataCompra { get; set; }
     public string RecCreatedBy { get; set; }
     public DateTime RecCreatedOn { get; set; }

@@ -32,17 +32,22 @@ namespace WebApiEasyList.Data
        .HasMaxLength(80);
 
       modelBuilder.Entity<Produto>()
-        .Property(p => p.Preco)
-         .HasPrecision(10, 2);
-
-      modelBuilder.Entity<Produto>()
-       .Property(p => p.Quantidade);
-
-      modelBuilder.Entity<Produto>()
-       .Property(p => p.QuantidadeEstoque);
-
-      modelBuilder.Entity<Produto>()
        .Property(p => p.Validade);
+
+      modelBuilder.Entity<Produto>()
+        .Property(p => p.IdCategoria);
+
+      modelBuilder.Entity<Produto>()
+          .Property(p => p.RecCreatedBy);
+
+      modelBuilder.Entity<Produto>()
+            .Property(p => p.RecCreatedOn);
+
+      modelBuilder.Entity<Produto>()
+            .Property(p => p.RecModifiedBy);
+
+      modelBuilder.Entity<Produto>()
+            .Property(p => p.RecModifiedOn);
     }
 
   }

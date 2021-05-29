@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace WebApiEasyList.Data
 {
@@ -11,39 +10,44 @@ namespace WebApiEasyList.Data
     }
 
     public DbSet<Compra> Compra { get; set; }
-    public DbSet<ItmCompra> itmCompra { get; set; }
-
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Compra>()
-    .Property(p => p.Id)
-     .ValueGeneratedOnAdd();
+        .Property(p => p.Id)
+        .ValueGeneratedOnAdd();
 
       modelBuilder.Entity<Compra>()
-        .Property(p => p.IdFornecedor)
-         .HasPrecision(5)
-         .IsRequired();
-      
-      modelBuilder.Entity<Compra>()
-          .Property(p => p.IdItmCompra)
-         .HasPrecision(5)
-         .IsRequired();
-
-      modelBuilder.Entity<ItmCompra>()
-      .Property(p => p.IdProduto)
-        .HasPrecision(5);
-
-      modelBuilder.Entity<ItmCompra>()
-      .HasMany<Compra>(c => c.)
-         .WithOne<ItmCompra>(itc => itc.Compra);
-
+        .Property(p => p.IdFornecedor) 
+        .HasPrecision(5)
+        .IsRequired();
 
       modelBuilder.Entity<Compra>()
-            .Property(p => p.DataCompra)
-           .IsRequired();
+      .Property(p => p.IdFormaPagamento)
+      .HasPrecision(5)
+      .IsRequired();
+
+      modelBuilder.Entity<Compra>()
+   .Property(p => p.Compartilhado);
+
+      modelBuilder.Entity<Compra>()
+            .Property(p => p.DataCompra);
+
+
+
+      modelBuilder.Entity<Compra>()
+            .Property(p => p.RecCreatedBy);
+
+      modelBuilder.Entity<Compra>()
+            .Property(p => p.RecCreatedOn);
+
+      modelBuilder.Entity<Compra>()
+            .Property(p => p.RecModifiedBy);
+
+      modelBuilder.Entity<Compra>()
+            .Property(p => p.RecModifiedOn);
 
     }
-
   }
 }
 

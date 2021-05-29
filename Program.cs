@@ -21,6 +21,7 @@ namespace WebApiEasyList
             .ConfigureWebHostDefaults(webBuilder =>
             {
               webBuilder.UseStartup<Startup>();
+              //.UseIISIntegration();
             });
   }
 }

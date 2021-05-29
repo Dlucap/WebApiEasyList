@@ -85,11 +85,9 @@ namespace WebApiEasyList.Migrations.CompraDb
 
             modelBuilder.Entity("WebApiEasyList.Data.ItmCompra", b =>
                 {
-                    b.HasOne("WebApiEasyList.Data.Compra", "Compra")
+                    b.HasOne("WebApiEasyList.Data.Compra", null)
                         .WithMany("ItemCompra")
                         .HasForeignKey("CompraId");
-
-                    b.Navigation("Compra");
                 });
 
             modelBuilder.Entity("WebApiEasyList.Data.Compra", b =>
