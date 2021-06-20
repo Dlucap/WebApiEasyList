@@ -26,12 +26,12 @@ namespace WebApiEasyList.Data
          .HasMaxLength(80);
 
       modelBuilder.Entity<Fornecedor>()
-    .Property(p => p.NomeFantasia)
-     .HasMaxLength(80);
+        .Property(p => p.NomeFantasia)
+         .HasMaxLength(80);
 
       modelBuilder.Entity<Fornecedor>()
-      .Property(p => p.Cnpj)
-       .HasMaxLength(14);
+        .Property(p => p.Cnpj)
+         .HasMaxLength(14);
 
       modelBuilder.Entity<Fornecedor>()
         .Property(p => p.Cep)
@@ -42,31 +42,31 @@ namespace WebApiEasyList.Data
          .HasMaxLength(2);
 
       modelBuilder.Entity<Fornecedor>()
-       .Property(p => p.Cidade);
+        .Property(p => p.Cidade);
 
       modelBuilder.Entity<Fornecedor>()
-       .Property(p => p.Bairro)
-       .HasMaxLength(80); ;
+        .Property(p => p.Bairro)
+         .HasMaxLength(80); ;
 
       modelBuilder.Entity<Fornecedor>()
-       .Property(p => p.Endereco)
-        .HasMaxLength(80); ;
+        .Property(p => p.Endereco)
+         .HasMaxLength(80); ;
 
       modelBuilder.Entity<Fornecedor>()
         .Property(p => p.Numero)
          .HasPrecision(5);
 
       modelBuilder.Entity<Fornecedor>()
-          .Property(p => p.RecCreatedBy);
+         .Property(p => p.UsuarioCriacao);
 
       modelBuilder.Entity<Fornecedor>()
-            .Property(p => p.RecCreatedOn);
+        .Property(p => p.DataCriacao);
 
       modelBuilder.Entity<Fornecedor>()
-            .Property(p => p.RecModifiedBy);
+        .Property(p => p.UsuarioModificacao);
 
       modelBuilder.Entity<Fornecedor>()
-            .Property(p => p.RecModifiedOn);
+        .Property(p => p.DataModificacao);
 
     }
   }

@@ -62,18 +62,11 @@ namespace WebApiEasyList
       services.AddDbContextPool<FormaPagamentoDbContext>(options =>
     options.UseMySql(stringSqlconnection,
       ServerVersion.AutoDetect(stringSqlconnection)));
-
-      /*
-      services.AddDbContextPool<CompraDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
+           
     //  services.AddDbContextPool<EstoqueCompraContext>(options =>
     //options.UseMySql(stringSqlconnection,
     //  ServerVersion.AutoDetect(stringSqlconnection)));
-      */
-
-
+      
       services.AddIdentity<IdentityUser,IdentityRole>()
           .AddRoles<IdentityRole>()
           .AddEntityFrameworkStores<AuthJwtContext>()

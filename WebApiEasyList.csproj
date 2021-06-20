@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Compra\**" />
+    <Compile Remove="Data\Model\Compra\**" />
+    <Content Remove="Controllers\Compra\**" />
+    <Content Remove="Data\Model\Compra\**" />
+    <EmbeddedResource Remove="Controllers\Compra\**" />
+    <EmbeddedResource Remove="Data\Model\Compra\**" />
+    <None Remove="Controllers\Compra\**" />
+    <None Remove="Data\Model\Compra\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
 
@@ -31,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\DbContext\Compra\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

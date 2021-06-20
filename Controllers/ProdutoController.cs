@@ -24,14 +24,14 @@ namespace WebApiEasyList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
-            return await _context.Produtos.ToListAsync();
+            return await _context.Produto.ToListAsync();
         }
 
         // GET: api/Produto/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Produto>> GetProduto(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
+            var produto = await _context.Produto.FindAsync(id);
 
             if (produto == null)
             {
@@ -77,7 +77,7 @@ namespace WebApiEasyList.Controllers
         [HttpPost]
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
-            _context.Produtos.Add(produto);
+            _context.Produto.Add(produto);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
@@ -87,13 +87,13 @@ namespace WebApiEasyList.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduto(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
+            var produto = await _context.Produto.FindAsync(id);
             if (produto == null)
             {
                 return NotFound();
             }
 
-            _context.Produtos.Remove(produto);
+            _context.Produto.Remove(produto);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -101,7 +101,7 @@ namespace WebApiEasyList.Controllers
 
         private bool ProdutoExists(int id)
         {
-            return _context.Produtos.Any(e => e.Id == id);
+            return _context.Produto.Any(e => e.Id == id);
         }
     }
 }

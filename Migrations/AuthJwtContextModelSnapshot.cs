@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiEasyList.Data;
 
-namespace WebApiEasyList.Migrations.AuthJwt
+namespace WebApiEasyList.Migrations
 {
     [DbContext(typeof(AuthJwtContext))]
     partial class AuthJwtContextModelSnapshot : ModelSnapshot

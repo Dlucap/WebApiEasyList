@@ -14,10 +14,10 @@ namespace WebApiEasyList.Data
     public string Bairro { get; set; }
     public string Endereco { get; set; }
     public int Numero { get; set; }
-    public string RecCreatedBy { get; set; }
-    public DateTime RecCreatedOn { get; set; }
-    public string RecModifiedBy { get; set; }
-    public DateTime RecModifiedOn { get; set; }
+    public string UsuarioCriacao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public string UsuarioModificacao { get; set; }
+    public DateTime DataModificacao { get; set; }
   }
 }
 //todo: Criar testes unitários para a web Api https://docs.microsoft.com/pt-br/aspnet/web-api/overview/testing-and-debugging/unit-testing-with-aspnet-web-api

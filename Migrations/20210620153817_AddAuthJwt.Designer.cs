@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiEasyList.Data;
 
-namespace WebApiEasyList.Migrations.AuthJwt
+namespace WebApiEasyList.Migrations
 {
     [DbContext(typeof(AuthJwtContext))]
-    [Migration("20210317232242_AuthJwt")]
-    partial class AuthJwt
+    [Migration("20210620153817_AddAuthJwt")]
+    partial class AddAuthJwt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

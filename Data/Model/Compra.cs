@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApiEasyList.Data
 {
   public class Compra
   {
     public int Id { get; set; }
-    public int IdFornecedor { get; set; }
-    public List<ItmCompra> ItemCompra { get; set; }
+    public int FornecedorId { get; set; }
+    public int FormaPagamentoId { get; set; }
+    public bool Compartilhado { get; set; } = false;
+    public StatusCompraEnum StatusCompra { get; set; }
     public DateTime DataCompra { get; set; }
-    public string RecCreatedBy { get; set; }
-    public DateTime RecCreatedOn { get; set; }
-    public string RecModifiedBy { get; set; }
-    public DateTime RecModifiedOn { get; set; }
+    public string UsuarioCriacao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public string UsuarioModificacao { get; set; }
+    public DateTime DataModificacao { get; set; }
 
-    
+    /*EF Relation*/
+    [JsonIgnore]
+    public Fornecedor Fornecedor { get; set; }
+    [JsonIgnore]
+    public FormaPagamento FormaPagamento { get; set; }
+    [JsonIgnore]
+    public IEnumerable<ItmCompra> ItemsCompra { get; set; }
+    [JsonIgnore]
+    public CompraCompartilhada CompraCompartilhada { get; set; }
   }  
 }

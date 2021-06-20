@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApiEasyList.Data
 {
@@ -18,28 +14,28 @@ namespace WebApiEasyList.Data
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<CompraCompartilhada>()
-       .Property(p => p.Id)
-        .ValueGeneratedOnAdd();
+        .Property(p => p.Id)
+         .ValueGeneratedOnAdd();
 
       modelBuilder.Entity<CompraCompartilhada>()
-     .Property(p => p.IdCompra)
-      .IsRequired();
+        .Property(p => p.CompraId)
+         .IsRequired();
 
       modelBuilder.Entity<CompraCompartilhada>()
         .Property(p => p.UsuariosCompartilhados)
          .IsRequired();
 
-      modelBuilder.Entity<CompraCompartilhada>()
-          .Property(p => p.RecCreatedBy);
+      modelBuilder.Entity<Compra>()
+         .Property(p => p.UsuarioCriacao);
 
-      modelBuilder.Entity<CompraCompartilhada>()
-            .Property(p => p.RecCreatedOn);
+      modelBuilder.Entity<Compra>()
+        .Property(p => p.DataCriacao);
 
-      modelBuilder.Entity<CompraCompartilhada>()
-            .Property(p => p.RecModifiedBy);
+      modelBuilder.Entity<Compra>()
+        .Property(p => p.UsuarioModificacao);
 
-      modelBuilder.Entity<CompraCompartilhada>()
-            .Property(p => p.RecModifiedOn);
+      modelBuilder.Entity<Compra>()
+        .Property(p => p.DataModificacao);
     }
   }
 }

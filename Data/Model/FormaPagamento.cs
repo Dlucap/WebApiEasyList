@@ -1,10 +1,11 @@
 ﻿using System;
 
 namespace WebApiEasyList.Data
-{//todo: https://www.learnentityframeworkcore.com/dbset/querying-data
-  public class EstoqueCompra
+{
+  public class FormaPagamento
   {
-
+    public int Id { get; set; }
+    public string NomeFormaPagamento { get; set; }
     public string UsuarioCriacao { get; set; }
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }

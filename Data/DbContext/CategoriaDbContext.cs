@@ -20,19 +20,20 @@ namespace WebApiEasyList.Data
 
       modelBuilder.Entity<Categoria>()
         .Property(p => p.NomeCategoria)
-         .HasMaxLength(50);
-      
-      modelBuilder.Entity<Categoria>()
-          .Property(p => p.RecCreatedBy);
+         .HasMaxLength(50)
+          .IsRequired();
 
       modelBuilder.Entity<Categoria>()
-            .Property(p => p.RecCreatedOn);
+       .Property(p => p.UsuarioCriacao);
 
       modelBuilder.Entity<Categoria>()
-            .Property(p => p.RecModifiedBy);
+        .Property(p => p.DataCriacao);
 
       modelBuilder.Entity<Categoria>()
-            .Property(p => p.RecModifiedOn);
+        .Property(p => p.UsuarioModificacao);
+
+      modelBuilder.Entity<Categoria>()
+        .Property(p => p.DataModificacao);
     }
   }
 }

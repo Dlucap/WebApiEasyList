@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApiEasyList.Migrations.AuthJwt
+namespace WebApiEasyList.Migrations
 {
-    public partial class AuthJwt : Migration
+    public partial class AddAuthJwt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

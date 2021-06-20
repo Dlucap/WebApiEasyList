@@ -15,40 +15,41 @@ namespace WebApiEasyList.Data
     {
 
        modelBuilder.Entity<ItmCompra>()
-      .Property(p => p.Id)
-       .ValueGeneratedOnAdd();
+         .Property(p => p.Id)
+          .ValueGeneratedOnAdd();
 
       modelBuilder.Entity<ItmCompra>()
-     .Property(p => p.IdCompra)
-      .IsRequired();
+        .Property(p => p.CompraId)
+         .IsRequired();
 
       modelBuilder.Entity<ItmCompra>()
-     .Property(p => p.IdProduto)
-      .IsRequired();
+        .Property(p => p.ProdutoId)
+         .IsRequired();
 
       modelBuilder.Entity<ItmCompra>()
-    .Property(p => p.IdCategoria)
-     .IsRequired();
+       .Property(p => p.Preco)
+        .IsRequired();
 
       modelBuilder.Entity<ItmCompra>()
         .Property(p => p.Quantidade)
-        .HasPrecision(5);
+         .HasPrecision(5)
+          .IsRequired();
 
       modelBuilder.Entity<ItmCompra>()
-      .Property(p => p.Preco)
-      .IsRequired();
+        .Property(p => p.Validade)
+         .IsRequired();
 
       modelBuilder.Entity<ItmCompra>()
-          .Property(p => p.RecCreatedBy);
+        .Property(p => p.UsuarioCriacao);
 
       modelBuilder.Entity<ItmCompra>()
-            .Property(p => p.RecCreatedOn);
+        .Property(p => p.DataCriacao);
 
       modelBuilder.Entity<ItmCompra>()
-            .Property(p => p.RecModifiedBy);
+         .Property(p => p.UsuarioModificacao);
 
       modelBuilder.Entity<ItmCompra>()
-            .Property(p => p.RecModifiedOn);
+        .Property(p => p.DataModificacao);
     }
   }
 }

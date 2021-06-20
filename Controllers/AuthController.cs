@@ -74,6 +74,7 @@ namespace WebApiEasyList.Controllers
     {
       var user = await _userManager.FindByEmailAsync(email);
       var identityClaims = new ClaimsIdentity();
+      identityClaims.AddClaims(await _userManager.GetClaimsAsync(user));
 
       //autentication sucessful so generate jwt token
       var tokenHandler = new JwtSecurityTokenHandler();
@@ -81,6 +82,10 @@ namespace WebApiEasyList.Controllers
       var tokenDescriptor = new SecurityTokenDescriptor
       {
         Subject = identityClaims,
+        //Subject = new ClaimsIdentity(new[]
+        //{
+        //    new Claim(ClaimTypes.Name, user.Id)
+        //}),
         Issuer = _appSettings.Emissor,
         Audience = _appSettings.ValidoEm,
         Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
@@ -92,3 +97,8 @@ namespace WebApiEasyList.Controllers
     }
   }
 }
+/**
+ * https://www.youtube.com/watch?v=ccVmPgxNE6c&ab_channel=CanaldotNET
+ * https://github.com/EduardoPires/Palestras/tree/master/JWT%20AspNetCore
+ * 
+ */

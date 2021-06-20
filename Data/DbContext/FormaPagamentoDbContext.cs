@@ -15,23 +15,23 @@ namespace WebApiEasyList.Data
     {
       modelBuilder.Entity<FormaPagamento>()
        .Property(p => p.Id)
-       .ValueGeneratedOnAdd();
+        .ValueGeneratedOnAdd();
 
       modelBuilder.Entity<FormaPagamento>()
         .Property(p => p.NomeFormaPagamento) 
-        .IsRequired();
+         .IsRequired();
 
       modelBuilder.Entity<FormaPagamento>()
-            .Property(p => p.RecCreatedBy);
+        .Property(p => p.UsuarioCriacao);
 
       modelBuilder.Entity<FormaPagamento>()
-            .Property(p => p.RecCreatedOn);
+         .Property(p => p.DataCriacao);
 
       modelBuilder.Entity<FormaPagamento>()
-            .Property(p => p.RecModifiedBy);
+         .Property(p => p.UsuarioModificacao);
 
       modelBuilder.Entity<FormaPagamento>()
-            .Property(p => p.RecModifiedOn);
+         .Property(p => p.DataModificacao);
     }
   }
 }

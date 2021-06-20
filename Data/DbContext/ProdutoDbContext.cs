@@ -9,45 +9,45 @@ namespace WebApiEasyList.Data
 
     }
 
-    public DbSet<Produto> Produtos { get; set; }
+    public DbSet<Produto> Produto { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
       modelBuilder.Entity<Produto>()
-       .Property(p => p.Id)
-        .ValueGeneratedOnAdd();
+        .Property(p => p.Id)
+         .ValueGeneratedOnAdd();
+
+      modelBuilder.Entity<Produto>()
+        .Property(p => p.CategoriaId)
+         .IsRequired();
 
       modelBuilder.Entity<Produto>()
         .Property(p => p.Marca)
-         .HasMaxLength(80);
+         .HasMaxLength(80)
+          .IsRequired(); ;
 
       modelBuilder.Entity<Produto>()
         .Property(p => p.Nome)
-         .HasMaxLength(80);
+         .HasMaxLength(80)
+          .IsRequired(); ;
 
       modelBuilder.Entity<Produto>()
-      .Property(p => p.Descricao)
-       .HasMaxLength(80);
+        .Property(p => p.Descricao)
+         .HasMaxLength(80);          
 
       modelBuilder.Entity<Produto>()
-       .Property(p => p.Validade);
+        .Property(p => p.UsuarioCriacao);
 
       modelBuilder.Entity<Produto>()
-        .Property(p => p.IdCategoria);
+        .Property(p => p.DataCriacao);
 
       modelBuilder.Entity<Produto>()
-          .Property(p => p.RecCreatedBy);
+         .Property(p => p.UsuarioModificacao);
 
       modelBuilder.Entity<Produto>()
-            .Property(p => p.RecCreatedOn);
-
-      modelBuilder.Entity<Produto>()
-            .Property(p => p.RecModifiedBy);
-
-      modelBuilder.Entity<Produto>()
-            .Property(p => p.RecModifiedOn);
+        .Property(p => p.DataModificacao);
     }
 
   }
