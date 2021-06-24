@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /BkpBanco/DumpEasylist20210619.sql
+/appsettings.json
