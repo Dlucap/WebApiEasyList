@@ -1,107 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using EasyList.Api.ApiModels;
+using EasyList.Business.Interfaces;
+using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EasyList.Api.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProdutoController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class ProdutoController : ControllerBase
+  {
+    private readonly IProdutoRepository _produtoRepository;
+    private readonly IMapper _mapper;
+
+    public ProdutoController(IProdutoRepository produtoRepository, IMapper mapper)
     {
-        private readonly ProdutoDbContext _context;
-
-        public ProdutoController(ProdutoDbContext context)
-        {
-            _context = context;
-        }
-
-        // GET: api/Produto
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
-        {
-            return await _context.Produto.ToListAsync();
-        }
-
-        // GET: api/Produto/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Produto>> GetProduto(int id)
-        {
-            var produto = await _context.Produto.FindAsync(id);
-
-            if (produto == null)
-            {
-                return NotFound();
-            }
-
-            return produto;
-        }
-
-        // PUT: api/Produto/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduto(int id, Produto produto)
-        {
-            if (id != produto.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(produto).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProdutoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Produto
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Produto>> PostProduto(Produto produto)
-        {
-            _context.Produto.Add(produto);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
-        }
-
-        // DELETE: api/Produto/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduto(int id)
-        {
-            var produto = await _context.Produto.FindAsync(id);
-            if (produto == null)
-            {
-                return NotFound();
-            }
-
-            _context.Produto.Remove(produto);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ProdutoExists(int id)
-        {
-            return _context.Produto.Any(e => e.Id == id);
-        }
+      _produtoRepository = produtoRepository;
+      _mapper = mapper;
     }
+
+    // GET: api/Produto
+    [HttpGet]
+    public async Task <IEnumerable<ProdutoApiModel>> GetProdutos()
+    {
+      var produtoApiModel = _mapper.Map<IEnumerable<ProdutoApiModel>>(await _produtoRepository.ObterTodos());
+
+      return produtoApiModel;
+    }
+
+    // GET: api/Produto/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ProdutoApiModel>> GetProduto(int id)
+    {
+      var produto = await _produtoRepository.ObterProdutoPorId(id);
+
+      if (produto == null) return NotFound();
+
+      return Ok(produto);
+    }
+
+    // PUT: api/Produto/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutProduto(int id, ProdutoApiModel produtoApiModel)
+    {
+      if (id != produtoApiModel.Id) return BadRequest();
+
+      if (!ModelState.IsValid) BadRequest();
+
+      try
+      {
+        await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoApiModel));
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ProdutoExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return NoContent();
+    }
+
+    // POST: api/Produto
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<ProdutoApiModel>> PostProduto(ProdutoApiModel produtoApiModel)
+    {
+      if (!ModelState.IsValid) BadRequest();
+
+      await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoApiModel));
+
+      return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoApiModel);
+    }
+
+    // DELETE: api/Produto/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduto(int id)
+    {
+      var produtoApiModel = ObterProdutoPorId(id);
+
+      if (produtoApiModel == null) return NotFound();
+
+      await _produtoRepository.Remover(id);
+
+      return NoContent();
+    }
+
+    private bool ProdutoExists(int id)
+    {
+      return _produtoRepository.ProdutoExist(id);
+    }
+
+    private async Task<ProdutoApiModel> ObterProdutoPorId(int id)
+    {
+      return _mapper.Map<ProdutoApiModel>(await _produtoRepository.ObterProdutoPorId(id));
+    }
+  }
 }

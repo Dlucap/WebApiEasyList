@@ -20,7 +20,6 @@ namespace EasyList.Api
     {
       Configuration = configuration;
     }
-
    
     public IConfiguration Configuration { get; }
 
@@ -29,9 +28,10 @@ namespace EasyList.Api
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      /*
       var stringSqlconnection = Configuration.GetConnectionString("WebApiEasyList");
-     
-      services.AddDbContextPool<AuthJwtContext>(options =>
+
+      services.AddDbContextPool<ApplicationDbContext>(options =>
      options.UseMySql(stringSqlconnection,
        ServerVersion.AutoDetect(stringSqlconnection)));
 
@@ -62,23 +62,24 @@ namespace EasyList.Api
       services.AddDbContextPool<FormaPagamentoDbContext>(options =>
     options.UseMySql(stringSqlconnection,
       ServerVersion.AutoDetect(stringSqlconnection)));
-           
-    //  services.AddDbContextPool<EstoqueCompraContext>(options =>
-    //options.UseMySql(stringSqlconnection,
-    //  ServerVersion.AutoDetect(stringSqlconnection)));
-      
-      services.AddIdentity<IdentityUser,IdentityRole>()
+
+      services.AddDbContextPool<EstoqueCompraContext>(options =>
+    options.UseMySql(stringSqlconnection,
+      ServerVersion.AutoDetect(stringSqlconnection)));
+
+      services.AddIdentity<IdentityUser, IdentityRole>()
           .AddRoles<IdentityRole>()
-          .AddEntityFrameworkStores<AuthJwtContext>()
+          .AddEntityFrameworkStores<ApplicationDbContext>()
           .AddDefaultTokenProviders();
 
-      // JWT
-      var appSettingsSection = Configuration.GetSection("AppSettings");
+      services.AddIdentityConfig(Configuration);
+
+      JWT
+     var appSettingsSection = Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
       var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
 
       services.AddAuthentication(x =>
       {
@@ -99,6 +100,7 @@ namespace EasyList.Api
         };
       });
 
+      */
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
@@ -117,6 +119,7 @@ namespace EasyList.Api
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiEasyList v1"));
+        app.UseDeveloperExceptionPage();
       }
 
       #region All services

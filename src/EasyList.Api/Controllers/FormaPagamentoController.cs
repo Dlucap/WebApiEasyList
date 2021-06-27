@@ -1,63 +1,62 @@
-﻿using System;
+﻿using AutoMapper;
+using EasyList.Api.ApiModels;
+using EasyList.Business.Interfaces;
+using EasyList.Business.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EasyList.Api.Data;
 
 namespace EasyList.Api.Controllers
 {
- // [Authorize]
+  // [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class FormaPagamentoController : ControllerBase
   {
-    private readonly FormaPagamentoDbContext _context;
+    private readonly IFormaPagamentoRepository _formaPagamentoRepository;
+    private readonly IMapper _mapper;
 
-    public FormaPagamentoController(FormaPagamentoDbContext context)
+    public FormaPagamentoController(IFormaPagamentoRepository formaPagamentoRepository,
+                                    IMapper mapper)
     {
-      _context = context;
-    }
+      _formaPagamentoRepository = formaPagamentoRepository;
+      _mapper = mapper;
+  }
 
     // GET: api/Compra
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<FormaPagamento>>> GetFormaPagamento()
+    public async Task <IEnumerable<FormaPagamentoApiModel>> GetFormaPagamento()
     {
-      return await _context.FormaPagamento.ToListAsync();
+      var formaPagamentoApiModel = _mapper.Map<IEnumerable<FormaPagamentoApiModel>>(await _formaPagamentoRepository.ObterTodos());
+
+      return formaPagamentoApiModel;
     }
 
     // GET: api/Compra/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<FormaPagamento>> GetFormaPagamento(int id)
+    public async Task<ActionResult<FormaPagamentoApiModel>> GetFormaPagamento(int id)
     {
-      var formaPag = await _context.FormaPagamento.FindAsync(id);
+      var prodformaPagamentoApiModeluto = await _formaPagamentoRepository.ObterFormaPagamentoPorId(id);
 
-      if (formaPag == null)
-      {
-        return NotFound();
-      }
+      if (prodformaPagamentoApiModeluto == null) return NotFound();
 
-      return formaPag;
+      return Ok(prodformaPagamentoApiModeluto);
     }
 
     // PUT: api/Compra/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFormaPagamento(int id, FormaPagamento formaPagamento)
+    public async Task<IActionResult> PutFormaPagamento(int id, FormaPagamentoApiModel formaPagamentoApiModel)
     {
-      if (id != formaPagamento.Id)
-      {
-        return BadRequest();
-      }
+      if (id != formaPagamentoApiModel.Id) return BadRequest();
 
-      _context.Entry(formaPagamento).State = EntityState.Modified;
+      if (!ModelState.IsValid) BadRequest();
 
       try
       {
-        await _context.SaveChangesAsync();
+        await _formaPagamentoRepository.Atualizar(_mapper.Map<FormaPagamento>(formaPagamentoApiModel));
       }
       catch (DbUpdateConcurrencyException)
       {
@@ -77,34 +76,36 @@ namespace EasyList.Api.Controllers
     // POST: api/Compra
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostFormaPagamento(FormaPagamento formaPagamento)
+    public async Task<ActionResult<Compra>> PostFormaPagamento(FormaPagamentoApiModel formaPagamentoApiModel)
     {
-      _context.FormaPagamento.Add(formaPagamento);
-      await _context.SaveChangesAsync();
+      if (!ModelState.IsValid) BadRequest();
 
-      return CreatedAtAction("GetFormaPagamento", new { id = formaPagamento.Id
-                                              }, formaPagamento);
+      await _formaPagamentoRepository.Adicionar(_mapper.Map<FormaPagamento>(formaPagamentoApiModel));
+
+      return CreatedAtAction("GetProduto", new { id = formaPagamentoApiModel.Id }, formaPagamentoApiModel);
     }
 
     // DELETE: api/Compra/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFormaPagamento(int id)
     {
-      var compra = await _context.FormaPagamento.FindAsync(id);
-      if (compra == null)
-      {
-        return NotFound();
-      }
+      var formaPagamentoApiModel = ObterFormaPagamentoPorId(id);
 
-      _context.FormaPagamento.Remove(compra);
-      await _context.SaveChangesAsync();
+      if (formaPagamentoApiModel == null) return NotFound();
+
+      await _formaPagamentoRepository.Remover(id);
 
       return NoContent();
     }
 
     private bool FormaPagamentoExists(int id)
     {
-      return _context.FormaPagamento.Any(e => e.Id == id);
+      return _formaPagamentoRepository.FormaPagamentoExist(id);
+    }
+
+    private async Task<ProdutoApiModel> ObterFormaPagamentoPorId(int id)
+    {
+      return _mapper.Map<ProdutoApiModel>(await _formaPagamentoRepository.ObterFormaPagamentoPorId(id));
     }
   }
 }

@@ -21,14 +21,14 @@ namespace EasyList.Api.Controllers
     }
     // GET: api/Categoria
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoria()
+    public async Task<ActionResult<IEnumerable<CategoriaApiModel>>> GetCategoria()
     {
       return await _context.Categoria.ToListAsync();
     }
 
     // GET: api/Categoria/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Categoria>> GetCategoria(int id)
+    public async Task<ActionResult<CategoriaApiModel>> GetCategoria(int id)
     {
       var compra = await _context.Categoria.FindAsync(id);
 
@@ -43,7 +43,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Categoria/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCategoria(int id, Categoria categoria)
+    public async Task<IActionResult> PutCategoria(int id, CategoriaApiModel categoria)
     {
       if (id != categoria.Id)
       {
@@ -74,7 +74,7 @@ namespace EasyList.Api.Controllers
     // POST: api/Compra
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostCategoria(Categoria categoria)
+    public async Task<ActionResult<Compra>> PostCategoria(CategoriaApiModel categoria)
     {
       _context.Categoria.Add(categoria);
       await _context.SaveChangesAsync();
