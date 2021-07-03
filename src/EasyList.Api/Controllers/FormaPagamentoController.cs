@@ -4,6 +4,7 @@ using EasyList.Business.Interfaces;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace EasyList.Api.Controllers
 
     // GET: api/Compra/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<FormaPagamentoApiModel>> GetFormaPagamento(int id)
+    public async Task<ActionResult<FormaPagamentoApiModel>> GetFormaPagamento(Guid id)
     {
       var prodformaPagamentoApiModeluto = await _formaPagamentoRepository.ObterFormaPagamentoPorId(id);
 
@@ -48,7 +49,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Compra/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFormaPagamento(int id, FormaPagamentoApiModel formaPagamentoApiModel)
+    public async Task<IActionResult> PutFormaPagamento(Guid id, FormaPagamentoApiModel formaPagamentoApiModel)
     {
       if (id != formaPagamentoApiModel.Id) return BadRequest();
 
@@ -87,7 +88,7 @@ namespace EasyList.Api.Controllers
 
     // DELETE: api/Compra/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteFormaPagamento(int id)
+    public async Task<IActionResult> DeleteFormaPagamento(Guid id)
     {
       var formaPagamentoApiModel = ObterFormaPagamentoPorId(id);
 
@@ -98,12 +99,12 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private bool FormaPagamentoExists(int id)
+    private bool FormaPagamentoExists(Guid id)
     {
       return _formaPagamentoRepository.FormaPagamentoExist(id);
     }
 
-    private async Task<ProdutoApiModel> ObterFormaPagamentoPorId(int id)
+    private async Task<ProdutoApiModel> ObterFormaPagamentoPorId(Guid id)
     {
       return _mapper.Map<ProdutoApiModel>(await _formaPagamentoRepository.ObterFormaPagamentoPorId(id));
     }

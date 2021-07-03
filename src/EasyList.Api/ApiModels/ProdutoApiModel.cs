@@ -8,7 +8,7 @@ namespace EasyList.Api.ApiModels
   public class ProdutoApiModel 
   {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public int CategoriaId { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]

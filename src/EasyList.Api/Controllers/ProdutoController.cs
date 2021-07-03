@@ -4,6 +4,7 @@ using EasyList.Business.Interfaces;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace EasyList.Api.Controllers
 
     // GET: api/Produto/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProdutoApiModel>> GetProduto(int id)
+    public async Task<ActionResult<ProdutoApiModel>> GetProduto(Guid id)
     {
       var produto = await _produtoRepository.ObterProdutoPorId(id);
 
@@ -45,7 +46,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Produto/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutProduto(int id, ProdutoApiModel produtoApiModel)
+    public async Task<IActionResult> PutProduto(Guid id, ProdutoApiModel produtoApiModel)
     {
       if (id != produtoApiModel.Id) return BadRequest();
 
@@ -84,7 +85,7 @@ namespace EasyList.Api.Controllers
 
     // DELETE: api/Produto/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProduto(int id)
+    public async Task<IActionResult> DeleteProduto(Guid id)
     {
       var produtoApiModel = ObterProdutoPorId(id);
 
@@ -95,12 +96,12 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private bool ProdutoExists(int id)
+    private bool ProdutoExists(Guid id)
     {
       return _produtoRepository.ProdutoExist(id);
     }
 
-    private async Task<ProdutoApiModel> ObterProdutoPorId(int id)
+    private async Task<ProdutoApiModel> ObterProdutoPorId(Guid id)
     {
       return _mapper.Map<ProdutoApiModel>(await _produtoRepository.ObterProdutoPorId(id));
     }
