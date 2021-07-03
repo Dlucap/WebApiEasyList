@@ -28,79 +28,13 @@ namespace EasyList.Api
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      /*
+    
       var stringSqlconnection = Configuration.GetConnectionString("WebApiEasyList");
 
       services.AddDbContextPool<ApplicationDbContext>(options =>
      options.UseMySql(stringSqlconnection,
        ServerVersion.AutoDetect(stringSqlconnection)));
 
-      services.AddDbContextPool<CompraDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<ItmCompraDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<CompraCompartilhadaDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<FornecedorDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<ProdutoDbContext>(options =>
-      options.UseMySql(stringSqlconnection,
-        ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<CategoriaDbContext>(options =>
-    options.UseMySql(stringSqlconnection,
-      ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<FormaPagamentoDbContext>(options =>
-    options.UseMySql(stringSqlconnection,
-      ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddDbContextPool<EstoqueCompraContext>(options =>
-    options.UseMySql(stringSqlconnection,
-      ServerVersion.AutoDetect(stringSqlconnection)));
-
-      services.AddIdentity<IdentityUser, IdentityRole>()
-          .AddRoles<IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
-
-      services.AddIdentityConfig(Configuration);
-
-      JWT
-     var appSettingsSection = Configuration.GetSection("AppSettings");
-      services.Configure<AppSettings>(appSettingsSection);
-
-      var appSettings = appSettingsSection.Get<AppSettings>();
-      var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
-      services.AddAuthentication(x =>
-      {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(x =>
-      {
-        x.RequireHttpsMetadata = true;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(key),
-          ValidateIssuer = true,
-          ValidateAudience = true,
-          ValidAudience = appSettings.ValidoEm,
-          ValidIssuer = appSettings.Emissor
-        };
-      });
-
-      */
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {

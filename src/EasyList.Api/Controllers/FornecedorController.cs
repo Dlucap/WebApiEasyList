@@ -3,6 +3,7 @@ using EasyList.Api.ApiModels;
 using EasyList.Business.Interfaces;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -40,7 +41,7 @@ namespace EasyList.Api.Controllers
 
     // GET: api/Fornecedor/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(int id)
+    public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(Guid id)
     {
       var fornecedor = await _fornecedorRepository.ObterFornecedorPorEndereco(id);
 
@@ -52,7 +53,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Fornecedor/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFornecedor(int id, FornecedorApiModel fornecedorApiModel)
+    public async Task<IActionResult> PutFornecedor(Guid id, FornecedorApiModel fornecedorApiModel)
     {
       if (id != fornecedorApiModel.Id)  return BadRequest();
     
@@ -77,7 +78,7 @@ namespace EasyList.Api.Controllers
 
     // DELETE: api/Fornecedor/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteFornecedor(int id)
+    public async Task<IActionResult> DeleteFornecedor(Guid id)
     {
       var fornecedorApiModel = await ObterFornecedorPorEndereco(id);
       {
@@ -90,14 +91,14 @@ namespace EasyList.Api.Controllers
     }
 
     [HttpGet("obter-endereco/{id:guid}")]
-    public async Task<EnderecoApiModel> ObterEnderecoPorId(int id)
+    public async Task<EnderecoApiModel> ObterEnderecoPorId(Guid id)
     {
       var enderecoViewModel = _mapper.Map<EnderecoApiModel>(await _enderecoRepository.ObterPorId(id));
       return enderecoViewModel;
     }
 
     [HttpPut("atualizar-endereco/{id:guid}")]
-    public async Task<IActionResult> AtualizarEndereco(int id, EnderecoApiModel enderecoApiModel)
+    public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoApiModel enderecoApiModel)
     {
       if (id !=enderecoApiModel.Id) return BadRequest();
 
@@ -106,7 +107,7 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private async Task<FornecedorApiModel> ObterFornecedorPorEndereco(int id)
+    private async Task<FornecedorApiModel> ObterFornecedorPorEndereco(Guid id)
     {
       return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorPorEndereco(id));
     }
