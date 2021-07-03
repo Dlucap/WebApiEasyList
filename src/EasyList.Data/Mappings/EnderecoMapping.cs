@@ -37,7 +37,7 @@ namespace EasyList.Data.Mappings
           .IsRequired()
           .HasColumnType("varchar(50)");
 
-      builder.ToTable("Enderecos");
+      builder.ToTable("ENDERECOS");
     }
   }
 }

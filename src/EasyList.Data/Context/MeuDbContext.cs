@@ -12,8 +12,7 @@ namespace EasyList.Data.Context
     public MeuDbContext(DbContextOptions<MeuDbContext> options) : base(options) { }
 
     #region DBSet
-    // public DbSet<IdentityDbContext> Identity { get; set; }
-    //public DbSet<Categoria> Categoria { get; set; }
+     //public DbSet<Categoria> Categoria { get; set; }
     //public DbSet<Compra> Compra { get; set; }
     //public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
     public DbSet<Endereco> Endereco { get; set; }
@@ -52,7 +51,7 @@ namespace EasyList.Data.Context
       {
         if (entry.State == EntityState.Modified)
         {
-          entry.Property("DataModificacao").IsModified = false;
+          entry.Property("DataModificacao").CurrentValue = DateTime.Now;
         }
       }
 

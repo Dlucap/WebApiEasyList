@@ -46,7 +46,7 @@ namespace EasyList.Business.Services
       await _enderecoRepository.Atualizar(endereco);
     }
 
-    public async Task<bool> Remover(int id)
+    public async Task<bool> Remover(Guid id)
     {
       var endereco = await _fornecedorRepository.ObterFornecedorPorEndereco(id);
       if (endereco != null)

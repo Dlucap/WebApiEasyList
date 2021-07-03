@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /BkpBanco/DumpEasylist20210619.sql
 /appsettings.json
+/src/EasyList.Api/appsettings.rar

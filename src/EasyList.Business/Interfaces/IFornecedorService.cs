@@ -8,7 +8,7 @@ namespace EasyList.Business.Interfaces
   {
     Task<bool> Adicionar(Fornecedor fornecedor);
     Task<bool> Atualizar(Fornecedor fornecedor);
-    Task<bool> Remover(int id);
+    Task<bool> Remover(Guid id);
 
     Task AtualizarEndereco(Endereco endereco);
   }

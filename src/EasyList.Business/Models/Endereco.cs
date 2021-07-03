@@ -1,8 +1,10 @@
-﻿namespace EasyList.Business.Models
+﻿using System;
+
+namespace EasyList.Business.Models
 {
   public class Endereco : Entity
   {
-    public int FornecedorId { get; set; }
+    public Guid FornecedorId { get; set; }
     public string Cep { get; set; }
     public string Estado { get; set; }
     public string Cidade { get; set; }

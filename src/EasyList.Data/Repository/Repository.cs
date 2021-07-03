@@ -26,7 +26,7 @@ namespace EasyList.Data.Repository
       return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
     }
 
-    public virtual async Task<TEntity> ObterPorId(int id)
+    public virtual async Task<TEntity> ObterPorId(Guid id)
     {
       return await DbSet.FindAsync(id);
     }
@@ -48,7 +48,7 @@ namespace EasyList.Data.Repository
       await SaveChanges();
     }
 
-    public virtual async Task Remover(int id)
+    public virtual async Task Remover(Guid id)
     { 
       DbSet.Remove(new TEntity { Id = id });
       await SaveChanges();

@@ -2,6 +2,7 @@
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace EasyList.Data.Repository
@@ -12,7 +13,7 @@ namespace EasyList.Data.Repository
     {
     }
 
-    public async Task<Fornecedor> ObterFornecedorPorEndereco(int id)
+    public async Task<Fornecedor> ObterFornecedorPorEndereco(Guid id)
     {
       return await Db.Fornecedor.AsNoTracking()
           .Include(c => c.Endereco)

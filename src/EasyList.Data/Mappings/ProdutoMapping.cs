@@ -20,11 +20,11 @@ namespace EasyList.Data
 
       builder.Property(p => p.Marca)
          .HasMaxLength(80)
-          .IsRequired(); ;
+          .IsRequired(); 
 
       builder.Property(p => p.Nome)
          .HasMaxLength(80)
-          .IsRequired(); ;
+          .IsRequired(); 
 
       builder.Property(p => p.Descricao)
          .HasMaxLength(80);

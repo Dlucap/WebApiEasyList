@@ -1,5 +1,6 @@
 ﻿using EasyList.Business.Intefaces;
 using EasyList.Business.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace EasyList.Business.Interfaces
@@ -8,9 +9,9 @@ namespace EasyList.Business.Interfaces
   {
     Task<FormaPagamento> ObterFormaPagamentoPorNome(string nomeFormaPagamento);
 
-    Task<FormaPagamento> ObterFormaPagamentoPorId(int idformaPagamento);
+    Task<FormaPagamento> ObterFormaPagamentoPorId(Guid idformaPagamento);
 
-    bool FormaPagamentoExist(int idformaPagamento);
+    bool FormaPagamentoExist(Guid idformaPagamento);
 
   }
 }
