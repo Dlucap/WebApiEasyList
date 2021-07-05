@@ -2,7 +2,7 @@
 
 namespace EasyList.Business.Models
 {
-  public interface  IUser
+  public interface  IUser 
   {
     string Name { get; }
     Guid GetUserId();

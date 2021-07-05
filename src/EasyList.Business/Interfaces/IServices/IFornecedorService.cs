@@ -11,5 +11,6 @@ namespace EasyList.Business.Interfaces
     Task<bool> Remover(Guid id);
 
     Task AtualizarEndereco(Endereco endereco);
+
   }
 }

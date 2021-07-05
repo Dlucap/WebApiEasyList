@@ -46,5 +46,22 @@ Descrição: Cadastrar uma lista de compra
  Obs:
  Informações referentes ao usuário criação, data criação, usuário modificação, data modificação serão controladas pela api.
  
+ *** Informações Git
+ - https://woliveiras.com.br/posts/facilitando-os-merges-no-git-com-o-visual-studio-code-como-merge-tool-e-editor-padr%C3%A3o/
+ - https://www.youtube.com/watch?v=oXMgyQt0ce0&ab_channel=C%C3%B3digoFonteTV
+ - https://www.youtube.com/watch?v=7riCX4Oxms8&ab_channel=GitHub 
+ - https://www.youtube.com/watch?v=NR9jc5ODvuM&ab_channel=MichelliBrito
+ - https://docs.microsoft.com/pt-br/azure/devops/repos/git/pull-requests?view=azure-devops
+ - https://www.youtube.com/watch?v=T5OxUTOfjTk&ab_channel=CodingNight
+ - https://www.youtube.com/watch?v=TEmvwagW8bI&ab_channel=AprendaC%C3%B3digo
+ 
+ *** .NET 5 + ASP.NET Core + JWT + Refresh Tokens: exemplo de implementação
+ - https://renatogroffe.medium.com/net-5-asp-net-core-jwt-refresh-tokens-exemplo-de-implementa%C3%A7%C3%A3o-fe885ecbaa4e 
+ - https://github.com/renatogroffe/ASPNETCore5_JWT-Identity-RefreshTokens
+ 
+ 
+ 
+ 
+ 
  
  

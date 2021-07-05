@@ -11,21 +11,24 @@ namespace EasyList.Data.Mappings
 
       builder.HasKey(p => p.Id);
 
-      builder.Property(p => p.Id)
-       .ValueGeneratedOnAdd();
-
       builder.Property(p => p.Nome)
-         .HasMaxLength(80);
+         .HasMaxLength(80)
+          .HasColumnType("varchar(80)");
 
       builder.Property(p => p.NomeFantasia)
-         .HasMaxLength(80);
+         .HasMaxLength(80)
+          .HasColumnType("varchar(80)");
 
       builder.Property(p => p.Cnpj)
-         .HasMaxLength(14);
+         .HasMaxLength(14)
+          .HasColumnType("varchar(14)");
+
+      builder.Property(p => p.Ativo)
+        .HasColumnType("bit");
 
       // 1 : 1 => Fornecedor : Endereco
-      builder.HasOne(f => f.Endereco)
-          .WithOne(e => e.Fornecedor);
+      //builder.HasOne(f => f.Endereco)
+      //    .WithOne(e => e.Fornecedor);
 
       builder.Property(p => p.UsuarioCriacao);
 

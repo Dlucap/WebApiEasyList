@@ -5,8 +5,8 @@ namespace EasyList.Business.Models
 {
   public class ItmCompra : Entity
   {
-    public int CompraId { get; set; }
-    public int ProdutoId { get; set; }
+    public Guid CompraId { get; set; }
+    public Guid ProdutoId { get; set; }
     public decimal Preco { get; set; }
     public int Quantidade { get; set; }
     public DateTime Validade { get; set; }

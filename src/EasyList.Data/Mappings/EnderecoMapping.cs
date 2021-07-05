@@ -10,6 +10,9 @@ namespace EasyList.Data.Mappings
     {
       builder.HasKey(p => p.Id);
 
+      //builder.Property(c => c.FornecedorId)
+      //     .IsRequired();
+
       builder.Property(c => c.Logradouro)
           .IsRequired()
           .HasColumnType("varchar(200)");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace EasyList.Business.Models
 {
@@ -7,12 +8,14 @@ namespace EasyList.Business.Models
     public string Nome { get; set; }
     public string NomeFantasia { get; set; }
     public string Cnpj { get; set; }
-    public Endereco Endereco { get; set; }
+    public Guid EnderecoId { get; set; }
     public bool Ativo { get; set; }
     public string UsuarioCriacao { get; set; }
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }
     public DateTime DataModificacao { get; set; }
+    [JsonIgnore]
+    public Endereco Endereco { get; set; }
   }
 }
 //todo: Criar testes unitários para a web Api https://docs.microsoft.com/pt-br/aspnet/web-api/overview/testing-and-debugging/unit-testing-with-aspnet-web-api

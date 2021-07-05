@@ -1,5 +1,6 @@
 ﻿using EasyList.Business.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading;
@@ -10,10 +11,10 @@ namespace EasyList.Data.Context
   public class MeuDbContext : DbContext
   {
     public MeuDbContext(DbContextOptions<MeuDbContext> options) : base(options) { }
-
+        
     #region DBSet
      //public DbSet<Categoria> Categoria { get; set; }
-    //public DbSet<Compra> Compra { get; set; }
+    public DbSet<Compra> Compra { get; set; }
     //public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
     public DbSet<Endereco> Endereco { get; set; }
     //public DbSet<Estoque> Estoque { get; set; }

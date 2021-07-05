@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EasyList.Api.Data;
+using EasyList.Business.Models;
 
 namespace EasyList.Api.Controllers
 {
@@ -13,7 +14,7 @@ namespace EasyList.Api.Controllers
   [ApiController]
   public class CompraController : ControllerBase
   {
-    private readonly CompraDbContext _context;
+    private readonly ICompraRepository _compraRepository;
 
     public CompraController(CompraDbContext context)
     {
@@ -22,14 +23,14 @@ namespace EasyList.Api.Controllers
 
     // GET: api/Compra
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Compra>>> GetCompra()
+    public async Task<ActionResult<IEnumerable<CompraApiModels>>> GetCompra()
     {
       return await _context.Compra.ToListAsync();
     }
 
     // GET: api/Compra/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Compra>> GetCompra(int id)
+    public async Task<ActionResult<Compra>> GetCompra(Guid id)
     {
       var compra = await _context.Compra.FindAsync(id);
 
@@ -44,7 +45,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Compra/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCompra(int id, Compra compra)
+    public async Task<IActionResult> PutCompra(Guid id, Compra compra)
     {
       if (id != compra.Id)
         return BadRequest();
@@ -82,7 +83,7 @@ namespace EasyList.Api.Controllers
 
     // DELETE: api/Compra/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCompra(int id)
+    public async Task<IActionResult> DeleteCompra(Guid id)
     {
       var compra = await _context.Compra.FindAsync(id);
       if (compra == null)
@@ -96,7 +97,7 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private bool CompraExists(int id)
+    private bool CompraExists(Guid id)
     {
       return _context.Compra.Any(e => e.Id == id);
     }

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyList.Api.Data;
+using EasyList.Api.ApiModels;
+using System;
+using EasyList.Business.Interfaces;
 
 namespace EasyList.Api.Controllers
 {
@@ -13,7 +16,7 @@ namespace EasyList.Api.Controllers
   [ApiController]
   public class CategoriaController : ControllerBase
   {
-    private readonly CategoriaDbContext _context;
+    private readonly ICategoriaRepository _categoriaRepository;
 
     public CategoriaController(CategoriaDbContext context)
     {
@@ -28,7 +31,7 @@ namespace EasyList.Api.Controllers
 
     // GET: api/Categoria/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategoriaApiModel>> GetCategoria(int id)
+    public async Task<ActionResult<CategoriaApiModel>> GetCategoria(Guid id)
     {
       var compra = await _context.Categoria.FindAsync(id);
 
@@ -43,7 +46,7 @@ namespace EasyList.Api.Controllers
     // PUT: api/Categoria/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCategoria(int id, CategoriaApiModel categoria)
+    public async Task<IActionResult> PutCategoria(Guid id, CategoriaApiModel categoria)
     {
       if (id != categoria.Id)
       {
@@ -74,7 +77,7 @@ namespace EasyList.Api.Controllers
     // POST: api/Compra
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostCategoria(CategoriaApiModel categoria)
+    public async Task<ActionResult<CategoriaApiModel>> PostCategoria(CategoriaApiModel categoria)
     {
       _context.Categoria.Add(categoria);
       await _context.SaveChangesAsync();
@@ -84,7 +87,7 @@ namespace EasyList.Api.Controllers
 
     // DELETE: api/Categoria/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCategoria(int id)
+    public async Task<IActionResult> DeleteCategoria(Guid id)
     {
       var compra = await _context.Categoria.FindAsync(id);
       if (compra == null)
@@ -99,7 +102,7 @@ namespace EasyList.Api.Controllers
     }
 
 
-    private bool CategoriaExists(int id)
+    private bool CategoriaExists(Guid id)
     {
       return _context.Categoria.Any(e => e.Id == id);
     }

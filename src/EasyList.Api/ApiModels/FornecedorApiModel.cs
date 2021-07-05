@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EasyList.Api.ApiModels
 {
@@ -16,10 +17,11 @@ namespace EasyList.Api.ApiModels
     [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
     public string NomeFantasia { get; set; }
 
+    [DisplayFormat(DataFormatString = "99298362000178")]
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [StringLength(14, ErrorMessage = "O campo {0} precisa ter {1} caracteres")]
-    public string Cnpj { get; set; }      
-
+    public string Cnpj { get; set; }
+     
     public EnderecoApiModel EnderecoApiModel { get; set; }
 
     public bool Ativo { get; set; }
@@ -28,5 +30,6 @@ namespace EasyList.Api.ApiModels
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }
     public DateTime DataModificacao { get; set; }
+  
   }
 }

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
@@ -24,34 +23,36 @@ namespace EasyList.Api.Controllers
     {
       _formaPagamentoRepository = formaPagamentoRepository;
       _mapper = mapper;
-  }
+    }
 
-    // GET: api/Compra
+    // GET: api/FormaPagamento
     [HttpGet]
-    public async Task <IEnumerable<FormaPagamentoApiModel>> GetFormaPagamento()
+    public async Task<IEnumerable<FormaPagamentoApiModel>> GetFormaPagamento()
     {
       var formaPagamentoApiModel = _mapper.Map<IEnumerable<FormaPagamentoApiModel>>(await _formaPagamentoRepository.ObterTodos());
 
       return formaPagamentoApiModel;
     }
 
-    // GET: api/Compra/5
+    // GET: api/FormaPagamento/5
     [HttpGet("{id}")]
     public async Task<ActionResult<FormaPagamentoApiModel>> GetFormaPagamento(Guid id)
     {
       var prodformaPagamentoApiModeluto = await _formaPagamentoRepository.ObterFormaPagamentoPorId(id);
 
-      if (prodformaPagamentoApiModeluto == null) return NotFound();
+      if (prodformaPagamentoApiModeluto == null) 
+        return NotFound();
 
       return Ok(prodformaPagamentoApiModeluto);
     }
 
-    // PUT: api/Compra/5
+    // PUT: api/FormaPagamento/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutFormaPagamento(Guid id, FormaPagamentoApiModel formaPagamentoApiModel)
     {
-      if (id != formaPagamentoApiModel.Id) return BadRequest();
+      if (id != formaPagamentoApiModel.Id) 
+        return BadRequest();
 
       if (!ModelState.IsValid) BadRequest();
 
@@ -74,19 +75,21 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    // POST: api/Compra
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+    //POST: api/FormaPagamento
+    //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostFormaPagamento(FormaPagamentoApiModel formaPagamentoApiModel)
+    public async Task<ActionResult<FormaPagamentoApiModel>> PostFormaPagamento(FormaPagamentoApiModel formaPagamentoApiModel)
     {
-      if (!ModelState.IsValid) BadRequest();
+      if (!ModelState.IsValid)
+        BadRequest();
 
       await _formaPagamentoRepository.Adicionar(_mapper.Map<FormaPagamento>(formaPagamentoApiModel));
 
       return CreatedAtAction("GetProduto", new { id = formaPagamentoApiModel.Id }, formaPagamentoApiModel);
     }
 
-    // DELETE: api/Compra/5
+    // DELETE: api/FormaPagamento/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFormaPagamento(Guid id)
     {

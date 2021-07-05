@@ -1,8 +1,8 @@
 ﻿using EasyList.Api.Data;
 using EasyList.Business.Models;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace EasyList.Api.ApiModels
 {
@@ -36,7 +36,6 @@ namespace EasyList.Api.ApiModels
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [StringLength(5, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 1)]
     public int Numero { get; set; }
-    [JsonIgnore]
-    public Fornecedor FornecedorId { get; set; }
+
   }
 }

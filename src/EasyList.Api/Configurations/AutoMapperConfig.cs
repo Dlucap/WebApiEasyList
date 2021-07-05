@@ -11,7 +11,8 @@ namespace EasyList.Api.Configurations
       //TODO: CONFIGURAR  O AUTOMAPPER
       CreateMap<Fornecedor, FornecedorApiModel>().ReverseMap();
       CreateMap<Endereco, EnderecoApiModel>().ReverseMap();
-      //CreateMap<Produto, ProdutoViewModel>();
+      CreateMap<Produto, ProdutoApiModel>().ReverseMap(); 
+      CreateMap<FormaPagamento, FormaPagamentoApiModel>().ReverseMap(); ;
 
       //CreateMap<ProdutoViewModel, Produto>()
       //    .ForMember(dest => dest.Fornecedor, opt => opt.MapFrom(src => src.NomeFornecedor));
