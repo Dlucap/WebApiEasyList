@@ -7,7 +7,7 @@ namespace EasyList.Business.Interfaces
 {
   public interface IFornecedorRepository : IRepository<Fornecedor>
   {
-    Task<Fornecedor> ObterFornecedorPorEndereco(Guid id);
+    Task<Fornecedor> ObterFornecedorPorId(Guid id);
   
   }
 }

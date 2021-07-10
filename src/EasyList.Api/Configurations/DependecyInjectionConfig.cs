@@ -6,9 +6,6 @@ using EasyList.Data.Context;
 using EasyList.Data.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EasyList.Api.Configurations
 {
@@ -22,13 +19,13 @@ namespace EasyList.Api.Configurations
       services.AddScoped<IFornecedorRepository, FornecedorRepository>();
       services.AddScoped<IEnderecoRepository, EnderecoRepository>();
       services.AddScoped<IFormaPagamentoRepository,FormaPagamentoRepository>();
-
+      services.AddScoped<ICategoriaRepository, CategoriaRepository>();
       //services.AddScoped<INotificador, Notificador>();
       //services.AddScoped<IProdutoService, ProdutoService>();
       services.AddScoped<IFornecedorService, FornecedorService>();
 
-      //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-      //services.AddScoped<IUser, AspNetUser>();
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      services.AddScoped<IUser, AspNetUser>();
 
       //services.AddTransient<ISwaggerProvider, SwaggerGenerator>();
       //services.AddTransient<ISchemaGenerator, SchemaGenerator>();

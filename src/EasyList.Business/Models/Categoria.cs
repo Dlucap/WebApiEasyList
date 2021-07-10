@@ -6,6 +6,7 @@ namespace EasyList.Business.Models
   {
     public string NomeCategoria { get; set; }
     public string UsuarioCriacao { get; set; }
+    public bool Ativo { get; set; }
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }
     public DateTime DataModificacao { get; set; }

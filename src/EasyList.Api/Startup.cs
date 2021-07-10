@@ -38,7 +38,6 @@ namespace EasyList.Api
 
       services.WebApiConfig();
 
-
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
@@ -51,7 +50,7 @@ namespace EasyList.Api
       _services = services;
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+   
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -102,7 +101,6 @@ namespace EasyList.Api
       //  sb.Append("</tbody></table>");
       //  await context.Response.WriteAsync(sb.ToString());
       //});
-
       #endregion All services
 
       app.UseMvcConfig();

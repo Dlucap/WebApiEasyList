@@ -54,7 +54,8 @@ namespace EasyList.Api.Controllers
       if (id != formaPagamentoApiModel.Id) 
         return BadRequest();
 
-      if (!ModelState.IsValid) BadRequest();
+      if (!ModelState.IsValid) 
+          BadRequest();
 
       try
       {
@@ -107,9 +108,9 @@ namespace EasyList.Api.Controllers
       return _formaPagamentoRepository.FormaPagamentoExist(id);
     }
 
-    private async Task<ProdutoApiModel> ObterFormaPagamentoPorId(Guid id)
+    private async Task<FormaPagamentoApiModel> ObterFormaPagamentoPorId(Guid id)
     {
-      return _mapper.Map<ProdutoApiModel>(await _formaPagamentoRepository.ObterFormaPagamentoPorId(id));
+      return _mapper.Map<FormaPagamentoApiModel>(await _formaPagamentoRepository.ObterFormaPagamentoPorId(id));
     }
   }
 }

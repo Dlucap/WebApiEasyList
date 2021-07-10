@@ -13,7 +13,7 @@ namespace EasyList.Data.Repository
     {
     }
 
-    public async Task<Fornecedor> ObterFornecedorPorEndereco(Guid id)
+    public async Task<Fornecedor> ObterFornecedorPorId(Guid id)
     {
       return await Db.Fornecedor.AsNoTracking()
           .Include(f => f.Endereco)

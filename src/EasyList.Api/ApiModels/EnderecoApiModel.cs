@@ -1,6 +1,4 @@
-﻿using EasyList.Api.Data;
-using EasyList.Business.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -31,6 +29,7 @@ namespace EasyList.Api.ApiModels
     [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
     public string Logradouro { get; set; }
 
+    [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
     public string Complemento { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
