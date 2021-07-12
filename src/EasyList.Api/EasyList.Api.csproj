@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\CompraCompartilhadaController.cs" />
-    <Compile Remove="Controllers\CompraController.cs" />
     <Compile Remove="Controllers\ItmCompraController.cs" />
   </ItemGroup>
 

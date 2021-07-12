@@ -2,9 +2,8 @@
 
 namespace EasyList.Business.Interfaces.IRepository
 {
-  public interface ICategoriaRepository : IRepository<Categoria>
+  public interface ICompraCompartilhadaRepository : IRepository<CompraCompartilhada>
   {
- 
-
+    
   }
 }

@@ -12,7 +12,10 @@ namespace EasyList.Api.Configurations
       CreateMap<Fornecedor, FornecedorApiModel>().ReverseMap();
       CreateMap<Endereco, EnderecoApiModel>().ReverseMap();
       CreateMap<Produto, ProdutoApiModel>().ReverseMap(); 
-      CreateMap<FormaPagamento, FormaPagamentoApiModel>().ReverseMap(); ;
+      CreateMap<FormaPagamento, FormaPagamentoApiModel>().ReverseMap();
+      CreateMap<Compra, CompraApiModel>().ReverseMap();
+      CreateMap<ItmCompra, ItmCompra>().ReverseMap();
+      CreateMap<CompraCompartilhadaApiModel, CompraCompartilhadaApiModel>().ReverseMap(); 
 
       //CreateMap<ProdutoViewModel, Produto>()
       //    .ForMember(dest => dest.Fornecedor, opt => opt.MapFrom(src => src.NomeFornecedor));

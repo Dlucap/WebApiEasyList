@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace EasyList.Business.Interfaces
+namespace EasyList.Business.Interfaces.IServices
 {
   public interface IFornecedorService : IDisposable
   {

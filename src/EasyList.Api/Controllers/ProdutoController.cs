@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
-using EasyList.Business.Interfaces;
+using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,7 @@ namespace EasyList.Api.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<ProdutoApiModel>> GetProduto(Guid id)
     {
-      var produto = await _produtoRepository.ObterProdutoPorId(id);
+      var produto = await ObterProdutoPorId(id);
 
       if (produto == null) 
         return NotFound();
@@ -100,7 +100,7 @@ namespace EasyList.Api.Controllers
 
     private async Task<ProdutoApiModel> ObterProdutoPorId(Guid id)
     {
-      return _mapper.Map<ProdutoApiModel>(await _produtoRepository.ObterProdutoPorId(id));
+      return _mapper.Map<ProdutoApiModel>(await _produtoRepository.ObterPorId(id));
     }
   }
 }

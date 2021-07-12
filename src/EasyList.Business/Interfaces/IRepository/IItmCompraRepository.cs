@@ -2,7 +2,7 @@
 
 namespace EasyList.Business.Interfaces.IRepository
 {
-  public interface ICompraRepository : IRepository<Compra>
+  public interface IItmCompraRepository : IRepository<ItmCompra>
   {  
     //Task<Compra> ObterCompraPorData(DateTime dtCompra);
 

@@ -1,13 +1,12 @@
-﻿using EasyList.Business.Intefaces;
-using EasyList.Business.Models;
+﻿using EasyList.Business.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace EasyList.Business.Interfaces
+namespace EasyList.Business.Interfaces.IRepository
 {
   public interface IFornecedorRepository : IRepository<Fornecedor>
   {
-    Task<Fornecedor> ObterFornecedorPorId(Guid id);
-  
+    Task<Fornecedor> ObterFornecedorEndereco(Guid id);
+    Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id);
   }
 }

@@ -11,6 +11,7 @@ namespace EasyList.Business.Models
     public Guid FormaPagamentoId { get; set; }
     public bool Compartilhado { get; set; } = false;
     public StatusCompraEnum StatusCompra { get; set; }
+    public IEnumerable<ItmCompra> ItemsCompra { get; set; }
     public DateTime DataCompra { get; set; }
     public string UsuarioCriacao { get; set; }
     public DateTime DataCriacao { get; set; }
@@ -22,8 +23,7 @@ namespace EasyList.Business.Models
     public Fornecedor Fornecedor { get; set; }
     [JsonIgnore]
     public FormaPagamento FormaPagamento { get; set; }
-    [JsonIgnore]
-    public IEnumerable<ItmCompra> ItemsCompra { get; set; }
+   
     [JsonIgnore]
     public CompraCompartilhada CompraCompartilhada { get; set; }
   }  

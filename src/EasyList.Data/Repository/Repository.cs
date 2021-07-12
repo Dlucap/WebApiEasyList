@@ -1,4 +1,4 @@
-﻿using EasyList.Business.Intefaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿using EasyList.Business.Interfaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +12,6 @@ namespace EasyList.Data.Repository
     public ProdutoRepository(MeuDbContext context) : base(context)
     {
     }
-
-    public async Task<Produto> ObterProdutoPorId(Guid id)
-    {
-      return await Db.Produto.AsNoTracking()
-                    .FirstOrDefaultAsync(p => p.Id == id);
-    }
-
     public async Task<Produto> ObterProdutoPorNome(string nome)
     {
       return await Db.Produto.AsNoTracking()
@@ -27,7 +20,7 @@ namespace EasyList.Data.Repository
 
     public bool ProdutoExist(Guid id)
     {
-      var produto =  ObterProdutoPorId(id);
+      var produto =  ObterPorId(id);
 
       if (produto != null)
         return true;

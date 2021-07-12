@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
-using EasyList.Business.Interfaces;
+using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +36,7 @@ namespace EasyList.Api.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<CategoriaApiModel>> GetCategoria(Guid id)
     {
-      var categoria = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaRepository.ObterCategoriasPorId(id));
+      var categoria = await ObterCategoriaPorId(id);
 
       if (categoria == null)
         return NotFound();
@@ -84,7 +84,7 @@ namespace EasyList.Api.Controllers
 
     private async Task<CategoriaApiModel> ObterCategoriaPorId(Guid id)
     {
-      return _mapper.Map<CategoriaApiModel>(await _categoriaRepository.ObterCategoriasPorId(id));
+      return _mapper.Map<CategoriaApiModel>(await _categoriaRepository.ObterPorId(id));
     }
 
   }

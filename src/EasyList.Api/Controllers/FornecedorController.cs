@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
-using EasyList.Business.Interfaces;
+using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,7 +42,7 @@ namespace EasyList.Api.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(Guid id)
     {
-      var fornecedor = await _fornecedorRepository.ObterFornecedorPorId(id);
+      var fornecedor = await ObterFornecedorPorId(id);
 
       if (fornecedor == null) 
         return NotFound();
@@ -78,14 +79,14 @@ namespace EasyList.Api.Controllers
     public async Task<IActionResult> DeleteFornecedor(Guid id)
     {
       var fornecedorApiModel = await ObterFornecedorPorId(id);
-      {
+      
         if (fornecedorApiModel == null) 
           return NotFound();
 
         await _fornecedorService.Remover(id);
 
         return NoContent();
-      }
+      
     }
 
     [HttpGet("obter-endereco/{id:guid}")]
@@ -108,7 +109,7 @@ namespace EasyList.Api.Controllers
 
     private async Task<FornecedorApiModel> ObterFornecedorPorId(Guid id)
     {
-      return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorPorId(id));
+      return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterPorId(id));
     }
    
   }

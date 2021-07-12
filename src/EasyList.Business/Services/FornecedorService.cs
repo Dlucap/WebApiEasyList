@@ -1,4 +1,5 @@
-﻿using EasyList.Business.Interfaces;
+﻿using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using System;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace EasyList.Business.Services
 
     public async Task<bool> Remover(Guid id)
     {
-      var endereco = await _fornecedorRepository.ObterFornecedorPorId(id);
+      var endereco = await _fornecedorRepository.ObterPorId(id);
       if (endereco != null)
         await _enderecoRepository.Remover(id);
 

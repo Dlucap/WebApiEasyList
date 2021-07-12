@@ -1,5 +1,6 @@
 ﻿using EasyList.Api.Extensions;
-using EasyList.Business.Interfaces;
+using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using EasyList.Business.Services;
 using EasyList.Data.Context;
@@ -13,6 +14,7 @@ namespace EasyList.Api.Configurations
   {
     public static IServiceCollection ResolveDependecies(this IServiceCollection services)
     {
+      #region Repository
       //todo configurar a resolução de dependencia
       services.AddScoped<MeuDbContext>();
       services.AddScoped<IProdutoRepository, ProdutoRepository>();
@@ -20,13 +22,21 @@ namespace EasyList.Api.Configurations
       services.AddScoped<IEnderecoRepository, EnderecoRepository>();
       services.AddScoped<IFormaPagamentoRepository,FormaPagamentoRepository>();
       services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+      services.AddScoped<ICompraRepository, CompraRepository>();
+      services.AddScoped<IItmCompraRepository, ItmCompraRepository>();
+      services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+      #endregion Repository
       //services.AddScoped<INotificador, Notificador>();
       //services.AddScoped<IProdutoService, ProdutoService>();
+
+      #region Services
       services.AddScoped<IFornecedorService, FornecedorService>();
+      services.AddScoped<IItmCompraService, ItmCompraService>();
+      #endregion Services
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddScoped<IUser, AspNetUser>();
-
+     
       //services.AddTransient<ISwaggerProvider, SwaggerGenerator>();
       //services.AddTransient<ISchemaGenerator, SchemaGenerator>();
 

@@ -15,12 +15,12 @@ namespace EasyList.Data.Context
     #region DBSet
     public DbSet<Categoria> Categoria { get; set; }
     public DbSet<Compra> Compra { get; set; }
-    //public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
+    public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
     public DbSet<Endereco> Endereco { get; set; }
     //public DbSet<Estoque> Estoque { get; set; }
     public DbSet<FormaPagamento> FormaPagamento { get; set; }
     public DbSet<Fornecedor> Fornecedor { get; set; }
-    //public DbSet<ItmCompra> ItmCompra { get; set; }
+    public DbSet<ItmCompra> ItmCompra { get; set; }
     public DbSet<Produto> Produto { get; set; }
     #endregion DBSet
 
