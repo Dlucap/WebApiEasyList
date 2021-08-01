@@ -3,7 +3,7 @@ using EasyList.Business.Models;
 using EasyList.Data.Context;
 using EasyList.Data.Repository;
 
-namespace EasyList.Business.Interfaces
+namespace EasyList.Data.Repository
 {
   public class CompraCompartilhadaRepository : Repository<CompraCompartilhada>, ICompraCompartilhadaRepository
   {

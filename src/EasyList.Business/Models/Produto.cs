@@ -9,10 +9,10 @@ namespace EasyList.Business.Models
     public string Marca { get; set; }
     public string Nome { get; set; }
     public string Descricao { get; set; }   
-    public string UsuarioCriacao { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public string UsuarioModificacao { get; set; }
-    public DateTime DataModificacao{ get; set; }
+    //public string UsuarioCriacao { get; set; }
+    //public DateTime DataCriacao { get; set; }
+    //public string UsuarioModificacao { get; set; }
+    //public DateTime DataModificacao{ get; set; }
     [JsonIgnore]
     public Categoria Categoria { get; set; }
   }

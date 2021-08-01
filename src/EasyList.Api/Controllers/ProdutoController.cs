@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
 using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,20 @@ namespace EasyList.Api.Controllers
   public class ProdutoController : ControllerBase
   {
     private readonly IProdutoRepository _produtoRepository;
+    private readonly ICategoriaService _categoriaService;
     private readonly IMapper _mapper;
 
-    public ProdutoController(IProdutoRepository produtoRepository, IMapper mapper)
+    public ProdutoController(IProdutoRepository produtoRepository,
+                             ICategoriaService categoriaService,
+                             IMapper mapper)
     {
       _produtoRepository = produtoRepository;
+      _categoriaService = categoriaService;
       _mapper = mapper;
     }
-       
+
     [HttpGet]
-    public async Task <IEnumerable<ProdutoApiModel>> GetProdutos()
+    public async Task<IEnumerable<ProdutoApiModel>> GetProdutos()
     {
       var produtoApiModel = _mapper.Map<IEnumerable<ProdutoApiModel>>(await _produtoRepository.ObterTodos());
 
@@ -36,7 +41,7 @@ namespace EasyList.Api.Controllers
     {
       var produto = await ObterProdutoPorId(id);
 
-      if (produto == null) 
+      if (produto == null)
         return NotFound();
 
       return Ok(produto);
@@ -45,35 +50,29 @@ namespace EasyList.Api.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> PutProduto(Guid id, ProdutoApiModel produtoApiModel)
     {
-      if (id != produtoApiModel.Id) 
+      if (id != produtoApiModel.Id)
         return BadRequest();
 
-      if (!ModelState.IsValid) BadRequest();
+      if (!await _categoriaService.CategoriaExists(produtoApiModel.CategoriaId))
+        return BadRequest();
 
-      try
-      {
-        await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoApiModel));
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!ProdutoExists(id))
-        {
-          return NotFound();
-        }
-        else
-        {
-          throw;
-        }
-      }
+      if (!ModelState.IsValid)
+        BadRequest();
+
+      await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoApiModel));
 
       return NoContent();
     }
-        
+
     [HttpPost]
     public async Task<ActionResult<ProdutoApiModel>> PostProduto(ProdutoApiModel produtoApiModel)
     {
-      if (!ModelState.IsValid) 
+      if (!ModelState.IsValid)
         BadRequest();
+
+      if (!await _categoriaService.CategoriaExists(produtoApiModel.CategoriaId))
+        return BadRequest();
+
 
       await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoApiModel));
 
@@ -83,19 +82,14 @@ namespace EasyList.Api.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduto(Guid id)
     {
-      var produtoApiModel = ObterProdutoPorId(id);
+      var produtoApiModel = await ObterProdutoPorId(id);
 
-      if (produtoApiModel == null) 
+      if (produtoApiModel == null)
         return NotFound();
 
       await _produtoRepository.Remover(id);
 
       return NoContent();
-    }
-
-    private bool ProdutoExists(Guid id)
-    {
-      return _produtoRepository.ProdutoExist(id);
     }
 
     private async Task<ProdutoApiModel> ObterProdutoPorId(Guid id)

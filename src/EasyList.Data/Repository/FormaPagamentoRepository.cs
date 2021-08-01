@@ -19,15 +19,11 @@ namespace EasyList.Data.Repository
                      .FirstOrDefaultAsync(pg => pg.NomeFormaPagamento.Contains(nomeFormaPagamento));
     }
 
-    public bool FormaPagamentoExist(Guid idformaPagamento)
+    public async override Task<FormaPagamento> ObterPorId(Guid id)
     {
-      var produto = ObterPorId(idformaPagamento);
-
-      if (produto != null)
-        return true;
-      else
-        return false;
+      return await Db.FormaPagamento.AsNoTracking()
+                                .FirstOrDefaultAsync(f => f.Id == id);
     }
-   
+
   }
 }

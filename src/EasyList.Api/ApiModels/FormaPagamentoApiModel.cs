@@ -1,5 +1,4 @@
-﻿using EasyList.Business.Models;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EasyList.Api.ApiModels

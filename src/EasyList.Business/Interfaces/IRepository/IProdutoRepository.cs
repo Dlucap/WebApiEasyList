@@ -8,6 +8,5 @@ namespace EasyList.Business.Interfaces.IRepository
   {
     Task<Produto> ObterProdutoPorNome(string nome);
 
-    bool ProdutoExist(Guid id);
   }
 }

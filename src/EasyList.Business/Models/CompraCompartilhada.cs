@@ -8,10 +8,10 @@ namespace EasyList.Business.Models
   {   
     public Guid CompraId { get; set; }
     public string UsuariosCompartilhados { get; set; }
-    public string UsuarioCriacao { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public string UsuarioModificacao { get; set; }
-    public DateTime DataModificacao { get; set; }
+    //public string UsuarioCriacao { get; set; }
+    //public DateTime DataCriacao { get; set; }
+    //public string UsuarioModificacao { get; set; }
+    //public DateTime DataModificacao { get; set; }
 
     [JsonIgnore]
     public Compra Compra { get; set; }

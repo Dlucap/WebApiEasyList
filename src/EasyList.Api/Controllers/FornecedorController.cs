@@ -34,59 +34,65 @@ namespace EasyList.Api.Controllers
     [HttpGet]
     public async Task<IEnumerable<FornecedorApiModel>> GetFornecedor()
     {
-      var fornecedores = _mapper.Map<IEnumerable<FornecedorApiModel>>(await _fornecedorRepository.ObterTodos());
+      var fornecedoresModel = _mapper.Map<IEnumerable<FornecedorApiModel>>(await ObterFornecedoresEndereco());
 
-      return fornecedores;
+      return fornecedoresModel;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetFornecedor")]
     public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(Guid id)
     {
       var fornecedor = await ObterFornecedorPorId(id);
 
-      if (fornecedor == null) 
+      if (fornecedor == null)
         return NotFound();
-     
+
       return Ok(fornecedor);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutFornecedor(Guid id, FornecedorApiModel fornecedorApiModel)
     {
-      if (id != fornecedorApiModel.Id)  
+      if (id != fornecedorApiModel.Id)
         return BadRequest();
-    
+
       if (!ModelState.IsValid)
         return BadRequest();
 
       await _fornecedorRepository.Atualizar(_mapper.Map<Fornecedor>(fornecedorApiModel));
-   
+
       return NoContent();
     }
 
     [HttpPost]
     public async Task<ActionResult<FornecedorApiModel>> PostFornecedor(FornecedorApiModel fornecedorApiModel)
     {
-      if (!ModelState.IsValid) 
-        BadRequest();
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      await _fornecedorRepository.Adicionar(_mapper.Map<Fornecedor>(fornecedorApiModel));
+      var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
+
+      await _fornecedorRepository.Adicionar(fornecedorEntity);
+
+      fornecedorApiModel.Id = fornecedorApiModel.Endereco.FornecedorId = fornecedorEntity.Id;
+      fornecedorApiModel.Endereco.Id = fornecedorEntity.Endereco.Id;
 
       return CreatedAtAction("GetFornecedor", new { id = fornecedorApiModel.Id }, fornecedorApiModel);
+
     }
-        
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFornecedor(Guid id)
     {
       var fornecedorApiModel = await ObterFornecedorPorId(id);
-      
-        if (fornecedorApiModel == null) 
-          return NotFound();
 
-        await _fornecedorService.Remover(id);
+      if (fornecedorApiModel == null)
+        return NotFound();
 
-        return NoContent();
-      
+      await _fornecedorService.Remover(id);
+
+      return NoContent();
+
     }
 
     [HttpGet("obter-endereco/{id:guid}")]
@@ -99,7 +105,7 @@ namespace EasyList.Api.Controllers
     [HttpPut("atualizar-endereco/{id:guid}")]
     public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoApiModel enderecoApiModel)
     {
-      if (id !=enderecoApiModel.Id) 
+      if (id != enderecoApiModel.Id)
         return BadRequest();
 
       await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoApiModel));
@@ -109,8 +115,14 @@ namespace EasyList.Api.Controllers
 
     private async Task<FornecedorApiModel> ObterFornecedorPorId(Guid id)
     {
-      return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterPorId(id));
+      return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
     }
-   
+
+    private async Task<IEnumerable<FornecedorApiModel>> ObterFornecedoresEndereco()
+    {
+      var listaFornecedores = await _fornecedorRepository.ObterTodosFornecedoresEndereco();
+      return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
+    }
+
   }
 }

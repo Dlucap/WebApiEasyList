@@ -49,7 +49,7 @@ namespace EasyList.Data.Repository
     }
 
     public virtual async Task Remover(Guid id)
-    { 
+    {      
       DbSet.Remove(new TEntity { Id = id });
       await SaveChanges();
     }

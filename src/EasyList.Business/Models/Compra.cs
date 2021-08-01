@@ -13,10 +13,10 @@ namespace EasyList.Business.Models
     public StatusCompraEnum StatusCompra { get; set; }
     public IEnumerable<ItmCompra> ItemsCompra { get; set; }
     public DateTime DataCompra { get; set; }
-    public string UsuarioCriacao { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public string UsuarioModificacao { get; set; }
-    public DateTime DataModificacao { get; set; }
+    //public string UsuarioCriacao { get; set; }
+    //public DateTime DataCriacao { get; set; }
+    //public string UsuarioModificacao { get; set; }
+    //public DateTime DataModificacao { get; set; }
 
     /*EF Relation*/
     [JsonIgnore]

@@ -27,8 +27,8 @@ namespace EasyList.Data.Mappings
         .HasColumnType("bit");
 
       // 1 : 1 => Fornecedor : Endereco
-      //builder.HasOne(f => f.Endereco)
-      //    .WithOne(e => e.Fornecedor);
+      builder.HasOne(f => f.Endereco)
+          .WithOne(e => e.Fornecedor);
 
       builder.Property(p => p.UsuarioCriacao);
 

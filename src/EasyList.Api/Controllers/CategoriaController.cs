@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Authorize]
+  //[Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class CategoriaController : ControllerBase
@@ -24,7 +24,7 @@ namespace EasyList.Api.Controllers
       _mapper = mapper;
     }
 
-    [Authorize]
+   // [Authorize]
     [HttpGet]
     public async Task<IEnumerable<CategoriaApiModel>> GetCategoria()
     {
@@ -89,3 +89,5 @@ namespace EasyList.Api.Controllers
 
   }
 }
+
+//http://www.macoratti.net/19/07/aspnc_httpatch2.htm

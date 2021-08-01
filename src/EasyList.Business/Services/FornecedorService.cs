@@ -49,7 +49,7 @@ namespace EasyList.Business.Services
 
     public async Task<bool> Remover(Guid id)
     {
-      var endereco = await _fornecedorRepository.ObterPorId(id);
+      var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
       if (endereco != null)
         await _enderecoRepository.Remover(id);
 

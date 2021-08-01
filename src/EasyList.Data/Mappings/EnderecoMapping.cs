@@ -8,10 +8,10 @@ namespace EasyList.Data.Mappings
   {
     public void Configure(EntityTypeBuilder<Endereco> builder)
     {
-      builder.HasKey(p => p.Id);
+      builder.HasKey(e => e.Id);
 
-      //builder.Property(c => c.FornecedorId)
-      //     .IsRequired();
+      builder.Property(e => e.FornecedorId)
+           .IsRequired();
 
       builder.Property(c => c.Logradouro)
           .IsRequired()

@@ -8,7 +8,5 @@ namespace EasyList.Business.Interfaces.IRepository
   {
     Task<FormaPagamento> ObterFormaPagamentoPorNome(string nomeFormaPagamento);
 
-    bool FormaPagamentoExist(Guid idformaPagamento);
-
   }
 }

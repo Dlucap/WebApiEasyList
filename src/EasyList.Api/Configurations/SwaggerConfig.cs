@@ -7,7 +7,6 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -83,10 +82,10 @@ namespace EasyList.Api.Configurations
     {
       var info = new OpenApiInfo()
       {
-        Title = "API - desenvolvedor.io",
+        Title = "API - EasyList",
         Version = description.ApiVersion.ToString(),
-        Description = "Esta API faz parte do curso REST com ASP.NET Core WebAPI.",
-        Contact = new OpenApiContact() { Name = "Eduardo Pires", Email = "contato@desenvolvedor.io" },
+        Description = "Esta Api foi criada para fins didáticos.",
+        Contact = new OpenApiContact() { Name = "Daniel Lucas Pereira E Silva", Email = "dlpsilva@yahoo.com.br" },
         License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
       };
 

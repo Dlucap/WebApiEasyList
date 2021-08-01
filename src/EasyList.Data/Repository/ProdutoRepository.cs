@@ -17,15 +17,10 @@ namespace EasyList.Data.Repository
       return await Db.Produto.AsNoTracking()
                     .FirstOrDefaultAsync(p => p.Nome.Contains(nome));
     }
-
-    public bool ProdutoExist(Guid id)
+    public async override Task<Produto> ObterPorId(Guid id)
     {
-      var produto =  ObterPorId(id);
-
-      if (produto != null)
-        return true;
-      else
-        return false;
+      return await Db.Produto.AsNoTracking()
+                                .FirstOrDefaultAsync(p => p.Id == id);
     }
 
   }

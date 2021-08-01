@@ -43,8 +43,9 @@ namespace EasyList.Data.Context
       foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCriacao") != null))
       {
         if (entry.State == EntityState.Added)
-        {
+        {        
           entry.Property("DataCriacao").CurrentValue = DateTime.Now;
+          entry.Property("DataModificacao").CurrentValue = DateTime.Now;
         }
       }
 

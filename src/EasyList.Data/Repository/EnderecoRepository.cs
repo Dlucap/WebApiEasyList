@@ -14,7 +14,8 @@ namespace EasyList.Data.Repository
     public async Task<Endereco> ObterEnderecoPorFornecedor(Guid EnderecoId)
     {
       return await Db.Endereco.AsNoTracking()
-                                .FirstOrDefaultAsync(f => f.Id == EnderecoId);
+                                .FirstOrDefaultAsync(f => f.FornecedorId == EnderecoId);
     }
+
   }
 }
