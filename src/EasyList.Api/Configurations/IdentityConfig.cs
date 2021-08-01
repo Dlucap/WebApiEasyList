@@ -19,7 +19,7 @@ namespace EasyList.Api.Configurations
       services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(stringSqlconnection, ServerVersion.AutoDetect(stringSqlconnection)));
 
-      services.AddIdentity<IdentityUser, IdentityRole>()
+      services.AddIdentity<IdentityUser, IdentityRole>()/*options => options.SignIn.RequireConfirmedAccount = false)*/
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddErrorDescriber<IdentityMensagensPortugues>()

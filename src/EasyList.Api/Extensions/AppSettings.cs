@@ -1,4 +1,4 @@
-﻿namespace EasyList.Api
+﻿namespace EasyList.Api.Extensions
 { 
   public class AppSettings
   {

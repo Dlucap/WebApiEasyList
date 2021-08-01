@@ -1,4 +1,4 @@
-﻿using EasyList.Api.Data;
+﻿using EasyList.Business.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,14 +11,16 @@ namespace EasyList.Data
 
       builder.HasKey(p => p.Id);
 
-      builder.Property(p => p.Id)
-       .ValueGeneratedOnAdd();
+      builder.Property(p => p.Id);
 
       builder.Property(p => p.NomeCategoria)
          .HasMaxLength(50)
           .IsRequired();
 
       builder.Property(p => p.UsuarioCriacao);
+
+      builder.Property(p => p.Ativo)
+        .HasColumnType("bit");
 
       builder.Property(p => p.DataCriacao);
 

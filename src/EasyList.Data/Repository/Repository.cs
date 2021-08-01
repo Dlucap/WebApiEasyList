@@ -1,4 +1,4 @@
-﻿using EasyList.Business.Intefaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +49,7 @@ namespace EasyList.Data.Repository
     }
 
     public virtual async Task Remover(Guid id)
-    { 
+    {      
       DbSet.Remove(new TEntity { Id = id });
       await SaveChanges();
     }

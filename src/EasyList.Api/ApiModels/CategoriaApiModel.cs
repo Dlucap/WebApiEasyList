@@ -12,6 +12,8 @@ namespace EasyList.Api.ApiModels
     [StringLength(50, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
     public string NomeCategoria { get; set; }
 
+    public bool Ativo { get; set; }
+
     public string UsuarioCriacao { get; set; }
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }

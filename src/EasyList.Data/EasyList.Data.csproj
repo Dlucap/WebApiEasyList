@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mappings\CategoriaMapping.cs" />
-    <Compile Remove="Mappings\CompraCompartilhadaMapping.cs" />
     <Compile Remove="Mappings\CompraMapping.cs" />
     <Compile Remove="Mappings\EstoqueCompraMapping.cs" />
-    <Compile Remove="Mappings\FormaPagamentoMapping.cs" />
     <Compile Remove="Mappings\ItmCompraMapping.cs" />
   </ItemGroup>
 
@@ -25,10 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EasyList.Business\EasyList.Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

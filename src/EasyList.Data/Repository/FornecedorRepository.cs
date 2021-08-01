@@ -1,8 +1,9 @@
-﻿using EasyList.Business.Interfaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EasyList.Data.Repository
@@ -13,12 +14,25 @@ namespace EasyList.Data.Repository
     {
     }
 
-    public async Task<Fornecedor> ObterFornecedorPorEndereco(Guid id)
+    public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
     {
       return await Db.Fornecedor.AsNoTracking()
           .Include(c => c.Endereco)
           .FirstOrDefaultAsync(c => c.Id == id);
     }
 
+    public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
+    {
+      return await Db.Fornecedor.AsNoTracking()
+          .Include(c => c.Endereco)
+          .FirstOrDefaultAsync(c => c.Id == id);
+    }
+
+    public async Task<IList<Fornecedor>> ObterTodosFornecedoresEndereco()
+    {
+      return await Db.Fornecedor.AsNoTracking()
+         .Include(c => c.Endereco)
+         .ToListAsync();
+    }
   }
 }

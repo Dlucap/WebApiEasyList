@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using EasyList.Api.ApiModels;
+using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using EasyList.Api.Data;
 
 namespace EasyList.Api.Controllers
 {
@@ -13,96 +15,79 @@ namespace EasyList.Api.Controllers
   [ApiController]
   public class CategoriaController : ControllerBase
   {
-    private readonly CategoriaDbContext _context;
+    private readonly ICategoriaRepository _categoriaRepository;
+    private readonly IMapper _mapper;
 
-    public CategoriaController(CategoriaDbContext context)
+    public CategoriaController(ICategoriaRepository categoriaRepository, IMapper mapper)
     {
-      _context = context;
+      _categoriaRepository = categoriaRepository;
+      _mapper = mapper;
     }
-    // GET: api/Categoria
+
+   // [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoriaApiModel>>> GetCategoria()
+    public async Task<IEnumerable<CategoriaApiModel>> GetCategoria()
     {
-      return await _context.Categoria.ToListAsync();
-    }
+      var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaRepository.ObterTodos());
 
-    // GET: api/Categoria/5
+      return categorias;
+    }
+        
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategoriaApiModel>> GetCategoria(int id)
+    public async Task<ActionResult<CategoriaApiModel>> GetCategoria(Guid id)
     {
-      var compra = await _context.Categoria.FindAsync(id);
+      var categoria = await ObterCategoriaPorId(id);
 
-      if (compra == null)
-      {
+      if (categoria == null)
         return NotFound();
-      }
 
-      return compra;
+      return Ok(categoria);
     }
 
-    // PUT: api/Categoria/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCategoria(int id, CategoriaApiModel categoria)
+    public async Task<IActionResult> PutCategoria(Guid id, CategoriaApiModel categoriaApiModel)
     {
-      if (id != categoria.Id)
-      {
+      if (id != categoriaApiModel.Id)
         return BadRequest();
-      }
 
-      _context.Entry(categoria).State = EntityState.Modified;
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      try
-      {
-        await _context.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!CategoriaExists(id))
-        {
-          return NotFound();
-        }
-        else
-        {
-          throw;
-        }
-      }
+      await _categoriaRepository.Atualizar(_mapper.Map<Categoria>(categoriaApiModel));
 
       return NoContent();
     }
 
-    // POST: api/Compra
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostCategoria(CategoriaApiModel categoria)
+    public async Task<ActionResult<CategoriaApiModel>> PostCategoria(CategoriaApiModel categoriaApiModel)
     {
-      _context.Categoria.Add(categoria);
-      await _context.SaveChangesAsync();
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      return CreatedAtAction("GetCategoria", new { id = categoria.Id }/*, categoria*/);
+      await _categoriaRepository.Atualizar(_mapper.Map<Categoria>(categoriaApiModel));
+
+      return CreatedAtAction("GetCategoria", new { id = categoriaApiModel.Id }, categoriaApiModel);
     }
 
-    // DELETE: api/Categoria/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCategoria(int id)
+    public async Task<IActionResult> DeleteCategoria(Guid id)
     {
-      var compra = await _context.Categoria.FindAsync(id);
-      if (compra == null)
-      {
-        return NotFound();
-      }
+      var categoriaApiModel = await ObterCategoriaPorId(id);
 
-      _context.Categoria.Remove(compra);
-      await _context.SaveChangesAsync();
+      if (categoriaApiModel is null)
+        return NotFound();
+
+      await _categoriaRepository.Remover(id);
 
       return NoContent();
     }
 
-
-    private bool CategoriaExists(int id)
+    private async Task<CategoriaApiModel> ObterCategoriaPorId(Guid id)
     {
-      return _context.Categoria.Any(e => e.Id == id);
+      return _mapper.Map<CategoriaApiModel>(await _categoriaRepository.ObterPorId(id));
     }
 
   }
 }
+
+//http://www.macoratti.net/19/07/aspnc_httpatch2.htm

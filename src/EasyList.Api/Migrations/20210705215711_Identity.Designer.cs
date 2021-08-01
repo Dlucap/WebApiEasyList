@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyList.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210703022917_inicial")]
-    partial class inicial
+    [Migration("20210705215711_Identity")]
+    partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

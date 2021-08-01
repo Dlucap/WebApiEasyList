@@ -1,4 +1,5 @@
 ﻿using EasyList.Api.ApiModels;
+using EasyList.Api.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

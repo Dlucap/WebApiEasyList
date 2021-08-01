@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using EasyList.Api.ApiModels;
+using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
+using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EasyList.Api.Data;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
@@ -13,92 +14,79 @@ namespace EasyList.Api.Controllers
   [ApiController]
   public class CompraController : ControllerBase
   {
-    private readonly CompraDbContext _context;
+    private readonly ICompraRepository _compraRepository;
+    private readonly IItmCompraService _itemCompraService;
+    private readonly IMapper _mapper;
 
-    public CompraController(CompraDbContext context)
+    public CompraController(ICompraRepository compraRepository, IItmCompraService itemCompraService, IMapper mapper)
     {
-      _context = context;
+      _compraRepository = compraRepository;
+      _itemCompraService = itemCompraService;
+      _mapper = mapper;
     }
-
-    // GET: api/Compra
+       
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Compra>>> GetCompra()
+    public async Task<IEnumerable<CompraApiModel>> GetCompra()
     {
-      return await _context.Compra.ToListAsync();
-    }
-
-    // GET: api/Compra/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Compra>> GetCompra(int id)
-    {
-      var compra = await _context.Compra.FindAsync(id);
-
-      if (compra == null)
-      {
-        return NotFound($"Compra {id}, não encontrado na base de dados.");
-      }
-
+      var compra = _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterTodos());
+      
       return compra;
     }
 
-    // PUT: api/Compra/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutCompra(int id, Compra compra)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Compra>> GetCompra(Guid id)
     {
-      if (id != compra.Id)
-        return BadRequest();
+      var compra = await ObterCompraPorId(id);
 
-      if (CompraExists(id))
+      if (compra == null)
         return NotFound();
 
-      if (compra.StatusCompra == StatusCompraEnum.CompraFinalizada)
-        return BadRequest("Compra já finaloizada.");
+      return Ok(compra);     
+    }  
 
-      _context.Entry(compra).State = EntityState.Modified;
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutCompra(Guid id, CompraApiModel compraApiModel)
+    {
+      if (id != compraApiModel.Id)
+        return BadRequest();
 
-      try
-      {
-        await _context.SaveChangesAsync();      
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        throw;
-      }
+      if (!ModelState.IsValid)
+        return BadRequest();
+
+      await _compraRepository.Atualizar(_mapper.Map<Compra>(compraApiModel));
 
       return NoContent();
     }
 
-    // POST: api/Compra
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostCompra(Compra compra)
-    {
-      _context.Compra.Add(compra);
-      await _context.SaveChangesAsync();
+    public async Task<ActionResult<Compra>> PostCompra(CompraApiModel compraApiModel)
+    {      
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      return CreatedAtAction("GetCompra", new { id = compra.Id }, compra);
+
+      await _compraRepository.Adicionar(_mapper.Map<Compra>(compraApiModel));
+
+      return NoContent();
     }
 
     // DELETE: api/Compra/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCompra(int id)
+    public async Task<IActionResult> DeleteCompra(Guid id)
     {
-      var compra = await _context.Compra.FindAsync(id);
-      if (compra == null)
-      {
-        return NotFound();
-      }
+      var compraApi = await ObterCompraPorId(id);
 
-      _context.Compra.Remove(compra);
-      await _context.SaveChangesAsync();
+      if (compraApi == null)
+        return NotFound();
+
+      await _compraRepository.Remover(id);
 
       return NoContent();
     }
 
-    private bool CompraExists(int id)
+    private async Task<IEnumerable<CompraApiModel>> ObterCompraPorId(Guid id)
     {
-      return _context.Compra.Any(e => e.Id == id);
+      return _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterPorId(id));
     }
   }
 }

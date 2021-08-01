@@ -1,4 +1,4 @@
-﻿using EasyList.Business.Interfaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,20 +19,11 @@ namespace EasyList.Data.Repository
                      .FirstOrDefaultAsync(pg => pg.NomeFormaPagamento.Contains(nomeFormaPagamento));
     }
 
-    public bool FormaPagamentoExist(Guid idformaPagamento)
+    public async override Task<FormaPagamento> ObterPorId(Guid id)
     {
-      var produto = ObterFormaPagamentoPorId(idformaPagamento);
-
-      if (produto != null)
-        return true;
-      else
-        return false;
+      return await Db.FormaPagamento.AsNoTracking()
+                                .FirstOrDefaultAsync(f => f.Id == id);
     }
 
-    public async Task<FormaPagamento> ObterFormaPagamentoPorId(Guid idformaPagamento)
-    {
-      return await Db.FormaPagamento.AsNoTracking()         
-          .FirstOrDefaultAsync(pg => pg.Id == idformaPagamento);
-    }
   }
 }

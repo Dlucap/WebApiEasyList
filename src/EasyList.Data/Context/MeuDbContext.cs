@@ -1,5 +1,6 @@
 ﻿using EasyList.Business.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading;
@@ -12,14 +13,14 @@ namespace EasyList.Data.Context
     public MeuDbContext(DbContextOptions<MeuDbContext> options) : base(options) { }
 
     #region DBSet
-     //public DbSet<Categoria> Categoria { get; set; }
-    //public DbSet<Compra> Compra { get; set; }
-    //public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
+    public DbSet<Categoria> Categoria { get; set; }
+    public DbSet<Compra> Compra { get; set; }
+    public DbSet<CompraCompartilhada> CompraCompartilhada { get; set; }
     public DbSet<Endereco> Endereco { get; set; }
     //public DbSet<Estoque> Estoque { get; set; }
     public DbSet<FormaPagamento> FormaPagamento { get; set; }
     public DbSet<Fornecedor> Fornecedor { get; set; }
-    //public DbSet<ItmCompra> ItmCompra { get; set; }
+    public DbSet<ItmCompra> ItmCompra { get; set; }
     public DbSet<Produto> Produto { get; set; }
     #endregion DBSet
 
@@ -42,8 +43,9 @@ namespace EasyList.Data.Context
       foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCriacao") != null))
       {
         if (entry.State == EntityState.Added)
-        {
+        {        
           entry.Property("DataCriacao").CurrentValue = DateTime.Now;
+          entry.Property("DataModificacao").CurrentValue = DateTime.Now;
         }
       }
 

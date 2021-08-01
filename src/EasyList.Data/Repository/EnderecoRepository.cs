@@ -1,4 +1,4 @@
-﻿using EasyList.Business.Interfaces;
+﻿using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +11,11 @@ namespace EasyList.Data.Repository
   {
     public EnderecoRepository(MeuDbContext context) : base(context) { }
 
-    public async Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId)
+    public async Task<Endereco> ObterEnderecoPorFornecedor(Guid EnderecoId)
     {
       return await Db.Endereco.AsNoTracking()
-                                .FirstOrDefaultAsync(f => f.FornecedorId == fornecedorId);
+                                .FirstOrDefaultAsync(f => f.FornecedorId == EnderecoId);
     }
+
   }
 }

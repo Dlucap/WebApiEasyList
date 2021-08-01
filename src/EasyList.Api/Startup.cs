@@ -1,16 +1,14 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AutoMapper;
+using EasyList.Api.Configurations;
+using EasyList.Api.Data;
+using EasyList.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using EasyList.Api.Data;
 
 namespace EasyList.Api
 {
@@ -20,20 +18,25 @@ namespace EasyList.Api
     {
       Configuration = configuration;
     }
-   
+
     public IConfiguration Configuration { get; }
 
     public IServiceCollection _services { get; set; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
+        
     public void ConfigureServices(IServiceCollection services)
     {
-    
+
       var stringSqlconnection = Configuration.GetConnectionString("WebApiEasyList");
 
-      services.AddDbContextPool<ApplicationDbContext>(options =>
-     options.UseMySql(stringSqlconnection,
-       ServerVersion.AutoDetect(stringSqlconnection)));
+      services.AddDbContext<MeuDbContext>(options =>
+       options.UseMySql(stringSqlconnection,
+        ServerVersion.AutoDetect(stringSqlconnection)));
+
+      services.AddIdentityConfig(Configuration);
+
+      services.AddAutoMapper(typeof(Startup));
+
+      services.WebApiConfig();
 
       services.AddControllers();
       services.AddSwaggerGen(c =>
@@ -42,10 +45,12 @@ namespace EasyList.Api
       });
       // services.AddApplicationInsightsTelemetry();
 
+      services.ResolveDependecies();
+
       _services = services;
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+   
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -96,16 +101,9 @@ namespace EasyList.Api
       //  sb.Append("</tbody></table>");
       //  await context.Response.WriteAsync(sb.ToString());
       //});
-
       #endregion All services
 
-      app.UseHttpsRedirection();
-
-      app.UseRouting();
-
-      app.UseAuthentication(); 
-
-      app.UseAuthorization();
+      app.UseMvcConfig();
 
       app.UseEndpoints(endpoints =>
       {
@@ -115,15 +113,3 @@ namespace EasyList.Api
   }
 }
 
-/**
- * User App
-*{
-*  "email": "dlpsilva@yahoo.com.br",
-*  "password": "1A2b@6"
-*}
-*{
-*  "email": "mestre@admin",
-*  "password": "1A2b@6"
-*}
-*
-*/

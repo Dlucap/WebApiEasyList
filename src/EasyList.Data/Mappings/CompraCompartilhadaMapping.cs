@@ -1,4 +1,4 @@
-﻿using EasyList.Api.Data;
+﻿using EasyList.Business.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

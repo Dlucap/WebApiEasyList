@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace EasyList.Business.Intefaces
+namespace EasyList.Business.Interfaces.IRepository
 {
   public interface IRepository<TEntity> : IDisposable where TEntity : Entity
   {

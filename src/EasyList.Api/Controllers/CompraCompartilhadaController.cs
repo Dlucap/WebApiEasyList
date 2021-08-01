@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using EasyList.Api.ApiModels;
+using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EasyList.Api.Data;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
@@ -15,95 +14,79 @@ namespace EasyList.Api.Controllers
   [ApiController]
   public class CompraCompartilhadaController : ControllerBase
   {
-    private readonly CompraCompartilhadaDbContext _context;
+    private readonly ICompraCompartilhadaRepository _CompraCompartilhadaRepository;
+    private readonly IMapper _mapper;
 
-    public CompraCompartilhadaController(CompraCompartilhadaDbContext context)
+    public CompraCompartilhadaController(ICompraCompartilhadaRepository CompraCompartilhadaRepository, IMapper mapper)
     {
-      _context = context;
+      _CompraCompartilhadaRepository = CompraCompartilhadaRepository;
+      _mapper = mapper;
     }
 
-    // GET: api/Compra
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CompraCompartilhada>>> GetCompraCompartilhada()
+    public async Task<IEnumerable<CompraCompartilhadaApiModel>> GetCompraCompartilhada()
     {
-      return await _context.CompraCompartilhada.ToListAsync();
+      var compraCompartilhada = _mapper.Map<IEnumerable<CompraCompartilhadaApiModel>>(await _CompraCompartilhadaRepository.ObterTodos());
+
+      return compraCompartilhada;
     }
 
-    // GET: api/Compra/5
-    [HttpGet("{idCompra}")]
-    public async Task<ActionResult<CompraCompartilhada>> GetCompraCompartilhada(int idCompra)
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CompraCompartilhadaApiModel>> GetCompraCompartilhada(Guid idCompra)
     {
-      var compra = await _context.CompraCompartilhada.FindAsync(idCompra);
+      var compraCompartilhada = await ObterCompraCompartilhadaPorId(idCompra);
 
-      if (compra == null)
-      {
+      if (compraCompartilhada == null)
         return NotFound();
-      }
 
-      return compra;
+      return Ok(compraCompartilhada);
     }
 
-    // PUT: api/Compra/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCompraCompartilhada(int id, CompraCompartilhada compraCompartilhada)
+    public async Task<IActionResult> PutCompraCompartilhada(Guid id, CompraCompartilhadaApiModel compraCompartilhadaApiModel)
     {
-      if (id != compraCompartilhada.Id)
-      {
+      if (id != compraCompartilhadaApiModel.Id)      
         return BadRequest();
-      }
 
-      _context.Entry(compraCompartilhada).State = EntityState.Modified;
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      try
-      {
-        await _context.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!CompraExists(id))
-        {
-          return NotFound();
-        }
-        else
-        {
-          throw;
-        }
-      }
+      await _CompraCompartilhadaRepository.Atualizar(_mapper.Map<CompraCompartilhada>(compraCompartilhadaApiModel)); 
 
       return NoContent();
     }
 
-    // POST: api/Compra
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Compra>> PostCompraCompartilhada(CompraCompartilhada compraCompartilhada )
+    public async Task<ActionResult<Compra>> PostCompraCompartilhada(CompraCompartilhadaApiModel compraCompartilhadaApiModel)
     {
-      _context.CompraCompartilhada.Add(compraCompartilhada);
-      await _context.SaveChangesAsync();
+      if (!ModelState.IsValid)
+        return BadRequest();
 
-      return CreatedAtAction("GetCompraCompartilhada", new { id = compraCompartilhada.Id }, compraCompartilhada);
+      await _CompraCompartilhadaRepository.Adicionar(_mapper.Map<CompraCompartilhada>(compraCompartilhadaApiModel));         
+
+      return CreatedAtAction("GetCompraCompartilhada", new { id = compraCompartilhadaApiModel.Id }, compraCompartilhadaApiModel);
     }
-
-    // DELETE: api/Compra/5
+        
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCompartilhamentoCompra(int id)
+    public async Task<IActionResult> DeleteCompartilhamentoCompra(Guid id)
     {
-      var compartilhamentoCompra = await _context.CompraCompartilhada.FindAsync(id);
-      if (compartilhamentoCompra == null)
-      {
+      var compraCompartilhadaApiModel = await ObterCompraCompartilhadaPorId(id);
+      
+      if (compraCompartilhadaApiModel == null)
         return NotFound();
-      }
 
-      _context.CompraCompartilhada.Remove(compartilhamentoCompra);
-      await _context.SaveChangesAsync();
+      await _CompraCompartilhadaRepository.Remover(id);
 
       return NoContent();
     }
 
-    private bool CompraExists(int id)
+    private async Task<CompraCompartilhadaApiModel> ObterCompraCompartilhadaPorId(Guid id)
     {
-      return _context.CompraCompartilhada.Any(e => e.Id == id);
+      var compraCompartilhada = _mapper.Map<CompraCompartilhadaApiModel>(await _CompraCompartilhadaRepository.ObterPorId(id));
+
+      return compraCompartilhada;
     }
+  
   }
 }
