@@ -24,11 +24,14 @@ namespace EasyList.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<CompraCompartilhadaApiModel>> GetCompraCompartilhada()
+    public async Task<ActionResult<IEnumerable<CompraCompartilhadaApiModel>>> GetCompraCompartilhada()
     {
       var compraCompartilhada = _mapper.Map<IEnumerable<CompraCompartilhadaApiModel>>(await _CompraCompartilhadaRepository.ObterTodos());
 
-      return compraCompartilhada;
+      if (compraCompartilhada is null)
+        return NotFound();
+
+      return Ok(compraCompartilhada);
     }
 
     

@@ -2,7 +2,7 @@
 using System;
 
 namespace EasyList.Business.Models
-{//todo: https://www.learnentityframeworkcore.com/dbset/querying-data
+{
   public class Estoque : Entity
   {
     //public string UsuarioCriacao { get; set; }

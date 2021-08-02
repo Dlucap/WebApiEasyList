@@ -6,6 +6,7 @@ using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
@@ -26,11 +27,14 @@ namespace EasyList.Api.Controllers
     }
        
     [HttpGet]
-    public async Task<IEnumerable<CompraApiModel>> GetCompra()
+    public async Task<ActionResult<IEnumerable<CompraApiModel>>> GetCompra()
     {
       var compra = _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterTodos());
-      
-      return compra;
+
+      if (compra == null)
+        return NotFound();
+
+      return Ok(compra);
     }
 
     [HttpGet("{id}")]
@@ -64,10 +68,12 @@ namespace EasyList.Api.Controllers
       if (!ModelState.IsValid)
         return BadRequest();
 
+      var compraEntity = _mapper.Map<Compra>(compraApiModel);
 
-      await _compraRepository.Adicionar(_mapper.Map<Compra>(compraApiModel));
+      await _compraRepository.Adicionar(compraEntity);
+      compraApiModel.Id = compraEntity.Id;     
 
-      return NoContent();
+      return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraApiModel);
     }
 
     // DELETE: api/Compra/5

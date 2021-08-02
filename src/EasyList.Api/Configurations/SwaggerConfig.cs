@@ -43,7 +43,7 @@ namespace EasyList.Api.Configurations
                         },
                         new string[] {}
                     }
-                }); ;
+                }); 
       });
 
       return services;

@@ -29,6 +29,6 @@ namespace EasyList.Api.ApiModels
     public DateTime DataCriacao { get; set; }
     public string UsuarioModificacao { get; set; }
     public DateTime DataModificacao { get; set; }
-    //https://www.newtonsoft.com/json/help/html/JsonPropertyOrder.htm
+   
   }
 }

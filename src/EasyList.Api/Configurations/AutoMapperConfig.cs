@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
 using EasyList.Business.Models;
-using System.Collections.Generic;
 
 namespace EasyList.Api.Configurations
 {
@@ -16,7 +15,7 @@ namespace EasyList.Api.Configurations
       CreateMap<FormaPagamento, FormaPagamentoApiModel>().ReverseMap();
       CreateMap<Compra, CompraApiModel>().ReverseMap();
       CreateMap<Categoria, CategoriaApiModel>().ReverseMap();
-      CreateMap<ItmCompra, ItmCompra>().ReverseMap();
+      CreateMap<ItmCompra, ItmCompraApiModel>().ReverseMap();
       CreateMap<CompraCompartilhadaApiModel, CompraCompartilhadaApiModel>().ReverseMap(); 
 
       //CreateMap<ProdutoViewModel, Produto>()

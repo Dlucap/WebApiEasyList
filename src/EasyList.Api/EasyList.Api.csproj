@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>7c10a318-464d-4ee8-bbac-b2ee2c7e9607</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,6 +47,8 @@
     </PackageReference>
 
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 

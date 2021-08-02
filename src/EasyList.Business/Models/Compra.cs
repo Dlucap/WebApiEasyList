@@ -23,8 +23,8 @@ namespace EasyList.Business.Models
     public Fornecedor Fornecedor { get; set; }
     [JsonIgnore]
     public FormaPagamento FormaPagamento { get; set; }
-   
-    [JsonIgnore]
-    public CompraCompartilhada CompraCompartilhada { get; set; }
+    //[JsonIgnore]
+    //public ItmCompra ItmCompra { get; set; }
+
   }  
 }

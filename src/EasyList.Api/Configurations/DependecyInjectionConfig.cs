@@ -46,7 +46,5 @@ namespace EasyList.Api.Configurations
 
       return services;
     }
-
-
   }
 }
