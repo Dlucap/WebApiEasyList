@@ -1,4 +1,4 @@
-﻿# Especificação WebApi EasyList
+# Especificação WebApi EasyList
 
 - Api criada para fins educativos.
 
@@ -57,17 +57,3 @@ Descrição: Cadastrar uma lista de compra
  *** .NET 5 + ASP.NET Core + JWT + Refresh Tokens: exemplo de implementação
  - https://renatogroffe.medium.com/net-5-asp-net-core-jwt-refresh-tokens-exemplo-de-implementa%C3%A7%C3%A3o-fe885ecbaa4e 
  - https://github.com/renatogroffe/ASPNETCore5_JWT-Identity-RefreshTokens
- 
- 
- 
- 
- 
- 
- 
-
- 
- 
- 
- 
- 
- 
