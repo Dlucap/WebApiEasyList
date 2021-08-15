@@ -1,7 +1,5 @@
 ﻿# Especificação WebApi EasyList
 
-# Especificação WebApi EasyList
-
 - Api criada para fins educativos.
 
 Descrição: Cadastrar uma lista de compra
