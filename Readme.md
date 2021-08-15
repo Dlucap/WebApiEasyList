@@ -4,13 +4,13 @@
 
 Descrição: Cadastrar uma lista de compra
 * Cadastros possíveis:
- - [ ] Cadastrar usuário para logar na aplicação 
+ - [X] Cadastrar usuário para logar na aplicação 
  - [x] Cadastrar produto 
  - [X] Cadastrar fornecedor
  - [X] Cadastrar categoria
  - [X] Cadastrar forma de pagamento
- - [ ] Criar e adicionar itens à lista de compra de sua própria lista ou de uma lista compartilhada
- - [ ] Adicionar a quantidade do produto a ser comprado no item de compra
+ - [X] Criar e adicionar itens à lista de compra de sua própria lista ou de uma lista compartilhada
+ - [X] Adicionar a quantidade do produto a ser comprado no item de compra
  
 * Ao fazer a compra:
  - [ ] Editar a lista de compra para adicionar o preço, quantidade, marca do produto atualizado
