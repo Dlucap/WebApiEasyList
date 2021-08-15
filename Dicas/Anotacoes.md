@@ -60,3 +60,22 @@ https://www.youtube.com/watch?v=ccVmPgxNE6c&ab_channel=CanaldotNET
   
   Template de template arquivo readme.md   
   https://github.com/dbader/readme-template
+  
+  Docker : 
+  https://faun.pub/deploy-dotnet-core-api-docker-container-with-mysql-on-heroku-ed387eab4222
+  
+  
+  heroku 
+  https://dev.to/lucianopereira86/net-core-web-api-part-3-heroku-284j
+  https://helloyogita.medium.com/deploying-net-core-web-api-to-heroku-using-docker-a9ab4ceb27ce
+  https://dev.to/smiththe_4th/deploy-asp-net-core-with-mysql-to-heroku-44dp
+  
+  https://docs.microsoft.com/pt-br/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-5.0
+  https://docs.docker.com/samples/dotnetcore/
+  https://dev.to/gbengelebs/how-to-containerize-an-asp-netcore-api-and-mysql-with-docker-compose-1m5c
+  https://renatogroffe.medium.com/asp-net-core-docker-compose-implementando-solu%C3%A7%C3%B5es-web-multi-containers-5f46d22a2ca0
+  http://www.macoratti.net/19/01/dock_mysqlnx3.htm
+  https://docs.docker.com/samples/aspnet-mssql-compose/
+  https://gist.github.com/PilotBob/6d46dcf6957dadc69bb4f15f31c9ac05
+  
+  https://github.com/angelitocsg/coding-live-002

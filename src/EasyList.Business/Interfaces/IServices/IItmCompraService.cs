@@ -6,8 +6,8 @@ namespace EasyList.Business.Interfaces.IServices
 {
   public interface IItmCompraService : IDisposable
   {
-    Task<bool> Adicionar(ItmCompra fornecedor);
-    Task<bool> Atualizar(ItmCompra fornecedor);
+    Task<bool> Adicionar(ItmCompra itmCompra);
+    Task<bool> Atualizar(ItmCompra itmCompra);
     Task<bool> Remover(Guid id);
 
   }

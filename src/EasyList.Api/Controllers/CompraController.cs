@@ -6,7 +6,6 @@ using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
@@ -29,13 +28,16 @@ namespace EasyList.Api.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompraApiModel>>> GetCompra()
     {
-      var compra = _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterTodos());
+
+      var compras = await _compraRepository.ObterTodasCompras();
+      var compra = _mapper.Map<IEnumerable<CompraApiModel>>(compras);
 
       if (compra == null)
         return NotFound();
 
       return Ok(compra);
-    }
+    }     
+
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Compra>> GetCompra(Guid id)
@@ -71,12 +73,17 @@ namespace EasyList.Api.Controllers
       var compraEntity = _mapper.Map<Compra>(compraApiModel);
 
       await _compraRepository.Adicionar(compraEntity);
-      compraApiModel.Id = compraEntity.Id;     
+      compraApiModel.Id = compraEntity.Id;
+
+      foreach (var item in compraEntity.ItemsCompra)
+      {
+        item.CompraId = compraEntity.Id; 
+        await _itemCompraService.Adicionar(item);
+      }     
 
       return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraApiModel);
     }
-
-    // DELETE: api/Compra/5
+  
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCompra(Guid id)
     {
@@ -90,9 +97,10 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private async Task<IEnumerable<CompraApiModel>> ObterCompraPorId(Guid id)
+    private async Task<CompraApiModel> ObterCompraPorId(Guid id)
     {
-      return _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterPorId(id));
+      var compra = await _compraRepository.ObterPorId(id);
+      return _mapper.Map<CompraApiModel>(compra);
     }
   }
 }
