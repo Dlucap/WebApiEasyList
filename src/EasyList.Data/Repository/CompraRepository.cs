@@ -39,6 +39,25 @@ namespace EasyList.Data.Repository
                 .FirstOrDefaultAsync(comp => comp.Id == id);
     }
 
+    public async Task<decimal> CalculaValorTotalCompra(Guid id)
+    { 
+      if(Buscar(c => c.Id == id).Result.Any())
+      {
+        var itens = await Db.ItmCompra.AsNoTracking().Where(it => it.CompraId == id).ToListAsync();
+
+        decimal result = 0;
+
+        foreach (var item in itens)
+        {
+          result = result + (item.Quantidade * item.Preco);
+        }
+
+        return Convert.ToDecimal(result.ToString("F"));
+      }
+
+      return -1;
+    }
+
     //public Task<Compra> ObterCompraPorPeriodoCompra(DateTime dtInicio, DateTime dtFim);
     //  {
     //    return await Db.Compra.AsNoTracking()

@@ -36,7 +36,20 @@ namespace EasyList.Api.Controllers
         return NotFound();
 
       return Ok(compra);
-    }     
+    }
+
+
+    [HttpGet("valor-total-compra{id}")]
+    public async Task<ActionResult<double>> GetValorTotalCompra(Guid id)
+    {    
+
+      var compra = await CalculaValorTotalCompra(id);
+
+      if (compra == null || compra == -1)
+        return BadRequest();
+
+      return Ok(compra);
+    }
 
 
     [HttpGet("{id}")]
@@ -102,5 +115,12 @@ namespace EasyList.Api.Controllers
       var compra = await _compraRepository.ObterPorId(id);
       return _mapper.Map<CompraApiModel>(compra);
     }
+
+    private async Task<decimal> CalculaValorTotalCompra(Guid id)
+    {
+      var valorCompra = await _compraRepository.CalculaValorTotalCompra(id);
+      return valorCompra;
+    }
+
   }
 }
