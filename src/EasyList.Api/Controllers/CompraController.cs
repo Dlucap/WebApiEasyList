@@ -26,12 +26,31 @@ namespace EasyList.Api.Controllers
     }
        
     [HttpGet]
-    public async Task<IEnumerable<CompraApiModel>> GetCompra()
+    public async Task<ActionResult<IEnumerable<CompraApiModel>>> GetCompra()
     {
-      var compra = _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterTodos());
-      
-      return compra;
+
+      var compras = await _compraRepository.ObterTodasCompras();
+      var compra = _mapper.Map<IEnumerable<CompraApiModel>>(compras);
+
+      if (compra == null)
+        return NotFound();
+
+      return Ok(compra);
     }
+
+
+    [HttpGet("valor-total-compra/{id}")]
+    public async Task<ActionResult<double>> GetValorTotalCompra(Guid id)
+    {    
+
+      var compra = await CalculaValorTotalCompra(id);
+
+      if (compra == null || compra == -1)
+        return BadRequest();
+
+      return Ok(compra);
+    }
+
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Compra>> GetCompra(Guid id)
@@ -64,13 +83,20 @@ namespace EasyList.Api.Controllers
       if (!ModelState.IsValid)
         return BadRequest();
 
+      var compraEntity = _mapper.Map<Compra>(compraApiModel);
 
-      await _compraRepository.Adicionar(_mapper.Map<Compra>(compraApiModel));
+      await _compraRepository.Adicionar(compraEntity);
+      compraApiModel.Id = compraEntity.Id;
 
-      return NoContent();
+      foreach (var item in compraEntity.ItemsCompra)
+      {
+        item.CompraId = compraEntity.Id; 
+        await _itemCompraService.Adicionar(item);
+      }     
+
+      return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraApiModel);
     }
-
-    // DELETE: api/Compra/5
+  
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCompra(Guid id)
     {
@@ -84,9 +110,17 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    private async Task<IEnumerable<CompraApiModel>> ObterCompraPorId(Guid id)
+    private async Task<CompraApiModel> ObterCompraPorId(Guid id)
     {
-      return _mapper.Map<IEnumerable<CompraApiModel>>(await _compraRepository.ObterPorId(id));
+      var compra = await _compraRepository.ObterPorId(id);
+      return _mapper.Map<CompraApiModel>(compra);
     }
+
+    private async Task<decimal> CalculaValorTotalCompra(Guid id)
+    {
+      var valorCompra = await _compraRepository.CalculaValorTotalCompra(id);
+      return valorCompra;
+    }
+
   }
 }

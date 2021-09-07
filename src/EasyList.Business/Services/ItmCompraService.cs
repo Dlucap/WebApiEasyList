@@ -2,6 +2,7 @@
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,21 +28,32 @@ namespace EasyList.Business.Services
     }
 
     public async Task<bool> Atualizar(ItmCompra itmCompra)
-    {
-      if (_itmCompraRepository.Buscar(itmComp => itmComp.Id == itmCompra.Id).Result.Any())
+    {      
+      if (!_itmCompraRepository.Buscar(itmComp => itmComp.Id == itmCompra.Id).Result.Any())
         return false;
-      
+
       await _itmCompraRepository.Atualizar(itmCompra);
+
       return true;
     }
-     
+
     public async Task<bool> Remover(Guid id)
     {
       var itmCompra = await _itmCompraRepository.ObterPorId(id);
       if (itmCompra != null)
         await _itmCompraRepository.Remover(id);
-            
+
       return true;
+    }
+
+    public async Task<ItmCompra> ObterPorId(Guid id)
+    {
+      return await _itmCompraRepository.ObterPorId(id);
+    }
+
+    public async Task<IList<ItmCompra>> BuscarItensCompra(Guid idCompra, string userName)
+    {
+      return _itmCompraRepository.Buscar(itm => itm.CompraId == idCompra && itm.UsuarioCriacao == userName).Result.ToList();
     }
 
     public void Dispose()

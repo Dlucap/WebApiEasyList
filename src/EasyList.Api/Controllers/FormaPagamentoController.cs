@@ -24,12 +24,20 @@ namespace EasyList.Api.Controllers
       _mapper = mapper;
     }
 
+    /// <summary>
+    ///  retorna todas as formas de pagamento cadastradas ativas e não ativas.
+    /// </summary>
+    /// <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
+    /// <response code="200"> sucesso maluco </response>
     [HttpGet]
-    public async Task<IEnumerable<FormaPagamentoApiModel>> GetFormaPagamento()
+    public async Task<ActionResult<IEnumerable<FormaPagamentoApiModel>>> GetFormaPagamento()
     {
       var formaPagamentoApiModel = _mapper.Map<IEnumerable<FormaPagamentoApiModel>>(await _formaPagamentoRepository.ObterTodos());
 
-      return formaPagamentoApiModel;
+      if (formaPagamentoApiModel is null)
+        return NotFound();
+
+      return Ok(formaPagamentoApiModel);
     }
      
     [HttpGet("{id}")]

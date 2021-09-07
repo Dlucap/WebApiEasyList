@@ -5,7 +5,7 @@ namespace EasyList.Business.Models
 {
   public class Endereco : Entity
   {
-    [JsonIgnore]
+    //[JsonIgnore]
     public Guid FornecedorId { get; set; }
     public string Cep { get; set; }
     public string Estado { get; set; }

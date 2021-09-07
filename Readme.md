@@ -9,8 +9,8 @@ Descrição: Cadastrar uma lista de compra
  - [X] Cadastrar fornecedor
  - [X] Cadastrar categoria
  - [X] Cadastrar forma de pagamento
- - [X] Criar e adicionar itens à lista de compra de sua própria lista ou de uma lista compartilhada
- - [X] Adicionar a quantidade do produto a ser comprado no item de compra
+ - [X] Cadastro Compra
+ - [X] Adicionar itens de compra para a compra cadastrada
  
 * Ao fazer a compra:
  - [ ] Editar a lista de compra para adicionar o preço, quantidade, marca do produto atualizado
@@ -28,7 +28,7 @@ Descrição: Cadastrar uma lista de compra
  - [ ] Informar a data de validade do produto para controle
  - [ ] Consultar quais produtos estão próximos de acabar considerando a quantidade mínima cadastrada
  - [ ] Sugerir adicionar produtos que estão próximos de acabar na próxima lista de compra 
-  [ ] 
+
 * Histórico 
  - [ ] Listar as compras por dia em uma quantidade mínima de 10 compras por vez (por página)
  - [ ] Realizar busca por período de data de compra, data de compra, fornecedor
@@ -57,10 +57,3 @@ Descrição: Cadastrar uma lista de compra
  *** .NET 5 + ASP.NET Core + JWT + Refresh Tokens: exemplo de implementação
  - https://renatogroffe.medium.com/net-5-asp-net-core-jwt-refresh-tokens-exemplo-de-implementa%C3%A7%C3%A3o-fe885ecbaa4e 
  - https://github.com/renatogroffe/ASPNETCore5_JWT-Identity-RefreshTokens
- 
- 
- 
- 
- 
- 
- 

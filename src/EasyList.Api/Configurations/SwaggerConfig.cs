@@ -7,7 +7,9 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.Configurations
@@ -17,7 +19,8 @@ namespace EasyList.Api.Configurations
     public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
     {
       services.AddSwaggerGen(c =>
-      {
+      {       
+
         c.OperationFilter<SwaggerDefaultValues>();
 
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -43,7 +46,12 @@ namespace EasyList.Api.Configurations
                         },
                         new string[] {}
                     }
-                }); ;
+                });
+
+
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
       });
 
       return services;
@@ -102,7 +110,7 @@ namespace EasyList.Api.Configurations
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
       if (operation.Parameters == null)
-      {
+      {        
         return;
       }
 

@@ -26,11 +26,14 @@ namespace EasyList.Api.Controllers
 
    // [Authorize]
     [HttpGet]
-    public async Task<IEnumerable<CategoriaApiModel>> GetCategoria()
+    public async Task<ActionResult<IEnumerable<CategoriaApiModel>>> GetCategoria()
     {
       var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaRepository.ObterTodos());
 
-      return categorias;
+      if (categorias is null)
+        return NotFound();
+
+      return Ok(categorias);
     }
         
     [HttpGet("{id}")]
@@ -90,4 +93,3 @@ namespace EasyList.Api.Controllers
   }
 }
 
-//http://www.macoratti.net/19/07/aspnc_httpatch2.htm

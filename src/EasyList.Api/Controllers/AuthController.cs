@@ -97,8 +97,3 @@ namespace EasyList.Api.Controllers
     }
   }
 }
-/**
- * https://www.youtube.com/watch?v=ccVmPgxNE6c&ab_channel=CanaldotNET
- * https://github.com/EduardoPires/Palestras/tree/master/JWT%20AspNetCore
- * 
- */

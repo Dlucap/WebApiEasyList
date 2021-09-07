@@ -39,10 +39,13 @@ namespace EasyList.Api
       services.WebApiConfig();
 
       services.AddControllers();
-      services.AddSwaggerGen(c =>
-      {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiEasyList", Version = "v1" });
-      });
+
+      services.AddSwaggerConfig();
+      
+      //services.AddSwaggerGen(c =>
+      //{
+      //  c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiEasyList", Version = "v1" });
+      //});
       // services.AddApplicationInsightsTelemetry();
 
       services.ResolveDependecies();

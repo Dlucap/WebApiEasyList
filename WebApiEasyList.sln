@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyList.Api", "src\EasyList.Api\EasyList.Api.csproj", "{64A01B4D-90AB-43F0-98C2-79811F933D45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyList.Business", "src\EasyList.Business\EasyList.Business.csproj", "{39C2AEE7-4799-43BA-A09E-ACD0892342E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyList.Business", "src\EasyList.Business\EasyList.Business.csproj", "{39C2AEE7-4799-43BA-A09E-ACD0892342E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyList.Data", "src\EasyList.Data\EasyList.Data.csproj", "{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyList.Data", "src\EasyList.Data\EasyList.Data.csproj", "{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

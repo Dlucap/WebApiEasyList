@@ -12,7 +12,6 @@ namespace EasyList.Business.Services
     private readonly IFornecedorRepository _fornecedorRepository;
     private readonly IEnderecoRepository _enderecoRepository;
 
-
     public FornecedorService(IFornecedorRepository fornecedorRepository,
                              IEnderecoRepository enderecoRepository)
     {
@@ -56,7 +55,7 @@ namespace EasyList.Business.Services
       await _fornecedorRepository.Remover(id);
       return true;
     }
-
+    
     public void Dispose()
     {
       _enderecoRepository?.Dispose();

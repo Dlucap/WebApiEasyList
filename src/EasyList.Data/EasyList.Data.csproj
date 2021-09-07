@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mappings\CompraMapping.cs" />
     <Compile Remove="Mappings\EstoqueCompraMapping.cs" />
-    <Compile Remove="Mappings\ItmCompraMapping.cs" />
   </ItemGroup>
 
   <ItemGroup>

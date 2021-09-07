@@ -4,7 +4,6 @@ using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace EasyList.Api.Controllers
 
     public ProdutoController(IProdutoRepository produtoRepository,
                              ICategoriaService categoriaService,
-                             IMapper mapper)
+                             IMapper mapper) 
     {
       _produtoRepository = produtoRepository;
       _categoriaService = categoriaService;
@@ -29,11 +28,15 @@ namespace EasyList.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<ProdutoApiModel>> GetProdutos()
-    {
+    public async Task<ActionResult<IEnumerable<ProdutoApiModel>>> GetProdutos( )
+    {   
+
       var produtoApiModel = _mapper.Map<IEnumerable<ProdutoApiModel>>(await _produtoRepository.ObterTodos());
 
-      return produtoApiModel;
+      if (produtoApiModel is null)
+        return NotFound();
+
+      return Ok(produtoApiModel);
     }
 
     [HttpGet("{id}")]

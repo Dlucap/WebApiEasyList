@@ -32,11 +32,14 @@ namespace EasyList.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<FornecedorApiModel>> GetFornecedor()
+    public async Task<ActionResult<IEnumerable<FornecedorApiModel>>> GetFornecedor()
     {
       var fornecedoresModel = _mapper.Map<IEnumerable<FornecedorApiModel>>(await ObterFornecedoresEndereco());
 
-      return fornecedoresModel;
+      if (fornecedoresModel is null)
+        return NotFound();
+
+      return Ok(fornecedoresModel);
     }
 
     [HttpGet("{id}", Name = "GetFornecedor")]

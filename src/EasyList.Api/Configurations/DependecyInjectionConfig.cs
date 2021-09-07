@@ -7,6 +7,8 @@ using EasyList.Data.Context;
 using EasyList.Data.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EasyList.Api.Configurations
 {
@@ -38,15 +40,13 @@ namespace EasyList.Api.Configurations
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddScoped<IUser, AspNetUser>();
-     
+
       //services.AddTransient<ISwaggerProvider, SwaggerGenerator>();
       //services.AddTransient<ISchemaGenerator, SchemaGenerator>();
 
-      //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+      ////services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
       return services;
     }
-
-
   }
 }

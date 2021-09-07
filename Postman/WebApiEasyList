@@ -1,0 +1,1112 @@
+{
+	"info": {
+		"_postman_id": "a710c515-eca4-4c7c-9334-49dda3963d30",
+		"name": "EasyList",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Registrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\",\r\n  \"confirmPassword\": \"1A2b@6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44389/api/Auth/nova-conta",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44389",
+							"path": [
+								"api",
+								"Auth",
+								"nova-conta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44389/api/Auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44389",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CompraEasyList",
+			"item": [
+				{
+					"name": "Fornecedor",
+					"item": [
+						{
+							"name": "GetFonecedor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MjQxMTc1ODMsImV4cCI6MTYyNDEyMTE4MiwiaWF0IjoxNjI0MTE3NTgzLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.x7XzhNEvrVVZldMASkT9PMWt9BVZDpBpCeRqF6B3edo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Fornecedor",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Fornecedor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetFonecedorByid",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MjQxMTc1ODMsImV4cCI6MTYyNDEyMTE4MiwiaWF0IjoxNjI0MTE3NTgzLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.x7XzhNEvrVVZldMASkT9PMWt9BVZDpBpCeRqF6B3edo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Fornecedor/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Fornecedor",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostFornecedor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MTczODkyNDAsImV4cCI6MTYxNzM5MjgzOCwiaWF0IjoxNjE3Mzg5MjQwLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.QmVMlHHmwhGkSp9rftHazcsf7s6ReqKZnykY-ECFZ24",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n {\r\n    \"Id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"Nome\": \"Supermercado Da Esquina\",\r\n    \"NomeFantasia\": \"Supermercado e Mercearia Do Paulo\",\r\n    \"Cnpj\": \"99298362000178\",\r\n    \"EnderecoApiModel\": {\r\n      \"Id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n      \"Cep\": \"string\",\r\n      \"Estado\": \"string\",\r\n      \"Cidade\": \"string\",\r\n      \"Bairro\": \"string\",\r\n      \"Logradouro\": \"string\",\r\n      \"Complemento\": \"string\",\r\n      \"Numero\": 0\r\n    },\r\n    \"Ativo\": true,\r\n    \"UsuarioCriacao\": \"string\",\r\n    \"DataCriacao\": \"2021-07-04T00:09:08.929Z\",\r\n    \"UsuarioModificacao\": \"string\",\r\n    \"DataModificacao\": \"2021-07-04T00:09:08.929Z\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Fornecedor",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Fornecedor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutFornecedor",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"nome\": \"Supermercado BH\",\r\n    \"nomeFantasia\": \"Supermercado BH - Contagem\",\r\n    \"cnpj\": \"76133566000153\",\r\n    \"cep\": \"32042490\",\r\n    \"estado\": \"MG\",\r\n    \"cidade\": \"Contagem\",\r\n    \"bairro\": \"Cabral\",\r\n    \"endereco\": \"Av. Severino Balsteros Rodrigues\",\r\n    \"numero\": 2590,\r\n    \"usuarioCriacao\": \"Daniel Lucas\",\r\n    \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n    \"usuarioModificacao\": \"Daniel Lucas\",\r\n    \"dataModificacao\": \"2021-06-20T22:50:38.901\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Fornecedor/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Fornecedor",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteFornecedor",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Fornecedor/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Fornecedor",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Produto",
+					"item": [
+						{
+							"name": "GetProduto",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MTczODkyNDAsImV4cCI6MTYxNzM5MjgzOCwiaWF0IjoxNjE3Mzg5MjQwLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.QmVMlHHmwhGkSp9rftHazcsf7s6ReqKZnykY-ECFZ24",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Produto",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Produto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetProdutoByID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Produto/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Produto",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostProduto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n    {\r\n       \r\n        \"categoriaId\": 1,\r\n        \"marca\": \"Seara\",\r\n        \"nome\": \"Bacon em Fatias teste\",\r\n        \"descricao\": \"Bacon em Fatia\",\r\n        \"usuarioCriacao\": \"Daniel Lucas\",\r\n        \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n        \"usuarioModificacao\": \"Daniel Lucas\",\r\n        \"dataModificacao\": \"2021-04-02T18:49:46.365\"\r\n    }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Produto",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Produto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteProduto",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Produto/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Produto",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutProduto",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 3,\r\n    \"categoriaId\": 1,\r\n    \"marca\": \"Seara\",\r\n    \"nome\": \"Bacon em Fatias testeeeeeeeeeee\",\r\n    \"descricao\": \"Bacon em Fatia\",\r\n    \"usuarioCriacao\": \"Daniel Lucas\",\r\n    \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n    \"usuarioModificacao\": \"Daniel Lucas\",\r\n    \"dataModificacao\": \"2021-04-02T18:49:46.365\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Produto/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Produto",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "FormaPagamento",
+					"item": [
+						{
+							"name": "GetFormaPagamento",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/FormaPagamento",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"FormaPagamento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetFormaPagamentoByID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/FormaPagamento/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"FormaPagamento",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostFormaPagamento",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \r\n  \"NomeFormaPagamento\": \"Dinheiro\",\r\n  \"Ativo\": true,\r\n  \"UsuarioCriacao\": \"Daniel\",\r\n  \"DataCriacao\": \"2021-07-05T22:29:52.096Z\",\r\n  \"UsuarioModificacao\": \"Daniel\",\r\n  \"DataModificacao\": \"2021-07-05T22:29:52.096Z\"\r\n}\r\n  ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/FormaPagamento",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"FormaPagamento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteFormaPagamento",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/FormaPagamento/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"FormaPagamento",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutFormaPagamento",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"id\": 2,\r\n        \"nomeFormaPagamento\": \"Cartão Crédito\",\r\n        \"usuarioCriacao\": \"Daniel Lucas\",\r\n        \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n        \"usuarioModificacao\": \"Daniel Lucas\",\r\n        \"dataModificacao\": \"2021-04-02T18:49:46.365\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/FormaPagamento/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"FormaPagamento",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Compra",
+					"item": [
+						{
+							"name": "GetCompras",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"fornecedorId\": 1,\r\n  \"formaPagamentoId\": 1,\r\n  \"compartilhado\": false,\r\n  \"statusCompra\": 0,\r\n  \"dataCompra\": \"2021-02-01T00:25:05.068Z\",\r\n  \"usuarioCriacao\": \"Daniel Lucas\",\r\n  \"dataCriacao\": \"2021-04-02T18:49:46.365Z\",\r\n  \"usuarioModificacao\": \"Daniel Lucas\",\r\n  \"dataModificacao\": \"2021-04-02T18:49:46.365Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Compra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetComprasById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"idFornecedor\": 0,\r\n  \"itemCompra\": [\r\n    {\r\n      \"id\": 0,\r\n      \"idCompra\": 0,\r\n      \"idProduto\": 0,\r\n      \"recCreatedBy\": \"string\",\r\n      \"recCreatedOn\": \"2021-02-01T00:25:05.068Z\",\r\n      \"recModifiedBy\": \"string\",\r\n      \"recModifiedOn\": \"2021-02-01T00:25:05.068Z\",\r\n      \r\n    }\r\n  ],\r\n  \"dataCompra\": \"2021-02-01T00:25:05.068Z\",\r\n  \"recCreatedBy\": \"string\",\r\n  \"recCreatedOn\": \"2021-02-01T00:25:05.068Z\",\r\n  \"recModifiedBy\": \"string\",\r\n  \"recModifiedOn\": \"2021-02-01T00:25:05.068Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Compra/5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostCompras",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{        \r\n        \"fornecedorId\": 1,\r\n        \"formaPagamentoId\": 1,\r\n        \"compartilhado\": true,\r\n        \"statusCompra\": 0,\r\n        \"dataCompra\": \"2021-06-23T00:25:05.068\",\r\n        \"usuarioCriacao\": \"Daniel Lucas\",\r\n        \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n        \"usuarioModificacao\": \"Daniel Lucas\",\r\n        \"dataModificacao\": \"2021-06-23T18:49:46.365\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Compra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutCompra",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 300,\r\n    \"fornecedorId\": 1,\r\n    \"formaPagamentoId\": 1,\r\n    \"compartilhado\": true,\r\n    \"statusCompra\": 5,\r\n    \"dataCompra\": \"2021-02-01T00:25:05.068\",\r\n    \"usuarioCriacao\": \"Daniel Lucas\",\r\n    \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n    \"usuarioModificacao\": \"Daniel Lucas\",\r\n    \"dataModificacao\": \"2021-04-02T18:49:46.365\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Compra/300",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra",
+										"300"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCompra",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Compra/300",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra",
+										"300"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Compra Compartilhada",
+					"item": [
+						{
+							"name": "GetComprasCompartilhada",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"fornecedorId\": 1,\r\n  \"formaPagamentoId\": 1,\r\n  \"compartilhado\": false,\r\n  \"statusCompra\": 0,\r\n  \"dataCompra\": \"2021-02-01T00:25:05.068Z\",\r\n  \"usuarioCriacao\": \"Daniel Lucas\",\r\n  \"dataCriacao\": \"2021-04-02T18:49:46.365Z\",\r\n  \"usuarioModificacao\": \"Daniel Lucas\",\r\n  \"dataModificacao\": \"2021-04-02T18:49:46.365Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"CompraCompartilhada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetComprasCompartilhadaById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"idFornecedor\": 0,\r\n  \"itemCompra\": [\r\n    {\r\n      \"id\": 0,\r\n      \"idCompra\": 0,\r\n      \"idProduto\": 0,\r\n      \"recCreatedBy\": \"string\",\r\n      \"recCreatedOn\": \"2021-02-01T00:25:05.068Z\",\r\n      \"recModifiedBy\": \"string\",\r\n      \"recModifiedOn\": \"2021-02-01T00:25:05.068Z\"\r\n    }\r\n  ],\r\n  \"dataCompra\": \"2021-02-01T00:25:05.068Z\",\r\n  \"recCreatedBy\": \"string\",\r\n  \"recCreatedOn\": \"2021-02-01T00:25:05.068Z\",\r\n  \"recModifiedBy\": \"string\",\r\n  \"recModifiedOn\": \"2021-02-01T00:25:05.068Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/CompraCompartilhada/",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"CompraCompartilhada",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostCompraCompartilhada",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"id\": 0,\r\n    \"compraId\": 305,\r\n    \"usuariosCompartilhados\": \"usuario teste\",\r\n    \"usuarioCriacao\": \"string\",\r\n    \"dataCriacao\": \"2021-06-24T01:26:38.905Z\",\r\n    \"usuarioModificacao\": \"string\",\r\n    \"dataModificacao\": \"2021-06-24T01:26:38.905Z\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"CompraCompartilhada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutCompraCompartilhada",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 300,\r\n    \"fornecedorId\": 1,\r\n    \"formaPagamentoId\": 1,\r\n    \"compartilhado\": true,\r\n    \"statusCompra\": 5,\r\n    \"dataCompra\": \"2021-02-01T00:25:05.068\",\r\n    \"usuarioCriacao\": \"Daniel Lucas\",\r\n    \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n    \"usuarioModificacao\": \"Daniel Lucas\",\r\n    \"dataModificacao\": \"2021-04-02T18:49:46.365\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"CompraCompartilhada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCompraCompartilhada",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"CompraCompartilhada"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Estoque",
+					"item": []
+				},
+				{
+					"name": "ItemCompra",
+					"item": [
+						{
+							"name": "GetItemCompra",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"idCompra\": 0,\r\n    \"idProduto\": 1,\r\n    \"idCategoria\": 0,\r\n    \"quantidade\": 0,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  },{\r\n    \"id\": 0,\r\n    \"idCompra\": 0,\r\n    \"idProduto\": 2,\r\n    \"idCategoria\": 0,\r\n    \"quantidade\": 0,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/ItmCompra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"ItmCompra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetItemCompraById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"compraId\": 3,\r\n    \"produtoId\": 1,\r\n    \"preco\": 20,\r\n    \"quantidade\": 1,\r\n    \"validade\": \"2021-06-20T03:50:38.630Z\",\r\n    \"usuarioCriacao\": \"Daniel Lucas\",\r\n    \"dataCriacao\": \"2021-06-20T03:50:38.630Z\",\r\n    \"usuarioModificacao\": \"Daniel Lucas\",\r\n    \"dataModificacao\": \"2021-06-20T03:50:38.630Z\"\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"ItmCompra",
+										"14"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostItemCompra",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"CompraId\": 301,\r\n    \"ProdutoId\": 1,\r\n    \"CategoriaId\": 1,\r\n    \"quantidade\": 2,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  },{\r\n    \"id\": 0,\r\n    \"CompraId\": 301,\r\n    \"ProdutoId\": 1,\r\n    \"CategoriaId\": 1,\r\n    \"quantidade\": 2,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  },{\r\n    \"id\": 0,\r\n    \"CompraId\": 301,\r\n    \"ProdutoId\": 2,\r\n    \"CategoriaId\": 1,\r\n    \"quantidade\": 2,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/ItmCompra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"ItmCompra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutItemCompra",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 14,\r\n        \"compraId\": 301,\r\n        \"produtoId\": 2,\r\n        \"preco\": 5.0000000000000000000000000000,\r\n        \"quantidade\": 2,\r\n        \"validade\": \"0001-01-01T00:00:00\",\r\n        \"usuarioCriacao\": null,\r\n        \"dataCriacao\": \"0001-01-01T00:00:00\",\r\n        \"usuarioModificacao\": null,\r\n        \"dataModificacao\": \"0001-01-01T00:00:00\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"ItmCompra",
+										"14"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteItemCompra",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"idCompra\": 0,\r\n    \"idProduto\": 1,\r\n    \"idCategoria\": 0,\r\n    \"quantidade\": 0,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  },{\r\n    \"id\": 0,\r\n    \"idCompra\": 0,\r\n    \"idProduto\": 2,\r\n    \"idCategoria\": 0,\r\n    \"quantidade\": 0,\r\n    \"recCreatedBy\": \"string\",\r\n    \"recCreatedOn\": \"2021-04-03T02:15:19.686Z\",\r\n    \"recModifiedBy\": \"string\",\r\n    \"recModifiedOn\": \"2021-04-03T02:15:19.686Z\"\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"ItmCompra",
+										"14"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categoria",
+					"item": [
+						{
+							"name": "GetCategoria",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MTczODM1MzAsImV4cCI6MTYxNzM4NzEyOSwiaWF0IjoxNjE3MzgzNTMwLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.uONMXjEQ74amwFyQ1jn-VISKdCrhRKbm77dsje3ldfM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Categoria",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Categoria"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCategoriaById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Categoria/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Categoria",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostCategoria",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"nomeCategoria\": \"Congelados\",\r\n  \"recCreatedBy\": \"Daniel Lucas\",\r\n  \"recCreatedOn\": \"2021-04-04T12:03:53.194Z\",\r\n  \"recModifiedBy\": \"Daniel Lucas\",\r\n  \"recModifiedOn\": \"2021-04-04T12:03:53.194Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Categoria",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Categoria"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PutCategoria",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nomeCategoria\": \"Mercearia\",\r\n    \"recCreatedBy\": \"Daniel\",\r\n    \"recCreatedOn\": \"2021-03-18T22:00:26.696\",\r\n    \"recModifiedBy\": \"Daniel\",\r\n    \"recModifiedOn\": \"2021-03-18T22:00:26.696\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/Categoria/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Categoria",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCategoria",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/Compra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"Compra"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
