@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyList.Api</name>
+    </assembly>
+    <members>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.GetFormaPagamento">
+            <summary>
+             retorna todas as formas de pagamento cadastradas ativas e não ativas.
+            </summary>
+            <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
+            <response code="200"> sucesso maluco </response>
+        </member>
+    </members>
+</doc>

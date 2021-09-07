@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace EasyList.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace EasyList.Api.Controllers
 
     public ProdutoController(IProdutoRepository produtoRepository,
                              ICategoriaService categoriaService,
-                             IMapper mapper)
+                             IMapper mapper) 
     {
       _produtoRepository = produtoRepository;
       _categoriaService = categoriaService;
@@ -28,8 +29,9 @@ namespace EasyList.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProdutoApiModel>>> GetProdutos()
-    {
+    public async Task<ActionResult<IEnumerable<ProdutoApiModel>>> GetProdutos( )
+    {   
+
       var produtoApiModel = _mapper.Map<IEnumerable<ProdutoApiModel>>(await _produtoRepository.ObterTodos());
 
       if (produtoApiModel is null)

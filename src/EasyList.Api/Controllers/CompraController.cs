@@ -39,7 +39,7 @@ namespace EasyList.Api.Controllers
     }
 
 
-    [HttpGet("valor-total-compra{id}")]
+    [HttpGet("valor-total-compra/{id}")]
     public async Task<ActionResult<double>> GetValorTotalCompra(Guid id)
     {    
 
