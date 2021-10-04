@@ -21,7 +21,7 @@ namespace EasyList.Api
     public IConfiguration Configuration { get; }
 
     public IServiceCollection _services { get; set; }
-        
+
     public void ConfigureServices(IServiceCollection services)
     {
       var stringSqlconnection = Configuration.GetConnectionString("WebApiEasyList");
@@ -36,23 +36,24 @@ namespace EasyList.Api
 
       services.WebApiConfig();
 
-      services.AddControllers();
+      services.AddControllers()
+          .AddNewtonsoftJson();
 
       services.AddSwaggerConfig();
-   
+
       services.ResolveDependecies();
 
       services.AddHealthChecks();
     }
 
-   
+
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();       
         app.UseDeveloperExceptionPage();
-      }      
+        app.UseDeveloperExceptionPage();
+      }
 
       app.UseMvcConfig();
       app.UseSwaggerConfig(provider);

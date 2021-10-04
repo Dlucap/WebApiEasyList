@@ -87,6 +87,27 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchFornecedor(Guid id, JsonPatchDocument<FornecedorApiModel> patchDocument)
+    {
+      if (patchDocument == null)
+        return BadRequest();
+
+      if (!ModelState.IsValid)
+        return BadRequest();
+
+      if (!await FornecedorExists(id))
+        return NotFound();
+
+      var fornecedor = await ObterFornecedorPorId(id);
+
+      patchDocument.ApplyTo(fornecedor);
+
+      await _fornecedorRepository.Atualizar(_mapper.Map<Fornecedor>(fornecedor));
+
+      return NoContent();
+    }
+
     [HttpPost]
     public async Task<ActionResult<FornecedorApiModel>> PostFornecedor(FornecedorApiModel fornecedorApiModel)
     {

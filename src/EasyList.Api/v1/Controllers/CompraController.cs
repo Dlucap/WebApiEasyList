@@ -42,8 +42,7 @@ namespace EasyList.Api.Controllers
 
     [HttpGet("valor-total-compra/{id}")]
     public async Task<ActionResult<double>> GetValorTotalCompra(Guid id)
-    {    
-
+    { 
       var compra = await CalculaValorTotalCompra(id);
 
       if (compra == null || compra == -1)
