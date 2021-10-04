@@ -38,6 +38,19 @@ namespace EasyList.Data.Repository
                         .ToListAsync();
     }
 
+    public virtual async Task<List<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15)
+    {
+      int PaginaAtual = pagina.Value;
+
+      if (tamanho == 0 || tamanho > 15 )
+        tamanho = 15;
+
+      return await DbSet.AsNoTracking()
+                        .OrderBy(e => e.DataCriacao)
+                        .Skip(tamanho * (PaginaAtual - 1)).Take(tamanho)
+                        .ToListAsync();
+    }
+
     public virtual async Task Adicionar(TEntity entity)
     {
       DbSet.Add(entity);
@@ -47,13 +60,13 @@ namespace EasyList.Data.Repository
     public virtual async Task Atualizar(TEntity entity)
     {
       DbSet.Update(entity);
-      await SaveChanges();      
+      await SaveChanges();
     }
 
     public virtual async Task Remover(Guid id)
     {
-        DbSet.Remove(new TEntity { Id = id });
-        await SaveChanges();
+      DbSet.Remove(new TEntity { Id = id });
+      await SaveChanges();
     }
 
     public async Task<int> SaveChanges()
@@ -65,7 +78,7 @@ namespace EasyList.Data.Repository
       //  throw new Exception(ex.Message);        
       //}
       return await Db.SaveChangesAsync();
-        //  await Db.Database.CommitTransactionAsync();
+      //  await Db.Database.CommitTransactionAsync();
       //}
       //catch (Exception ex)
       //{
