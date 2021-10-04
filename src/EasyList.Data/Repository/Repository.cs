@@ -42,7 +42,7 @@ namespace EasyList.Data.Repository
     {
       int PaginaAtual = pagina.Value;
 
-      if (tamanho == 0 || tamanho > 15 )
+      if (tamanho > 15 )
         tamanho = 15;
 
       return await DbSet.AsNoTracking()

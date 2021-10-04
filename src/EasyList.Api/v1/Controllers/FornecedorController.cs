@@ -3,14 +3,17 @@ using EasyList.Api.ApiModels;
 using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Route("api/[controller]")]
+  //[Authorize]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class FornecedorController : ControllerBase
   {
@@ -51,6 +54,23 @@ namespace EasyList.Api.Controllers
         return NotFound();
 
       return Ok(fornecedor);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pagina"></param>
+    /// <param name="tamanho"></param>
+    /// <returns></returns>
+    [HttpGet("{pagina}/{tamanho}", Name = "GetAllFornecedores")]
+    public async Task<ActionResult<FornecedorApiModel>> ObterFornecedores(int? pagina, int tamanho)
+    {
+      var fornecedores = await ObterAllFornecedores(pagina, tamanho);
+
+      if (fornecedores == null)
+        return NotFound();
+
+      return Ok(fornecedores);
     }
 
     [HttpPut("{id}")]
@@ -116,9 +136,16 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
+    #region Metodos Privados
     private async Task<FornecedorApiModel> ObterFornecedorPorId(Guid id)
     {
       return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
+    }
+
+    private async Task<IEnumerable<FornecedorApiModel>> ObterAllFornecedores(int? pagina, int tamanho)
+    {
+      var listaFornecedores = await _fornecedorRepository.ObterTodosPorPaginacao(pagina, tamanho);
+      return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
     }
 
     private async Task<IEnumerable<FornecedorApiModel>> ObterFornecedoresEndereco()
@@ -127,5 +154,10 @@ namespace EasyList.Api.Controllers
       return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
     }
 
+    private async Task<bool> FornecedorExists(Guid id)
+    {
+      return _fornecedorRepository.Buscar(x => x.Id == id).Result.Any();
+    }
+    #endregion Metodos Privados
   }
 }

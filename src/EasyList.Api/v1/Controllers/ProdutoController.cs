@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Route("api/[controller]")]
+   //[Authorize]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class ProdutoController : ControllerBase
   {
@@ -49,6 +50,18 @@ namespace EasyList.Api.Controllers
 
       return Ok(produto);
     }
+
+    //[HttpGet]
+    //public async Task<ActionResult<IEnumerable<ProdutoApiModel>>> GetProdutos(int pagina = 1, int tamanhoPagina = 5 )
+    //{
+
+    //  //var produtoApiModel = _mapper.Map<PagedList<ProdutoApiModel>>(await _produtoRepository.ObterTodos());
+
+    //  //if (produtoApiModel is null)
+    //  //  return NotFound();
+
+    //  //return Ok(produtoApiModel);
+    //}
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutProduto(Guid id, ProdutoApiModel produtoApiModel)

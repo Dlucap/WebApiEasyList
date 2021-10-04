@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Authors>Daniel Lucas Pereira e Silva</Authors>
+    <Product>EasyList</Product>
   </PropertyGroup>
 
   <ItemGroup>

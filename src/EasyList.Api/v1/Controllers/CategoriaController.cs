@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace EasyList.Api.Controllers
 {
   //[Authorize]
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CategoriaController : ControllerBase
   {

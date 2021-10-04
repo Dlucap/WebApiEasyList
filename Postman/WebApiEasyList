@@ -9,64 +9,71 @@
 			"name": "Autenticação",
 			"item": [
 				{
-					"name": "Registrar",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\",\r\n  \"confirmPassword\": \"1A2b@6\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "JWT",
+					"item": [
+						{
+							"name": "Registrar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\",\r\n  \"confirmPassword\": \"1A2b@6\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/v1/Auth/nova-conta",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"v1",
+										"Auth",
+										"nova-conta"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "https://localhost:44389/api/Auth/nova-conta",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44389",
-							"path": [
-								"api",
-								"Auth",
-								"nova-conta"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\" \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"hugoosvaldohenriquebernardes_@sabereler.com.br\",\r\n  \"password\": \"1A2b@6\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/v1/Auth/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"v1",
+										"Auth",
+										"login"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:44389/api/Auth/login",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44389",
-							"path": [
-								"api",
-								"Auth",
-								"login"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -92,7 +99,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Fornecedor",
+									"raw": "https://localhost:44389/api/v1/Fornecedor",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -100,6 +107,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Fornecedor"
 									]
 								}
@@ -122,7 +130,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Fornecedor/3",
+									"raw": "https://localhost:44389/api/v1/Fornecedor/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -130,8 +138,42 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Fornecedor",
 										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GeAllFonecedoresPaginado",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MjQxMTc1ODMsImV4cCI6MTYyNDEyMTE4MiwiaWF0IjoxNjI0MTE3NTgzLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.x7XzhNEvrVVZldMASkT9PMWt9BVZDpBpCeRqF6B3edo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44389/api/v1/Fornecedor/1/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"v1",
+										"Fornecedor",
+										"1",
+										"1"
 									]
 								}
 							},
@@ -162,7 +204,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Fornecedor",
+									"raw": "https://localhost:44389/api/v1/Fornecedor",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -170,6 +212,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Fornecedor"
 									]
 								}
@@ -191,7 +234,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Fornecedor/1",
+									"raw": "https://localhost:44389/api/v1/Fornecedor/1",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -199,6 +242,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Fornecedor",
 										"1"
 									]
@@ -212,7 +256,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Fornecedor/3",
+									"raw": "https://localhost:44389/api/v1/Fornecedor/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -220,8 +264,50 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Fornecedor",
 										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PatchFornecedor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MTczODkyNDAsImV4cCI6MTYxNzM5MjgzOCwiaWF0IjoxNjE3Mzg5MjQwLCJpc3MiOiJXZWJBcGlFYXN5TGlzdCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0In0.QmVMlHHmwhGkSp9rftHazcsf7s6ReqKZnykY-ECFZ24",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"value\": \"Teste\",\r\n        \"path\": \"/nome\",\r\n        \"op\": \"replace\"\r\n    }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/v1/Fornecedor/08d9546d-581e-47bc-830e-243094ecac5e",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"v1",
+										"Fornecedor",
+										"08d9546d-581e-47bc-830e-243094ecac5e"
 									]
 								}
 							},
@@ -248,7 +334,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Produto",
+									"raw": "https://localhost:44389/api/v1/Produto",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -256,6 +342,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Produto"
 									]
 								}
@@ -268,7 +355,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Produto/3",
+									"raw": "https://localhost:44389/api/v1/Produto/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -276,6 +363,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Produto",
 										"3"
 									]
@@ -298,7 +386,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Produto",
+									"raw": "https://localhost:44389/api/v1/Produto",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -306,6 +394,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Produto"
 									]
 								}
@@ -318,7 +407,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Produto/3",
+									"raw": "https://localhost:44389/api/v1/Produto/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -326,6 +415,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Produto",
 										"3"
 									]
@@ -348,7 +438,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Produto/3",
+									"raw": "https://localhost:44389/api/v1/Produto/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -356,6 +446,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Produto",
 										"3"
 									]
@@ -386,7 +477,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/FormaPagamento",
+									"raw": "https://localhost:44389/api/v1/FormaPagamento",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -394,6 +485,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"FormaPagamento"
 									]
 								}
@@ -406,7 +498,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/FormaPagamento/2",
+									"raw": "https://localhost:44389/api/v1/FormaPagamento/2",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -414,6 +506,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"FormaPagamento",
 										"2"
 									]
@@ -436,7 +529,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/FormaPagamento",
+									"raw": "https://localhost:44389/api/v1/FormaPagamento",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -444,6 +537,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"FormaPagamento"
 									]
 								}
@@ -456,7 +550,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/FormaPagamento/3",
+									"raw": "https://localhost:44389/api/v1/FormaPagamento/3",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -464,6 +558,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"FormaPagamento",
 										"3"
 									]
@@ -486,7 +581,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/FormaPagamento/2",
+									"raw": "https://localhost:44389/api/v1/FormaPagamento/2",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -494,6 +589,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"FormaPagamento",
 										"2"
 									]
@@ -524,7 +620,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Compra",
+									"raw": "https://localhost:44389/api/v1/Compra",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -532,6 +628,40 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
+										"Compra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetValorTotalCompra",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"fornecedorId\": 1,\r\n  \"formaPagamentoId\": 1,\r\n  \"compartilhado\": false,\r\n  \"statusCompra\": 0,\r\n  \"dataCompra\": \"2021-02-01T00:25:05.068Z\",\r\n  \"usuarioCriacao\": \"Daniel Lucas\",\r\n  \"dataCriacao\": \"2021-04-02T18:49:46.365Z\",\r\n  \"usuarioModificacao\": \"Daniel Lucas\",\r\n  \"dataModificacao\": \"2021-04-02T18:49:46.365Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44389/api/v1/Compra",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44389",
+									"path": [
+										"api",
+										"v1",
 										"Compra"
 									]
 								}
@@ -556,7 +686,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Compra/5",
+									"raw": "https://localhost:44389/api/v1/Compra/5",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -564,6 +694,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Compra",
 										"5"
 									]
@@ -578,7 +709,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{        \r\n        \"fornecedorId\": 1,\r\n        \"formaPagamentoId\": 1,\r\n        \"compartilhado\": true,\r\n        \"statusCompra\": 0,\r\n        \"dataCompra\": \"2021-06-23T00:25:05.068\",\r\n        \"usuarioCriacao\": \"Daniel Lucas\",\r\n        \"dataCriacao\": \"2021-04-02T18:49:46.365\",\r\n        \"usuarioModificacao\": \"Daniel Lucas\",\r\n        \"dataModificacao\": \"2021-06-23T18:49:46.365\"\r\n    }",
+									"raw": " {    \r\n    \"FornecedorId\": \"08d9546d-581e-47bc-830e-243094ecac5e\",\r\n    \"FormaPagamentoId\": \"08d95483-a67a-4495-8def-39973ccf3b48\",\r\n    \"Compartilhado\": true,\r\n    \"StatusCompra\": 0,\r\n    \"ItensCompra\": {\t\t\t\t\t\r\n\t\t\t\t\t \"UsuarioCriacao\": \"Daniel\",\r\n\t\t\t\t\t\"UsuarioModificacao\": \"Daniel\",\t\t\t\t\t\r\n\t\t\t\t\t\"ProdutoId\"\t: \"08d9547a-74ff-4056-8013-718f510f4385\",\r\n\t\t\t\t\t\"Preco\" : 10.00, \r\n\t\t\t\t\t\"Quantidade\" : 2,\r\n\t\t\t\t\t\"Validade\" :\"2021-08-01T00:52:40.263Z\"\t\t\t\t\r\n\t\t\t\t\t},\r\n    \"DataCompra\": \"2021-08-01T00:52:40.263Z\",\r\n    \"UsuarioCriacao\": \"string\",\r\n    \"DataCriacao\": \"2021-08-01T00:52:40.263Z\",\r\n    \"UsuarioModificacao\": \"string\",\r\n    \"DataModificacao\": \"2021-08-01T00:52:40.263Z\"\r\n  }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -586,7 +717,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Compra",
+									"raw": "https://localhost:44389/api/v1/Compra",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -594,6 +725,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Compra"
 									]
 								}
@@ -615,7 +747,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Compra/300",
+									"raw": "https://localhost:44389/api/v1/Compra/300",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -623,6 +755,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Compra",
 										"300"
 									]
@@ -636,7 +769,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Compra/300",
+									"raw": "https://localhost:44389/api/v1/Compra/300",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -644,6 +777,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Compra",
 										"300"
 									]
@@ -674,7 +808,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"raw": "https://localhost:44389/api/v1/CompraCompartilhada",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -682,6 +816,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"CompraCompartilhada"
 									]
 								}
@@ -706,7 +841,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/CompraCompartilhada/",
+									"raw": "https://localhost:44389/api/v1/CompraCompartilhada/",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -714,6 +849,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"CompraCompartilhada",
 										""
 									]
@@ -736,7 +872,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"raw": "https://localhost:44389/api/v1/CompraCompartilhada",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -744,6 +880,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"CompraCompartilhada"
 									]
 								}
@@ -765,7 +902,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"raw": "https://localhost:44389/api/v1/CompraCompartilhada",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -773,6 +910,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"CompraCompartilhada"
 									]
 								}
@@ -785,7 +923,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/CompraCompartilhada",
+									"raw": "https://localhost:44389/api/v1/CompraCompartilhada",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -793,6 +931,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"CompraCompartilhada"
 									]
 								}
@@ -826,7 +965,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/ItmCompra",
+									"raw": "https://localhost:44389/api/v1/ItmCompra",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -834,6 +973,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"ItmCompra"
 									]
 								}
@@ -858,7 +998,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"raw": "https://localhost:44389/api/v1/ItmCompra/14",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -866,6 +1006,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"ItmCompra",
 										"14"
 									]
@@ -888,7 +1029,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/ItmCompra",
+									"raw": "https://localhost:44389/api/v1/ItmCompra",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -896,6 +1037,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"ItmCompra"
 									]
 								}
@@ -917,7 +1059,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"raw": "https://localhost:44389/api/v1/ItmCompra/14",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -925,6 +1067,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"ItmCompra",
 										"14"
 									]
@@ -947,7 +1090,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/ItmCompra/14",
+									"raw": "https://localhost:44389/api/v1/ItmCompra/14",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -955,6 +1098,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"ItmCompra",
 										"14"
 									]
@@ -990,7 +1134,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Categoria",
+									"raw": "https://localhost:44389/api/v1/Categoria",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -998,6 +1142,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Categoria"
 									]
 								}
@@ -1010,7 +1155,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Categoria/2",
+									"raw": "https://localhost:44389/api/v1/Categoria/2",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1018,6 +1163,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Categoria",
 										"2"
 									]
@@ -1040,7 +1186,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Categoria",
+									"raw": "https://localhost:44389/api/v1/Categoria",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1048,6 +1194,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Categoria"
 									]
 								}
@@ -1069,7 +1216,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:44389/api/Categoria/2",
+									"raw": "https://localhost:44389/api/v1/Categoria/2",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1077,6 +1224,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Categoria",
 										"2"
 									]
@@ -1090,7 +1238,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:44389/api/Compra",
+									"raw": "https://localhost:44389/api/v1/Compra",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1098,6 +1246,7 @@
 									"port": "44389",
 									"path": [
 										"api",
+										"v1",
 										"Compra"
 									]
 								}

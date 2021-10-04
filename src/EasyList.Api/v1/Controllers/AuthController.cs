@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class AuthController : ControllerBase
   {

@@ -11,5 +11,13 @@
             <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
             <response code="200"> sucesso maluco </response>
         </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.ObterFornecedores(System.Nullable{System.Int32},System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="pagina"></param>
+            <param name="tamanho"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

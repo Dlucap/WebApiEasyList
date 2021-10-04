@@ -22,22 +22,21 @@ namespace EasyList.Api.Configurations
       services.AddApiVersioning(options =>
       {
         options.AssumeDefaultVersionWhenUnspecified = true;
-        options.DefaultApiVersion = new ApiVersion(2, 0);
+        options.DefaultApiVersion = new ApiVersion(1, 0);
         options.ReportApiVersions = true;
       });
 
-      //services.AddVersionedApiExplorer(options =>
-      //{
-      //  options.GroupNameFormat = "'v'VVV";
-      //  options.SubstituteApiVersionInUrl = true;
-      //});
+      services.AddVersionedApiExplorer(options =>
+      {
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+      });
 
       services.Configure<ApiBehaviorOptions>(opt =>
       {
         opt.SuppressModelStateInvalidFilter = true;
       });
-
-      //services.AddHealthChecksUI();
 
       return services;
     }
@@ -48,26 +47,15 @@ namespace EasyList.Api.Configurations
       app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();
-     // app.UseMiddleware<ExceptionMiddleware>();
-      //app.UseEndpoints(endpoints =>
-      //{
-      //  endpoints.MapControllers();
-      //  endpoints.MapHealthChecks("/health", new HealthCheckOptions()
-      //  {
-      //    Predicate = _ => true,
-      //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-      //  });
-        //endpoints.MapHealthChecksUI(options =>
-        //{
-        //    options.UIPath = "/health-ui";
-        //    options.ResourcesPath = "/health-ui-resources";
-
-        //    options.UseRelativeApiPath = false;
-        //    options.UseRelativeResourcesPath = false;
-        //    options.UseRelativeWebhookPath = false;
-        //});
-      //});
-
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+        {
+          Predicate = _ => true,
+          ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+      });
       return app;
     }
 

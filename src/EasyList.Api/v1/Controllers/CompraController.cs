@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Route("api/[controller]")]
+  //[Authorize]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CompraController : ControllerBase
   {

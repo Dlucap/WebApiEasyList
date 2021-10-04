@@ -41,10 +41,9 @@ namespace EasyList.Api.Configurations
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddScoped<IUser, AspNetUser>();
 
-      //services.AddTransient<ISwaggerProvider, SwaggerGenerator>();
-      //services.AddTransient<ISchemaGenerator, SchemaGenerator>();
-
-      ////services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+      #region Swagger
+      services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+      #endregion Swagger
 
       return services;
     }
