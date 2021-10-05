@@ -11,13 +11,90 @@
             <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
             <response code="200"> sucesso maluco </response>
         </member>
-        <member name="M:EasyList.Api.Controllers.FornecedorController.ObterFornecedores(System.Nullable{System.Int32},System.Int32)">
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedor">
             <summary>
-            
+            Retorna todos (ativos e inativos) os fornecedores cadastrados no banco
             </summary>
-            <param name="pagina"></param>
-            <param name="tamanho"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedor(System.Guid)">
+            <summary>
+             Retorna fornecedor (ativos e inativos) cadastrados no banco por Id
+            </summary>
+            <param name="id"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedores(System.Nullable{System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Retorna os fornecedores cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página</param>
+            <param name="ativo">Ativo 1 / Inativo 0</param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.ObterEnderecoPorId(System.Guid)">
+            <summary>
+             Obtém endereço Fornecedor por Id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PostFornecedor(EasyList.Api.ApiModels.FornecedorApiModel)">
+            <summary>
+            Insere o Fornecedor
+            </summary>
+            <param name="fornecedorApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PutFornecedor(System.Guid,EasyList.Api.ApiModels.FornecedorApiModel)">
+            <summary>
+            Atualiza Forneedor 
+            </summary>
+            <param name="id"></param>
+            <param name="fornecedorApiModel"></param>
+            <returns></returns>
+            <response code="200"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.AtualizarEndereco(System.Guid,EasyList.Api.ApiModels.EnderecoApiModel)">
+            <summary>
+             Atualiza Endereço Fornecedor 
+            </summary>
+            <param name="id"></param>
+            <param name="enderecoApiModel"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PatchFornecedor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.FornecedorApiModel})">
+            <summary>
+            Atualização Parcial Fornecedor
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.DeleteFornecedor(System.Guid)">
+            <summary>
+            Deleta Forncedor
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
         </member>
     </members>
 </doc>

@@ -34,6 +34,11 @@ namespace EasyList.Api.Controllers
       _mapper = mapper;
     }
 
+    /// <summary>
+    /// Retorna todos (ativos e inativos) os fornecedores cadastrados no banco
+    /// </summary>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="404"> Não Encontrado</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<FornecedorApiModel>>> GetFornecedor()
     {
@@ -44,7 +49,13 @@ namespace EasyList.Api.Controllers
 
       return Ok(fornecedoresModel);
     }
-
+   
+    /// <summary>
+    ///  Retorna fornecedor (ativos e inativos) cadastrados no banco por Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="404"> Não Encontrado</response>
     [HttpGet("{id}", Name = "GetFornecedor")]
     public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(Guid id)
     {
@@ -57,22 +68,75 @@ namespace EasyList.Api.Controllers
     }
 
     /// <summary>
-    /// 
+    /// Retorna os fornecedores cadastrados no banco
     /// </summary>
-    /// <param name="pagina"></param>
-    /// <param name="tamanho"></param>
-    /// <returns></returns>
-    [HttpGet("{pagina}/{tamanho}", Name = "GetAllFornecedores")]
-    public async Task<ActionResult<FornecedorApiModel>> ObterFornecedores(int? pagina, int tamanho)
+    /// <param name="pagina"> Página </param>
+    /// <param name="tamanho">Quantidade de registros por página</param>
+    /// <param name="ativo">Ativo 1 / Inativo 0</param>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="404"> Não Encontrado</response>
+    [HttpGet("{pagina}/{tamanho}/{ativo}", Name = "GetAllFornecedores")]
+    public async Task<ActionResult<FornecedorApiModel>> GetFornecedores(int? pagina, int tamanho,bool ativo)
     {
-      var fornecedores = await ObterAllFornecedores(pagina, tamanho);
+      var fornecedores = await ObterAllFornecedores(pagina, tamanho,ativo);
 
       if (fornecedores == null)
         return NotFound();
 
       return Ok(fornecedores);
+    }     
+
+    /// <summary>
+    ///  Obtém endereço Fornecedor por Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="404"> Não Encontrado</response>
+    [HttpGet("obter-endereco/{id:guid}")]
+    public async Task<ActionResult<EnderecoApiModel>> ObterEnderecoPorId(Guid id)
+    {      
+      var enderecoViewModel = _mapper.Map<EnderecoApiModel>(await _enderecoRepository.ObterPorId(id));
+      
+      if (enderecoViewModel == null)
+        return NotFound();
+
+      return enderecoViewModel;
     }
 
+    /// <summary>
+    /// Insere o Fornecedor
+    /// </summary>
+    /// <param name="fornecedorApiModel"></param>
+    /// <returns></returns>
+    /// <response code="201"> Criado com Sucesso </response>
+    /// <response code="400"> Não Encontrado </response>
+    [HttpPost]
+    public async Task<ActionResult<FornecedorApiModel>> PostFornecedor(FornecedorApiModel fornecedorApiModel)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest();
+
+      var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
+
+      await _fornecedorRepository.Adicionar(fornecedorEntity);
+
+      fornecedorApiModel.Id = fornecedorApiModel.Endereco.FornecedorId = fornecedorEntity.Id;
+      fornecedorApiModel.Endereco.Id = fornecedorEntity.Endereco.Id;
+
+      return CreatedAtAction("GetFornecedor", new { id = fornecedorApiModel.Id }, fornecedorApiModel);
+
+    }
+
+    /// <summary>
+    /// Atualiza Forneedor 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="fornecedorApiModel"></param>
+    /// <returns></returns>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="400"> Requisição Inválida </response>
+    /// <response code="500"> Erro Interno do Servidor</response>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutFornecedor(Guid id, FornecedorApiModel fornecedorApiModel)
     {
@@ -87,7 +151,36 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    [HttpPatch("{id}")]
+    /// <summary>
+    ///  Atualiza Endereço Fornecedor 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="enderecoApiModel"></param>
+    /// <returns></returns>
+    /// <response code="204"> Sucesso </response>
+    /// <response code="400"> Requisição Inválida </response>
+    /// <response code="500"> Erro Interno do Servidor</response>
+    [HttpPut("atualizar-endereco/{id:guid}")]
+    public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoApiModel enderecoApiModel)
+    {
+      if (id != enderecoApiModel.Id)
+        return BadRequest();
+
+      await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoApiModel));
+
+      return NoContent();
+    }
+
+    /// <summary>
+    /// Atualização Parcial Fornecedor
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="patchDocument"></param>
+    /// <returns></returns>
+    /// <response code="204"> Sucesso </response>
+    /// <response code="400"> Requisição Inválida </response>
+    /// <response code="404"> Não Encontrado</response>
+       [HttpPatch("{id}")]
     public async Task<IActionResult> PatchFornecedor(Guid id, JsonPatchDocument<FornecedorApiModel> patchDocument)
     {
       if (patchDocument == null)
@@ -108,23 +201,13 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    [HttpPost]
-    public async Task<ActionResult<FornecedorApiModel>> PostFornecedor(FornecedorApiModel fornecedorApiModel)
-    {
-      if (!ModelState.IsValid)
-        return BadRequest();
-
-      var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
-
-      await _fornecedorRepository.Adicionar(fornecedorEntity);
-
-      fornecedorApiModel.Id = fornecedorApiModel.Endereco.FornecedorId = fornecedorEntity.Id;
-      fornecedorApiModel.Endereco.Id = fornecedorEntity.Endereco.Id;
-
-      return CreatedAtAction("GetFornecedor", new { id = fornecedorApiModel.Id }, fornecedorApiModel);
-
-    }
-
+    /// <summary>
+    /// Deleta Forncedor
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <response code="204"> Sucesso </response>
+    /// <response code="404"> Não Encontrado</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFornecedor(Guid id)
     {
@@ -136,25 +219,6 @@ namespace EasyList.Api.Controllers
       await _fornecedorService.Remover(id);
 
       return NoContent();
-
-    }
-
-    [HttpGet("obter-endereco/{id:guid}")]
-    public async Task<EnderecoApiModel> ObterEnderecoPorId(Guid id)
-    {
-      var enderecoViewModel = _mapper.Map<EnderecoApiModel>(await _enderecoRepository.ObterPorId(id));
-      return enderecoViewModel;
-    }
-
-    [HttpPut("atualizar-endereco/{id:guid}")]
-    public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoApiModel enderecoApiModel)
-    {
-      if (id != enderecoApiModel.Id)
-        return BadRequest();
-
-      await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoApiModel));
-
-      return NoContent();
     }
 
     #region Metodos Privados
@@ -163,9 +227,9 @@ namespace EasyList.Api.Controllers
       return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
     }
 
-    private async Task<IEnumerable<FornecedorApiModel>> ObterAllFornecedores(int? pagina, int tamanho)
+    private async Task<IEnumerable<FornecedorApiModel>> ObterAllFornecedores(int? pagina, int tamanho, bool ativo)
     {
-      var listaFornecedores = await _fornecedorRepository.ObterTodosPorPaginacao(pagina, tamanho);
+      var listaFornecedores = await _fornecedorService.ObterTodosPorPaginacao(pagina, tamanho,ativo);
       return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
     }
 
@@ -177,7 +241,7 @@ namespace EasyList.Api.Controllers
 
     private async Task<bool> FornecedorExists(Guid id)
     {
-      return _fornecedorRepository.Buscar(x => x.Id == id).Result.Any();
+      return  _fornecedorRepository.Buscar(x => x.Id == id).Result.Any();
     }
     #endregion Metodos Privados
   }

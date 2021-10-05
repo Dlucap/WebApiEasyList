@@ -40,17 +40,14 @@ namespace EasyList.Data.Repository
 
     public virtual async Task<List<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15)
     {
-      int PaginaAtual = pagina.Value;
-
-      if (tamanho > 15 )
+      if (tamanho > 15)
         tamanho = 15;
 
       return await DbSet.AsNoTracking()
                         .OrderBy(e => e.DataCriacao)
-                        .Skip(tamanho * (PaginaAtual - 1)).Take(tamanho)
+                        .Skip(tamanho * (pagina.Value - 1)).Take(tamanho)
                         .ToListAsync();
     }
-
     public virtual async Task Adicionar(TEntity entity)
     {
       DbSet.Add(entity);
