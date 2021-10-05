@@ -39,7 +39,7 @@ namespace EasyList.Data.Repository
     }
 
     public virtual async Task<List<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15)
-    {
+    {   
       if (tamanho > 15)
         tamanho = 15;
 

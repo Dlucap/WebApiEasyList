@@ -35,10 +35,10 @@ namespace EasyList.Api.Controllers
     }
 
     /// <summary>
-    /// Retorna todos (ativos e inativos) os fornecedores cadastrados no banco
+    /// Retorna todos os fornecedores (ativos e inativos) cadastrados no banco
     /// </summary>
     /// <response code="200"> Sucesso </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="404"> Não Encontrado </response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<FornecedorApiModel>>> GetFornecedor()
     {
@@ -55,7 +55,7 @@ namespace EasyList.Api.Controllers
     /// </summary>
     /// <param name="id"></param>
     /// <response code="200"> Sucesso </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="404"> Não Encontrado </response>
     [HttpGet("{id}", Name = "GetFornecedor")]
     public async Task<ActionResult<FornecedorApiModel>> GetFornecedor(Guid id)
     {
@@ -71,10 +71,10 @@ namespace EasyList.Api.Controllers
     /// Retorna os fornecedores cadastrados no banco
     /// </summary>
     /// <param name="pagina"> Página </param>
-    /// <param name="tamanho">Quantidade de registros por página</param>
-    /// <param name="ativo">Ativo 1 / Inativo 0</param>
+    /// <param name="tamanho">Quantidade de registros por página </param>
+    /// <param name="ativo">Ativo 1 / Inativo 0 </param>
     /// <response code="200"> Sucesso </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="404"> Não Encontrado </response>
     [HttpGet("{pagina}/{tamanho}/{ativo}", Name = "GetAllFornecedores")]
     public async Task<ActionResult<FornecedorApiModel>> GetFornecedores(int? pagina, int tamanho,bool ativo)
     {
@@ -92,7 +92,7 @@ namespace EasyList.Api.Controllers
     /// <param name="id"></param>
     /// <returns></returns>
     /// <response code="200"> Sucesso </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="404"> Não Encontrado </response>
     [HttpGet("obter-endereco/{id:guid}")]
     public async Task<ActionResult<EnderecoApiModel>> ObterEnderecoPorId(Guid id)
     {      
@@ -101,7 +101,7 @@ namespace EasyList.Api.Controllers
       if (enderecoViewModel == null)
         return NotFound();
 
-      return enderecoViewModel;
+      return Ok(enderecoViewModel);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ namespace EasyList.Api.Controllers
     /// <param name="fornecedorApiModel"></param>
     /// <returns></returns>
     /// <response code="201"> Criado com Sucesso </response>
-    /// <response code="400"> Não Encontrado </response>
+    /// <response code="400"> Requisição Inválida </response>
     [HttpPost]
     public async Task<ActionResult<FornecedorApiModel>> PostFornecedor(FornecedorApiModel fornecedorApiModel)
     {
@@ -134,9 +134,9 @@ namespace EasyList.Api.Controllers
     /// <param name="id"></param>
     /// <param name="fornecedorApiModel"></param>
     /// <returns></returns>
-    /// <response code="200"> Sucesso </response>
+    /// <response code="204"> Sucesso </response>
     /// <response code="400"> Requisição Inválida </response>
-    /// <response code="500"> Erro Interno do Servidor</response>
+    /// <response code="500"> Erro Interno do Servidor </response>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutFornecedor(Guid id, FornecedorApiModel fornecedorApiModel)
     {
@@ -157,9 +157,9 @@ namespace EasyList.Api.Controllers
     /// <param name="id"></param>
     /// <param name="enderecoApiModel"></param>
     /// <returns></returns>
-    /// <response code="204"> Sucesso </response>
+    /// <response code="204"> Atualizado Com Sucesso </response>
     /// <response code="400"> Requisição Inválida </response>
-    /// <response code="500"> Erro Interno do Servidor</response>
+    /// <response code="500"> Erro Interno do Servidor </response>
     [HttpPut("atualizar-endereco/{id:guid}")]
     public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoApiModel enderecoApiModel)
     {
@@ -177,9 +177,9 @@ namespace EasyList.Api.Controllers
     /// <param name="id"></param>
     /// <param name="patchDocument"></param>
     /// <returns></returns>
-    /// <response code="204"> Sucesso </response>
+    /// <response code="204"> Atualizado Com Sucesso </response>
     /// <response code="400"> Requisição Inválida </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="404"> Não Encontrado </response>
        [HttpPatch("{id}")]
     public async Task<IActionResult> PatchFornecedor(Guid id, JsonPatchDocument<FornecedorApiModel> patchDocument)
     {
@@ -206,8 +206,8 @@ namespace EasyList.Api.Controllers
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <response code="204"> Sucesso </response>
-    /// <response code="404"> Não Encontrado</response>
+    /// <response code="204"> Deletado Com Sucesso </response>
+    /// <response code="404"> Não Encontrado </response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFornecedor(Guid id)
     {
