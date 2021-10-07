@@ -47,7 +47,8 @@ namespace EasyList.Data.Repository
                         .OrderBy(e => e.DataCriacao)
                         .Skip(tamanho * (pagina.Value - 1)).Take(tamanho)
                         .ToListAsync();
-    }
+    }     
+
     public virtual async Task Adicionar(TEntity entity)
     {
       DbSet.Add(entity);
