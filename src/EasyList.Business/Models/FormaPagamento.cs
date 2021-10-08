@@ -6,8 +6,6 @@ namespace EasyList.Business.Models
   public class FormaPagamento : Entity
   {
     public string NomeFormaPagamento { get; set; }
-    public string UsuarioCriacao { get; set; }
-
     public bool Ativo { get; set; }
 
     //public string UsuarioCriacao { get; set; }

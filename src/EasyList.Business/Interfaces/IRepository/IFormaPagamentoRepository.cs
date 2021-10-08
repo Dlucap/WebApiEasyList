@@ -1,5 +1,6 @@
 ﻿using EasyList.Business.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EasyList.Business.Interfaces.IRepository
@@ -8,5 +9,6 @@ namespace EasyList.Business.Interfaces.IRepository
   {
     Task<FormaPagamento> ObterFormaPagamentoPorNome(string nomeFormaPagamento);
 
+    Task<IEnumerable<FormaPagamento>> ObterAllFormaPgamento(int? pagina, int tamanho, bool ativo);
   }
 }

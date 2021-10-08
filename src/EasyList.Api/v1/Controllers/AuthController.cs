@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class AuthController : ControllerBase
   {
@@ -31,6 +31,13 @@ namespace EasyList.Api.Controllers
       _appSettings = appSettings.Value;
     }
 
+    /// <summary>
+    /// Registrar Novo Usuário
+    /// </summary>
+    /// <param name="registerUser"></param>
+    /// <returns> Token de Autenticação</returns>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="400"> Requisição Inválida </response>
     [HttpPost("nova-conta")]
     public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
     {
@@ -54,6 +61,13 @@ namespace EasyList.Api.Controllers
       return Ok(await GerarJwt(registerUser.Email));
     }
 
+    /// <summary>
+    /// Login 
+    /// </summary>
+    /// <param name="registerUser"></param>
+    /// <returns> Token de Autenticação</returns>
+    /// <response code="200"> Sucesso </response>
+    /// <response code="400"> Requisição Inválida </response>
     [HttpPost("login")]
     public async Task<ActionResult> Login (LoginUserViewModel loginUser)
     {
@@ -70,6 +84,7 @@ namespace EasyList.Api.Controllers
       return BadRequest("Usuário ou senha inválidos");
     }
 
+    #region Métodos privados
     private async Task<string> GerarJwt(string email)
     {
       var user = await _userManager.FindByEmailAsync(email);
@@ -95,5 +110,6 @@ namespace EasyList.Api.Controllers
       return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 
     }
+    #endregion Métodos privados
   }
 }

@@ -2,6 +2,7 @@
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,12 +56,19 @@ namespace EasyList.Business.Services
       await _fornecedorRepository.Remover(id);
       return true;
     }
-    
+
+    public Task<IList<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
+    {
+      return _fornecedorRepository.ObterTodosPorPaginacao(pagina,tamanho,ativo);
+    }
+
     public void Dispose()
     {
       _enderecoRepository?.Dispose();
       _fornecedorRepository?.Dispose();
     }
 
+    
   }
 }
+

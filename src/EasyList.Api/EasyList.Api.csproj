@@ -6,17 +6,22 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <Authors>Daniel Lucas Pereira E Silva</Authors>
+    <Company>EasyList</Company>
+    <Product>EasyList Api</Product>
+    <Description>Api para gerenciar lista de compras</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Users\ozzy-\source\repos\WebApiEasyList\src\EasyList.Api\EasyList.Api.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Compra\**" />
-    <Content Remove="Controllers\Compra\**" />
-    <EmbeddedResource Remove="Controllers\Compra\**" />
-    <None Remove="Controllers\Compra\**" />
+    <Compile Remove="v1\Controllers\Compra\**" />
+    <Content Remove="v1\Controllers\Compra\**" />
+    <EmbeddedResource Remove="v1\Controllers\Compra\**" />
+    <None Remove="v1\Controllers\Compra\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +37,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" />
 
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.10" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
 
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
 

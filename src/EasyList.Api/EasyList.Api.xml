@@ -4,12 +4,497 @@
         <name>EasyList.Api</name>
     </assembly>
     <members>
+        <member name="M:EasyList.Api.Controllers.AuthController.Registrar(EasyList.Api.ApiModels.RegisterUserViewModel)">
+            <summary>
+            Registrar Novo Usuário
+            </summary>
+            <param name="registerUser"></param>
+            <returns> Token de Autenticação</returns>
+            <response code="200"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.AuthController.Login(EasyList.Api.ApiModels.LoginUserViewModel)">
+            <summary>
+            Login 
+            </summary>
+            <param name="registerUser"></param>
+            <returns> Token de Autenticação</returns>
+            <response code="200"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.GetCategoria">
+            <summary>
+            Retorna todas as catefgorias (ativos e inativos) cadastradas no banco
+            </summary>
+            <param name="registerUser"></param>
+            <returns> Token de Autenticação</returns>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.GetCategoria(System.Guid)">
+            <summary>
+            Retorna todas as catefgorias (ativos e inativos) cadastradas no banco por Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.GetCategorias(System.Nullable{System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Retorna as categorias cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página </param>
+            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.PostCategoria(EasyList.Api.ApiModels.CategoriaApiModel)">
+            <summary>
+            Insere a Categoria
+            </summary>
+            <param name="categoriaApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.PutCategoria(System.Guid,EasyList.Api.ApiModels.CategoriaApiModel)">
+            <summary>
+            Atualiza Produto
+            </summary>
+            <param name="id"></param>
+            <param name="categoriaApiModel"></param>
+            <returns></returns>
+            <response code="200"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.PatchFornecedor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.CategoriaApiModel})">
+            <summary>
+            Atualização Parcial Categoria
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CategoriaController.DeleteCategoria(System.Guid)">
+            <summary>
+            Deleta Categoria
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.GetCompraCompartilhada">
+            <summary>
+             Retorna as compras compartilhadas (ativos e inativos) cadastrados no banco
+            </summary>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.GetCompraCompartilhada(System.Guid)">
+            <summary>
+             Retorna as compras compartilhadas (ativos e inativos) cadastrados no banco por Id
+            </summary>
+            <param name="idCompra"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.PostCompraCompartilhada(EasyList.Api.ApiModels.CompraCompartilhadaApiModel)">
+            <summary>
+            Insere o Compartilhamento da compra
+            </summary>
+            <param name="compraCompartilhadaApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.PutCompraCompartilhada(System.Guid,EasyList.Api.ApiModels.CompraCompartilhadaApiModel)">
+            <summary>
+            Atualiza Compra  Compartilhada 
+            </summary>
+            <param name="id"></param>
+            <param name="compraCompartilhadaApiModel"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.PatchCompraCompartilhada(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.CompraCompartilhadaApiModel})">
+            <summary>
+            Atualização Parcial Compra Compartilhada
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.DeleteCompartilhamentoCompra(System.Guid)">
+            <summary>
+            Retirar o compartilhamentod compra com o usuário
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Deletado Com Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraCompartilhadaController.CompraCompartilhadaExists(System.Guid)">
+            <summary>
+            Verifica se compra está compartilhada
+            </summary>
+            <param name="id">Id. compra compartilhada</param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.GetCompra">
+            <summary>
+             Retorna compras cadastrados no banco
+            </summary>
+            <param name="id"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.GetCompra(System.Guid)">
+            <summary>
+             Retorna compras cadastrados no banco por Id
+            </summary>
+            <param name="id"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.GetCompras(System.Nullable{System.Int32},System.Int32)">
+            <summary>
+            Retorna as compras cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página </param>
+            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.GetValorTotalCompra(System.Guid)">
+            <summary>
+             Retorna o valor total da compra
+            </summary>
+            <param name="id"></param>
+            <response code="200"> Sucesso </response>
+            <response code="400">Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.PostCompra(EasyList.Api.ApiModels.CompraApiModel)">
+            <summary>
+            Insere a Compra
+            </summary>
+            <param name="compraApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.PutCompra(System.Guid,EasyList.Api.ApiModels.CompraApiModel)">
+            <summary>
+            Atualiza Compra 
+            </summary>
+            <param name="id"></param>
+            <param name="compraApiModel"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.PatchCompra(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.CompraApiModel})">
+            <summary>
+            Atualização Parcial Compra
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.CompraController.DeleteCompra(System.Guid)">
+            <summary>
+            Deleta Compra
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Deletado Com Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
         <member name="M:EasyList.Api.Controllers.FormaPagamentoController.GetFormaPagamento">
             <summary>
-             retorna todas as formas de pagamento cadastradas ativas e não ativas.
+            Retorna todas as formas de pagamento cadastradas ativas e não ativas.
             </summary>
             <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
             <response code="200"> sucesso maluco </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.GetFormaPagamento(System.Guid)">
+            <summary>
+            Retorna todas as formas de pagamento cadastradas ativas e não ativas por id
+            </summary>
+            <returns> retorna todas as formas de pagamento cadastradas ativas e não ativas.</returns>
+            <response code="200"> sucesso maluco </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.GetFormaPagamento(System.Nullable{System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Retorna as formas de pagamento cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho"> Quantidade de registros por página </param>
+            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.PostFormaPagamento(EasyList.Api.ApiModels.FormaPagamentoApiModel)">
+            <summary>
+            Insere o Forma de pagamento
+            </summary>
+            <param name="formaPagamentoApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.PutFormaPagamento(System.Guid,EasyList.Api.ApiModels.FormaPagamentoApiModel)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="formaPagamentoApiModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.PatchFornecedor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.FormaPagamentoApiModel})">
+            <summary>
+            Atualização Parcial FormaPagamento
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FormaPagamentoController.DeleteFormaPagamento(System.Guid)">
+            <summary>
+            Deleta Forma de pagamento
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Deletado Com Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedor">
+            <summary>
+            Retorna todos os fornecedores (ativos e inativos) cadastrados no banco
+            </summary>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedor(System.Guid)">
+            <summary>
+             Retorna fornecedor (ativos e inativos) cadastrados no banco por Id
+            </summary>
+            <param name="id"></param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.GetFornecedores(System.Nullable{System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Retorna os fornecedores cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página </param>
+            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.ObterEnderecoPorId(System.Guid)">
+            <summary>
+             Obtém endereço Fornecedor por Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PostFornecedor(EasyList.Api.ApiModels.FornecedorApiModel)">
+            <summary>
+            Insere o Fornecedor
+            </summary>
+            <param name="fornecedorApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PutFornecedor(System.Guid,EasyList.Api.ApiModels.FornecedorApiModel)">
+            <summary>
+            Atualiza Fornecedor 
+            </summary>
+            <param name="id"></param>
+            <param name="fornecedorApiModel"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.AtualizarEndereco(System.Guid,EasyList.Api.ApiModels.EnderecoApiModel)">
+            <summary>
+             Atualiza Endereço Fornecedor 
+            </summary>
+            <param name="id"></param>
+            <param name="enderecoApiModel"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.PatchFornecedor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.FornecedorApiModel})">
+            <summary>
+            Atualização Parcial Fornecedor
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.FornecedorController.DeleteFornecedor(System.Guid)">
+            <summary>
+            Deleta Forncedor
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Deletado Com Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.GetItmCompra(System.Guid,System.String)">
+            <summary>
+            Retorna todos os fornecedores (ativos e inativos) cadastrados no banco para o usuário e compra específica
+            </summary>
+            <param name="idCompra"> Id da compra </param>
+            <param name="user"> Usuário </param>
+            <returns></returns>    
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.GetItmCompra(System.Nullable{System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Retorna os fornecedores cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página </param>
+            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.PostItmCompra(System.Collections.Generic.IEnumerable{EasyList.Api.ApiModels.ItmCompraApiModel})">
+            <summary>
+            Insere o Itens de compra
+            </summary>
+            <param name="itemCompraApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.PutItmCompra(System.Guid,System.Guid,EasyList.Api.ApiModels.ItmCompraApiModel)">
+            <summary>
+            Atualiza Item Compra 
+            </summary>
+            <param name="id"></param>
+            <param name="compraId"></param>
+            <param name="itemCompraApiModel"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.PatchItemCompra(System.Guid,System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.ItmCompraApiModel})">
+            <summary>
+            Atualização Parcial Item compra
+            </summary>
+            <param name="id"></param>
+            <param name="compraId"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Atualizado Com Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ItmCompraController.DeleteItmCompra(System.Guid,System.Guid)">
+            <summary>
+            Deleta Item Compra
+            </summary>
+            <param name="id"> Id do Item da Compra </param>
+            <param name="compraId"> Id da Compra </param>
+            <returns></returns>
+            <response code="204"> Deletado Com Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.GetProdutos">
+            <summary>
+            Retorna todos produtos cadastrados no banco
+            </summary>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.GetProduto(System.Guid)">
+            <summary>
+            Retorna todos produtos cadastrados no banco pelo Id
+            </summary>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.GetProdutos(System.Nullable{System.Int32},System.Int32)">
+            <summary>
+            Retorna os produtos cadastrados no banco
+            </summary>
+            <param name="pagina"> Página </param>
+            <param name="tamanho">Quantidade de registros por página</param>
+            <response code="200"> Sucesso </response>
+            <response code="404"> Não Encontrado </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.PostProduto(EasyList.Api.ApiModels.ProdutoApiModel)">
+            <summary>
+            Insere o Produto
+            </summary>
+            <param name="produtoApiModel"></param>
+            <returns></returns>
+            <response code="201"> Criado com Sucesso </response>
+            <response code="400">  Requisição Inválida  </response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.PutProduto(System.Guid,EasyList.Api.ApiModels.ProdutoApiModel)">
+            <summary>
+            Atualiza Produto
+            </summary>
+            <param name="id"></param>
+            <param name="produtoApiModel"></param>
+            <returns></returns>
+            <response code="200"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="500"> Erro Interno do Servidor</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.PatchFornecedor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.ProdutoApiModel})">
+            <summary>
+            Atualização Parcial Produto
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="400"> Requisição Inválida </response>
+            <response code="404"> Não Encontrado</response>
+        </member>
+        <member name="M:EasyList.Api.Controllers.ProdutoController.DeleteProduto(System.Guid)">
+            <summary>
+            Deleta Produto
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204"> Sucesso </response>
+            <response code="404"> Não Encontrado</response>
         </member>
     </members>
 </doc>
