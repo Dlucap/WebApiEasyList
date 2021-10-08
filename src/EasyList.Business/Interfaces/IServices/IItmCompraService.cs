@@ -11,7 +11,7 @@ namespace EasyList.Business.Interfaces.IServices
     Task<bool> Atualizar(ItmCompra itmCompra);
     Task<bool> Remover(Guid id);
     Task<IList<ItmCompra>> BuscarItensCompra(Guid idCompra, string userName);
-    Task<ItmCompra> ObterPorId(Guid id);
+    Task<ItmCompra> ObterPorId(Guid id, Guid compraId);
 
   }
 }

@@ -46,9 +46,9 @@ namespace EasyList.Business.Services
       return true;
     }
 
-    public async Task<ItmCompra> ObterPorId(Guid id)
+    public async Task<ItmCompra> ObterPorId(Guid id, Guid compraId)
     {
-      return await _itmCompraRepository.ObterPorId(id);
+      return await _itmCompraRepository.ObterPorId(id,compraId);
     }
 
     public async Task<IList<ItmCompra>> BuscarItensCompra(Guid idCompra, string userName)
