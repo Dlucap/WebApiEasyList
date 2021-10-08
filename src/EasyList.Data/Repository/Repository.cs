@@ -39,7 +39,7 @@ namespace EasyList.Data.Repository
     }
 
     public virtual async Task<List<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15)
-    {   
+    {
       if (tamanho > 15)
         tamanho = 15;
 
@@ -47,7 +47,7 @@ namespace EasyList.Data.Repository
                         .OrderBy(e => e.DataCriacao)
                         .Skip(tamanho * (pagina.Value - 1)).Take(tamanho)
                         .ToListAsync();
-    }     
+    }
 
     public virtual async Task Adicionar(TEntity entity)
     {
@@ -68,21 +68,8 @@ namespace EasyList.Data.Repository
     }
 
     public async Task<int> SaveChanges()
-    { //  await Db.Database.CommitTransactionAsync();
-      //}
-      //catch (Exception ex)
-      //{
-      //  await Db.Database.RollbackTransactionAsync();
-      //  throw new Exception(ex.Message);        
-      //}
-      return await Db.SaveChangesAsync();
-      //  await Db.Database.CommitTransactionAsync();
-      //}
-      //catch (Exception ex)
-      //{
-      //  await Db.Database.RollbackTransactionAsync();
-      //  throw new Exception(ex.Message);        
-      //}
+    { 
+      return await Db.SaveChangesAsync();      
     }
 
     public void Dispose()

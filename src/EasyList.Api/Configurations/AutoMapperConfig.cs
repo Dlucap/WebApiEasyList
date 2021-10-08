@@ -16,7 +16,7 @@ namespace EasyList.Api.Configurations
       CreateMap<Compra, CompraApiModel>().ReverseMap();
       CreateMap<Categoria, CategoriaApiModel>().ReverseMap();
       CreateMap<ItmCompra, ItmCompraApiModel>().ReverseMap();
-      CreateMap<CompraCompartilhadaApiModel, CompraCompartilhadaApiModel>().ReverseMap();
+      CreateMap<CompraCompartilhada, CompraCompartilhadaApiModel>().ReverseMap();
         
       // Mapeando relações entre entidades
       CreateMap<CompraApiModel, Compra>()
