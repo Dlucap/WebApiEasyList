@@ -3,6 +3,8 @@ using EasyList.Business.Models;
 using EasyList.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Data.Repository
@@ -11,6 +13,18 @@ namespace EasyList.Data.Repository
   {
     public FormaPagamentoRepository(MeuDbContext context) : base(context)
     {
+    }
+
+    public async Task<IEnumerable<FormaPagamento>> ObterAllFormaPgamento(int? pagina, int tamanho, bool ativo)
+    {
+      if (tamanho > 15)
+        tamanho = 15;
+
+      return await DbSet.AsNoTracking()
+                        .Where(e => e.Ativo == ativo)
+                        .OrderBy(e => e.DataCriacao)
+                        .Skip(tamanho * (pagina.Value - 1)).Take(tamanho)
+                        .ToListAsync();
     }
 
     public async Task<FormaPagamento> ObterFormaPagamentoPorNome(string nomeFormaPagamento)

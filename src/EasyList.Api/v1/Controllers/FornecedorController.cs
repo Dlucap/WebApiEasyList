@@ -129,7 +129,7 @@ namespace EasyList.Api.Controllers
     }
 
     /// <summary>
-    /// Atualiza Forneedor 
+    /// Atualiza Fornecedor 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="fornecedorApiModel"></param>
@@ -145,6 +145,9 @@ namespace EasyList.Api.Controllers
 
       if (!ModelState.IsValid)
         return BadRequest();
+
+      if (!await FornecedorExists(id))
+        return NotFound();
 
       await _fornecedorRepository.Atualizar(_mapper.Map<Fornecedor>(fornecedorApiModel));
 
