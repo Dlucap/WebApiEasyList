@@ -13,7 +13,7 @@ namespace EasyList.Data.Repository
       /**
        * Desabilitando o rastreamento a nível de instância de contexto / EF Core - Desabilitando o rastreamento de consultas (No Tracking)
        * http://www.macoratti.net/18/04/efcore_notrack1.htm
-       */
+       **/
       context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
        
