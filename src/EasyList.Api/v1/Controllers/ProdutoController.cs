@@ -86,7 +86,7 @@ namespace EasyList.Api.Controllers
     /// <param name="produtoApiModel"></param>
     /// <returns></returns>
     /// <response code="201"> Criado com Sucesso </response>
-    /// <response code="400"> Não Encontrado </response>
+    /// <response code="400">  Requisição Inválida  </response>
     [HttpPost]
     public async Task<ActionResult<ProdutoApiModel>> PostProduto(ProdutoApiModel produtoApiModel)
     {
@@ -96,9 +96,11 @@ namespace EasyList.Api.Controllers
       if (!await _categoriaService.CategoriaExists(produtoApiModel.CategoriaId))
         return BadRequest();
 
-      await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoApiModel));
+      var produtoEntity = _mapper.Map<Produto>(produtoApiModel);
 
-      return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoApiModel);
+      await _produtoRepository.Adicionar(produtoEntity);
+
+      return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoEntity);
     }
 
     /// <summary>
@@ -121,6 +123,9 @@ namespace EasyList.Api.Controllers
 
       if (!ModelState.IsValid)
         BadRequest();
+
+      if (!await ProdutoExists(id))
+        return NotFound();
 
       await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoApiModel));
 
@@ -158,7 +163,7 @@ namespace EasyList.Api.Controllers
     }
 
     /// <summary>
-    /// 
+    /// Deleta Produto
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
