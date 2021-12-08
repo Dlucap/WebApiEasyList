@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.Controllers
 {
-  //[Authorize]
+  [Authorize]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CategoriaController : ControllerBase
@@ -30,7 +30,6 @@ namespace EasyList.Api.Controllers
     /// <summary>
     /// Retorna todas as catefgorias (ativos e inativos) cadastradas no banco
     /// </summary>
-    /// <param name="registerUser"></param>
     /// <returns> Token de Autenticação</returns>
     /// <response code="200"> Sucesso </response>
     /// <response code="404"> Não Encontrado </response>

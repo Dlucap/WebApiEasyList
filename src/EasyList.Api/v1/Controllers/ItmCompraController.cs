@@ -23,13 +23,14 @@ namespace EasyList.Api.Controllers
     private readonly IItmCompraService _itmCompraService;
     private readonly IItmCompraRepository _itmCompraRepository;
     private readonly IMapper _mapper;
-
+     
     public ItmCompraController(IItmCompraService itmCompraService, IItmCompraRepository itmCompraRepository, IMapper mapper)
     {
       _itmCompraService = itmCompraService;
       _itmCompraRepository = itmCompraRepository;
       _mapper = mapper;
     }
+
     /// <summary>
     /// Retorna todos os fornecedores (ativos e inativos) cadastrados no banco para o usuário e compra específica
     /// </summary>

@@ -64,7 +64,7 @@ namespace EasyList.Api.Controllers
     /// <summary>
     /// Login 
     /// </summary>
-    /// <param name="registerUser"></param>
+    /// <param name="loginUser"></param>
     /// <returns> Token de Autenticação</returns>
     /// <response code="200"> Sucesso </response>
     /// <response code="400"> Requisição Inválida </response>
