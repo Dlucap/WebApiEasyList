@@ -5,6 +5,7 @@ using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,6 @@ namespace EasyList.Api.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompraApiModel>>> GetCompra()
     {
-
       var compras = await _compraRepository.ObterTodasCompras();
       var compra = _mapper.Map<IEnumerable<CompraApiModel>>(compras);
 
@@ -227,6 +227,7 @@ namespace EasyList.Api.Controllers
       var listaFornecedores = await _compraRepository.ObterTodosPorPaginacao(pagina, tamanho);
       return _mapper.Map<IEnumerable<CompraApiModel>>(listaFornecedores);
     }
+       
     #endregion Métodos Privados
   }
 }
