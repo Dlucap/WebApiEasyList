@@ -30,8 +30,7 @@ namespace EasyList.Api.Controllers
 
     /// <summary>
     ///  Retorna compras cadastrados no banco
-    /// </summary>
-    /// <param name="id"></param>
+    /// </summary>  
     /// <response code="200"> Sucesso </response>
     /// <response code="404"> Não Encontrado </response>
     [HttpGet]
@@ -68,8 +67,7 @@ namespace EasyList.Api.Controllers
     /// Retorna as compras cadastrados no banco
     /// </summary>
     /// <param name="pagina"> Página </param>
-    /// <param name="tamanho">Quantidade de registros por página </param>
-    /// <param name="ativo">Ativo 1 / Inativo 0 </param>
+    /// <param name="tamanho">Quantidade de registros por página </param>   
     /// <response code="200"> Sucesso </response>
     /// <response code="404"> Não Encontrado </response>
     [HttpGet("{pagina}/{tamanho}/{ativo}")]
@@ -157,7 +155,7 @@ namespace EasyList.Api.Controllers
     }
 
     /// <summary>
-    /// Atualização Parcial Compra
+    /// Atualização Parcial Compra 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="patchDocument"></param>

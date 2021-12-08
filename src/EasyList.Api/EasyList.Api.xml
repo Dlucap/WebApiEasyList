@@ -17,7 +17,7 @@
             <summary>
             Login 
             </summary>
-            <param name="registerUser"></param>
+            <param name="loginUser"></param>
             <returns> Token de Autenticação</returns>
             <response code="200"> Sucesso </response>
             <response code="400"> Requisição Inválida </response>
@@ -26,7 +26,6 @@
             <summary>
             Retorna todas as catefgorias (ativos e inativos) cadastradas no banco
             </summary>
-            <param name="registerUser"></param>
             <returns> Token de Autenticação</returns>
             <response code="200"> Sucesso </response>
             <response code="404"> Não Encontrado </response>
@@ -153,8 +152,7 @@
         <member name="M:EasyList.Api.Controllers.CompraController.GetCompra">
             <summary>
              Retorna compras cadastrados no banco
-            </summary>
-            <param name="id"></param>
+            </summary>  
             <response code="200"> Sucesso </response>
             <response code="404"> Não Encontrado </response>
         </member>
@@ -171,8 +169,7 @@
             Retorna as compras cadastrados no banco
             </summary>
             <param name="pagina"> Página </param>
-            <param name="tamanho">Quantidade de registros por página </param>
-            <param name="ativo">Ativo 1 / Inativo 0 </param>
+            <param name="tamanho">Quantidade de registros por página </param>   
             <response code="200"> Sucesso </response>
             <response code="404"> Não Encontrado </response>
         </member>
@@ -206,7 +203,7 @@
         </member>
         <member name="M:EasyList.Api.Controllers.CompraController.PatchCompra(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{EasyList.Api.ApiModels.CompraApiModel})">
             <summary>
-            Atualização Parcial Compra
+            Atualização Parcial Compra 
             </summary>
             <param name="id"></param>
             <param name="patchDocument"></param>

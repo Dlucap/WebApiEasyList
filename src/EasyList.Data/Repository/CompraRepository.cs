@@ -40,10 +40,17 @@ namespace EasyList.Data.Repository
     }
 
     public async Task<decimal> CalculaValorTotalCompra(Guid id)
-    { 
-      if(Buscar(c => c.Id == id).Result.Any())
+    {
+      if (Buscar(c => c.Id == id).Result.Any())
       {
-        var itens = await Db.ItmCompra.AsNoTracking().Where(it => it.CompraId == id).ToListAsync();
+        var itens = await Db.ItmCompra.AsNoTracking()
+                            .Where(it => it.CompraId == id)
+                            .Select(itm => new ItmCompra
+                            {
+                              Quantidade = itm.Quantidade,
+                              Preco = itm.Preco
+                            })
+                            .ToListAsync();
 
         decimal result = 0;
 
