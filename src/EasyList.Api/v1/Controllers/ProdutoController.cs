@@ -10,9 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyList.Api.Controllers
+namespace EasyList.Api.V1.Controllers
 {
-  //[Authorize]
+#if !DEBUG
+  [Authorize]
+#endif
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class ProdutoController : ControllerBase
@@ -191,7 +194,7 @@ namespace EasyList.Api.Controllers
     private async Task<IEnumerable<ProdutoApiModel>> ObterAllProdutos(int? pagina, int tamanho)
     {
       var listaProdutos = await _produtoRepository.ObterTodosPorPaginacao(pagina, tamanho);
-    
+
       return _mapper.Map<IEnumerable<ProdutoApiModel>>(listaProdutos);
     }
 

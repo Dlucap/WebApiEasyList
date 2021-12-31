@@ -18,10 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="v1\Controllers\Compra\**" />
-    <Content Remove="v1\Controllers\Compra\**" />
-    <EmbeddedResource Remove="v1\Controllers\Compra\**" />
-    <None Remove="v1\Controllers\Compra\**" />
+    <Compile Remove="V1\Controllers\Compra\**" />
+    <Content Remove="V1\Controllers\Compra\**" />
+    <EmbeddedResource Remove="V1\Controllers\Compra\**" />
+    <None Remove="V1\Controllers\Compra\**" />
   </ItemGroup>
 
   <ItemGroup>
