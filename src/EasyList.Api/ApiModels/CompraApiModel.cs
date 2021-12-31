@@ -8,7 +8,7 @@ namespace EasyList.Api.ApiModels
   {   
     public Guid Id { get; set; }
     public Guid FornecedorId { get; set; }
-    public Guid FormaPagamentoId { get; set; }
+    public Guid? FormaPagamentoId { get; set; }
     public bool Compartilhado { get; set; } = false;
     public StatusCompraEnum StatusCompra { get; set; }
     public IEnumerable<ItmCompraApiModel> ItensCompra { get; set; }

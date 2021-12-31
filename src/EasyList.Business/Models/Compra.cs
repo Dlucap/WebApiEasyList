@@ -8,7 +8,7 @@ namespace EasyList.Business.Models
   public class Compra : Entity
   {    
     public Guid FornecedorId { get; set; }
-    public Guid FormaPagamentoId { get; set; }
+    public Guid? FormaPagamentoId { get; set; }
     public bool Compartilhado { get; set; } = false;
     public StatusCompraEnum StatusCompra { get; set; }
     public IEnumerable<ItmCompra> ItemsCompra { get; set; }

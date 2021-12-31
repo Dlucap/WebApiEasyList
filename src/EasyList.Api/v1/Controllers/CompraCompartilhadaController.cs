@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyList.Api.Controllers
+namespace EasyList.Api.V1.Controllers
 {
-  //[Authorize]
+#if !DEBUG
+  [Authorize]
+#endif
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CompraCompartilhadaController : ControllerBase

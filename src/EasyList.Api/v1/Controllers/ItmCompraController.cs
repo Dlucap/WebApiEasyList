@@ -13,9 +13,12 @@ using EasyList.Business.Models;
 using EasyList.Business.Interfaces.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace EasyList.Api.Controllers
+namespace EasyList.Api.V1.Controllers
 {
-  //[Authorize]
+#if !DEBUG
+  [Authorize]
+#endif
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class ItmCompraController : ControllerBase

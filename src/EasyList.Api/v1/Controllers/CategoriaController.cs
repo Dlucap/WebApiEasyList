@@ -10,9 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyList.Api.Controllers
+namespace EasyList.Api.V1.Controllers
 {
+#if !DEBUG
   [Authorize]
+#endif
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CategoriaController : ControllerBase
@@ -116,7 +119,7 @@ namespace EasyList.Api.Controllers
 
       if (!ModelState.IsValid)
         return BadRequest();
-      
+
       if (!await CategoriaExists(id))
         return NotFound();
 
@@ -174,7 +177,7 @@ namespace EasyList.Api.Controllers
 
       return NoContent();
     }
-   
+
     #region Métodos privados
     private async Task<CategoriaApiModel> ObterCategoriaPorId(Guid id)
     {
@@ -188,10 +191,10 @@ namespace EasyList.Api.Controllers
 
     private async Task<IEnumerable<CategoriaApiModel>> ObterAllCategorias(int? pagina, int tamanho, bool ativo)
     {
-      var listaCategorias= await _categoriaRepository.ObterTodosPorPaginacao(pagina, tamanho, ativo);
+      var listaCategorias = await _categoriaRepository.ObterTodosPorPaginacao(pagina, tamanho, ativo);
       return _mapper.Map<IEnumerable<CategoriaApiModel>>(listaCategorias);
     }
-     
+
 
     #endregion Métodos privados
 
