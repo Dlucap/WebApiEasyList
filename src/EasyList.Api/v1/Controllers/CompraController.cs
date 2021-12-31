@@ -11,9 +11,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyList.Api.Controllers
+namespace EasyList.Api.V1.Controllers
 {
-  //[Authorize]
+#if !DEBUG
+  [Authorize]
+#endif
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CompraController : ControllerBase
@@ -204,7 +207,7 @@ namespace EasyList.Api.Controllers
       return NoContent();
     }
 
-    #region Métodos Privados
+#region Métodos Privados
     private async Task<CompraApiModel> ObterCompraPorId(Guid id)
     {
       var compra = await _compraRepository.ObterPorId(id);
@@ -228,6 +231,6 @@ namespace EasyList.Api.Controllers
       return _mapper.Map<IEnumerable<CompraApiModel>>(listaFornecedores);
     }
        
-    #endregion Métodos Privados
+#endregion Métodos Privados
   }
 }
