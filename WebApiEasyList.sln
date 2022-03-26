@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyList.Business", "src\Ea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyList.Data", "src\EasyList.Data\EasyList.Data.csproj", "{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyList.Test", "EasyList.Test\EasyList.Test.csproj", "{F7C9C61B-2A53-4D62-B038-27C06C258A9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D2D1D5B-B506-4B1C-B26F-2119E56DA36A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7C9C61B-2A53-4D62-B038-27C06C258A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C9C61B-2A53-4D62-B038-27C06C258A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C9C61B-2A53-4D62-B038-27C06C258A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C9C61B-2A53-4D62-B038-27C06C258A9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
