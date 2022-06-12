@@ -16,7 +16,6 @@ namespace EasyList.Data.Repository
 
     }
 
-
     public async Task<IEnumerable<Compra>> ObterTodasCompras()
     {
       return await Db.Compra.AsNoTracking()

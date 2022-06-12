@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyList.Api.Data;
 using EasyList.Business.Interfaces.IServices;
 using AutoMapper;
 using EasyList.Api.ApiModels;
 using System;
 using EasyList.Business.Models;
-using EasyList.Business.Interfaces.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace EasyList.Api.V1.Controllers
 {
 #if !DEBUG
   [Authorize]
-#endif
+#endif 
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]

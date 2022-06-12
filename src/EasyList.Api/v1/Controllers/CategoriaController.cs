@@ -40,7 +40,7 @@ namespace EasyList.Api.V1.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoriaApiModel>>> GetCategoria()
     {
-      var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaService.ObterTodos());
+      var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaService.ObterTodasCategorias());
 
       if (categorias is null)
         return NotFound();
@@ -75,7 +75,7 @@ namespace EasyList.Api.V1.Controllers
     [HttpGet("{pagina}/{tamanho}/{ativo}")]
     public async Task<ActionResult<FornecedorApiModel>> GetCategorias(int? pagina, int tamanho, bool ativo)
     {
-      var categorias = await ObterAllCategorias(pagina, tamanho, ativo);
+      var categorias = await ObterAllCategoriasPorPaginacao(pagina, tamanho, ativo);
 
       if (categorias == null)
         return NotFound();
@@ -93,8 +93,6 @@ namespace EasyList.Api.V1.Controllers
     [HttpPost]
     public async Task<ActionResult<CategoriaApiModel>> PostCategoria(CategoriaApiModel categoriaApiModel)
     {
-
-      ModelState.Remove("Id"); // Key removal
 
       if (!ModelState.IsValid)
         return BadRequest();
@@ -190,10 +188,10 @@ namespace EasyList.Api.V1.Controllers
 
     private async Task<bool> CategoriaExists(Guid id)
     {
-      return _categoriaService.Buscar(x => x.Id == id).Result.Any();
+      return await _categoriaService.CategoriaExists(id);
     }
 
-    private async Task<IEnumerable<CategoriaApiModel>> ObterAllCategorias(int? pagina, int tamanho, bool ativo)
+    private async Task<IEnumerable<CategoriaApiModel>> ObterAllCategoriasPorPaginacao(int? pagina, int tamanho, bool ativo)
     {
       var listaCategorias = await _categoriaService.ObterTodosPorPaginacao(pagina, tamanho, ativo);
       return _mapper.Map<IEnumerable<CategoriaApiModel>>(listaCategorias);
