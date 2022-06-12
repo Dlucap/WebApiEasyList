@@ -31,14 +31,14 @@ namespace EasyList.Data.Repository
       return await DbSet.FindAsync(id);
     }
 
-    public virtual async Task<List<TEntity>> ObterTodos()
+    public virtual async Task<IEnumerable<TEntity>> ObterTodos()
     {
       return await DbSet.AsNoTracking()
                         .OrderBy(e => e.DataCriacao)
                         .ToListAsync();
     }
 
-    public virtual async Task<List<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15)
+    public virtual async Task<IEnumerable<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
     {
       if (tamanho > 15)
         tamanho = 15;

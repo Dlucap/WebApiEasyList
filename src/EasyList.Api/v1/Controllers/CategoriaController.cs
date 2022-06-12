@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
 using EasyList.Business.Interfaces.IRepository;
+using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -20,12 +21,12 @@ namespace EasyList.Api.V1.Controllers
   [ApiController]
   public class CategoriaController : ControllerBase
   {
-    private readonly ICategoriaRepository _categoriaRepository;
+    private readonly ICategoriaService _categoriaService;
     private readonly IMapper _mapper;
 
-    public CategoriaController(ICategoriaRepository categoriaRepository, IMapper mapper)
+    public CategoriaController(ICategoriaService categoriaService, IMapper mapper)
     {
-      _categoriaRepository = categoriaRepository;
+      _categoriaService = categoriaService;
       _mapper = mapper;
     }
 
@@ -39,7 +40,7 @@ namespace EasyList.Api.V1.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoriaApiModel>>> GetCategoria()
     {
-      var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaRepository.ObterTodos());
+      var categorias = _mapper.Map<IEnumerable<CategoriaApiModel>>(await _categoriaService.ObterTodos());
 
       if (categorias is null)
         return NotFound();
@@ -92,12 +93,15 @@ namespace EasyList.Api.V1.Controllers
     [HttpPost]
     public async Task<ActionResult<CategoriaApiModel>> PostCategoria(CategoriaApiModel categoriaApiModel)
     {
+
+      ModelState.Remove("Id"); // Key removal
+
       if (!ModelState.IsValid)
         return BadRequest();
 
       var categoriaEntity = _mapper.Map<Categoria>(categoriaApiModel);
 
-      await _categoriaRepository.Adicionar(categoriaEntity);
+      await _categoriaService.Adicionar(categoriaEntity);
 
       return CreatedAtAction("GetCategoria", new { id = categoriaApiModel.Id }, categoriaEntity);
     }
@@ -123,7 +127,7 @@ namespace EasyList.Api.V1.Controllers
       if (!await CategoriaExists(id))
         return NotFound();
 
-      await _categoriaRepository.Atualizar(_mapper.Map<Categoria>(categoriaApiModel));
+      await _categoriaService.Atualizar(_mapper.Map<Categoria>(categoriaApiModel));
 
       return NoContent();
     }
@@ -153,7 +157,7 @@ namespace EasyList.Api.V1.Controllers
 
       patchDocument.ApplyTo(produto);
 
-      await _categoriaRepository.Atualizar(_mapper.Map<Categoria>(produto));
+      await _categoriaService.Atualizar(_mapper.Map<Categoria>(produto));
 
       return NoContent();
     }
@@ -173,7 +177,7 @@ namespace EasyList.Api.V1.Controllers
       if (categoriaApiModel is null)
         return NotFound();
 
-      await _categoriaRepository.Remover(id);
+      await _categoriaService.Remover(id);
 
       return NoContent();
     }
@@ -181,17 +185,17 @@ namespace EasyList.Api.V1.Controllers
     #region Métodos privados
     private async Task<CategoriaApiModel> ObterCategoriaPorId(Guid id)
     {
-      return _mapper.Map<CategoriaApiModel>(await _categoriaRepository.ObterPorId(id));
+      return _mapper.Map<CategoriaApiModel>(await _categoriaService.ObterPorId(id));
     }
 
     private async Task<bool> CategoriaExists(Guid id)
     {
-      return _categoriaRepository.Buscar(x => x.Id == id).Result.Any();
+      return _categoriaService.Buscar(x => x.Id == id).Result.Any();
     }
 
     private async Task<IEnumerable<CategoriaApiModel>> ObterAllCategorias(int? pagina, int tamanho, bool ativo)
     {
-      var listaCategorias = await _categoriaRepository.ObterTodosPorPaginacao(pagina, tamanho, ativo);
+      var listaCategorias = await _categoriaService.ObterTodosPorPaginacao(pagina, tamanho, ativo);
       return _mapper.Map<IEnumerable<CategoriaApiModel>>(listaCategorias);
     }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Business.Services
 {
-  public class FornecedorService : BaseService, IFornecedorService
+  public class FornecedorService : IFornecedorService
   {
     private readonly IFornecedorRepository _fornecedorRepository;
     private readonly IEnderecoRepository _enderecoRepository;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Business.Services
 {
-  public class ItmCompraService : BaseService, IItmCompraService
+  public class ItmCompraService : IItmCompraService
   {
 
     private readonly IItmCompraRepository _itmCompraRepository;
@@ -51,9 +51,19 @@ namespace EasyList.Business.Services
       return await _itmCompraRepository.ObterPorId(id,compraId);
     }
 
-    public async Task<IList<ItmCompra>> BuscarItensCompra(Guid idCompra, string userName)
+    public async Task<IEnumerable<ItmCompra>> BuscarItensCompra(Guid idCompra, string userName)
     {
       return _itmCompraRepository.Buscar(itm => itm.CompraId == idCompra && itm.UsuarioCriacao == userName).Result.ToList();
+    }       
+
+    public async Task<IEnumerable<ItmCompra>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
+    {
+      return await _itmCompraRepository.ObterTodosPorPaginacao(pagina, tamanho, ativo);
+    }    
+
+    public async Task<bool> ItensCompraExists(Guid id, Guid compraId)
+    {
+      return _itmCompraRepository.Buscar(x => x.Id == id && x.CompraId == compraId).Result.Any();
     }
 
     public void Dispose()
