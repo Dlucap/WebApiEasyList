@@ -38,15 +38,15 @@ namespace EasyList.Data.Repository
     public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
     {
       return await Db.Fornecedor.AsNoTracking()
-          .Include(c => c.Endereco)
+          .Include(c => c.Endereco).Include(c => c.)
           .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<IList<Fornecedor>> ObterTodosFornecedoresEndereco()
+    public async Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco()
     {
       return await Db.Fornecedor.AsNoTracking()
          .Include(c => c.Endereco)
          .ToListAsync();
-    }
+    }    
   }
 }

@@ -57,9 +57,24 @@ namespace EasyList.Business.Services
       return true;
     }
 
-    public Task<IList<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
+    public async Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
     {
-      return _fornecedorRepository.ObterTodosPorPaginacao(pagina,tamanho,ativo);
+      return await _fornecedorRepository.ObterTodosPorPaginacao(pagina,tamanho,ativo);
+    }    
+
+    public async Task<IEnumerable<Fornecedor>> ObterFornecedoresEndereco(Guid id)
+    {
+      return await _fornecedorRepository.ObterFornecedorEndereco(id);
+    }
+
+    public async Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco()
+    {
+      return await _fornecedorRepository.ObterTodosFornecedoresEndereco();
+    }
+
+    public async Task<bool> FornecedorExists(Guid id)
+    {
+      return _fornecedorRepository.Buscar(f => f.Id == id).Result.Any();
     }
 
     public void Dispose()
@@ -68,7 +83,7 @@ namespace EasyList.Business.Services
       _fornecedorRepository?.Dispose();
     }
 
-    
+   
   }
 }
 

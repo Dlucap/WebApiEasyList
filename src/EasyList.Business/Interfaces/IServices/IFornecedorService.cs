@@ -10,8 +10,10 @@ namespace EasyList.Business.Interfaces.IServices
     Task<bool> Adicionar(Fornecedor fornecedor);
     Task<bool> Atualizar(Fornecedor fornecedor);
     Task<bool> Remover(Guid id);
-    Task<IList<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);   
+    Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco();
+    Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);   
     Task AtualizarEndereco(Endereco endereco);
-        
+    Task<IEnumerable<Fornecedor>> ObterFornecedoresEndereco(Guid id);
+    Task<bool> FornecedorExists(Guid id);    
   }
 }

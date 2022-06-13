@@ -20,18 +20,15 @@ namespace EasyList.Api.V1.Controllers
   [ApiController]
   public class FornecedorController : ControllerBase
   {
-    private readonly IFornecedorRepository _fornecedorRepository;
     private readonly IEnderecoRepository _enderecoRepository;
     private readonly IFornecedorService _fornecedorService;
     private readonly IMapper _mapper;
 
-    public FornecedorController(IFornecedorRepository fornecedorRepository,
-                                IEnderecoRepository enderecoRepository,
+    public FornecedorController(IEnderecoRepository enderecoRepository,
                                 IFornecedorService fornecedorService,
                                 IMapper mapper)
 
-    {
-      _fornecedorRepository = fornecedorRepository;
+    {    
       _enderecoRepository = enderecoRepository;
       _fornecedorService = fornecedorService;
       _mapper = mapper;
@@ -122,7 +119,7 @@ namespace EasyList.Api.V1.Controllers
 
       var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
 
-      await _fornecedorRepository.Adicionar(fornecedorEntity);
+      await _fornecedorService.Adicionar(fornecedorEntity);
 
       fornecedorApiModel.Id = fornecedorApiModel.Endereco.FornecedorId = fornecedorEntity.Id;
       fornecedorApiModel.Endereco.Id = fornecedorEntity.Endereco.Id;
@@ -152,7 +149,7 @@ namespace EasyList.Api.V1.Controllers
       if (!await FornecedorExists(id))
         return NotFound();
 
-      await _fornecedorRepository.Atualizar(_mapper.Map<Fornecedor>(fornecedorApiModel));
+      await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorApiModel));
 
       return NoContent();
     }
@@ -202,7 +199,7 @@ namespace EasyList.Api.V1.Controllers
 
       patchDocument.ApplyTo(fornecedor);
 
-      await _fornecedorRepository.Atualizar(_mapper.Map<Fornecedor>(fornecedor));
+      await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedor));
 
       return NoContent();
     }
@@ -230,7 +227,7 @@ namespace EasyList.Api.V1.Controllers
     #region Metodos Privados
     private async Task<FornecedorApiModel> ObterFornecedorPorId(Guid id)
     {
-      return _mapper.Map<FornecedorApiModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
+      return _mapper.Map<FornecedorApiModel>(await _fornecedorService.ObterFornecedoresEndereco(id));
     }
 
     private async Task<IEnumerable<FornecedorApiModel>> ObterAllFornecedores(int? pagina, int tamanho, bool ativo)
@@ -241,13 +238,13 @@ namespace EasyList.Api.V1.Controllers
 
     private async Task<IEnumerable<FornecedorApiModel>> ObterFornecedoresEndereco()
     {
-      var listaFornecedores = await _fornecedorRepository.ObterTodosFornecedoresEndereco();
+      var listaFornecedores = await _fornecedorService.ObterFornecedoresEndereco();
       return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
     }
 
     private async Task<bool> FornecedorExists(Guid id)
     {
-      return  _fornecedorRepository.Buscar(x => x.Id == id).Result.Any();
+      return await _fornecedorService.FornecedorExists(id);
     }
     #endregion Metodos Privados
   }

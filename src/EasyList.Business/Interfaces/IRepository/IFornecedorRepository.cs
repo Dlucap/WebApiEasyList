@@ -7,9 +7,8 @@ namespace EasyList.Business.Interfaces.IRepository
 {
   public interface IFornecedorRepository : IRepository<Fornecedor>
   {
-    Task<IList<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);
-    Task<IList<Fornecedor>> ObterTodosFornecedoresEndereco();
-    Task<Fornecedor> ObterFornecedorEndereco(Guid id);
+    Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);
+    Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco();   
     Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id);
   }
 }
