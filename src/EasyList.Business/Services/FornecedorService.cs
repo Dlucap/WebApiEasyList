@@ -22,22 +22,18 @@ namespace EasyList.Business.Services
 
     public async Task<bool> Adicionar(Fornecedor fornecedor)
     {
-      if (_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj).Result.Any())
-      {
+      if (_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj).Result.Any())     
         return false;
-      }
-
+     
       await _fornecedorRepository.Adicionar(fornecedor);
       return true;
     }
 
     public async Task<bool> Atualizar(Fornecedor fornecedor)
     {
-      if (_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj && f.Id == fornecedor.Id).Result.Any())
-      {
+      if (_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj && f.Id == fornecedor.Id).Result.Any())     
         return false;
-      }
-
+    
       await _fornecedorRepository.Atualizar(fornecedor);
       return true;
     }
@@ -67,8 +63,7 @@ namespace EasyList.Business.Services
       _enderecoRepository?.Dispose();
       _fornecedorRepository?.Dispose();
     }
-
-    
+            
   }
 }
 

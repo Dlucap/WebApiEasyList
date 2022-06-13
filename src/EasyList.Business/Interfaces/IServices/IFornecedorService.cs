@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Business.Interfaces.IServices
 {
-  public interface IFornecedorService : IDisposable
+    public interface IFornecedorService : IDisposable
   {
     Task<bool> Adicionar(Fornecedor fornecedor);
     Task<bool> Atualizar(Fornecedor fornecedor);

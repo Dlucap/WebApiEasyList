@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Data.Repository
 {
-  public class FornecedorRepository : Repository<Fornecedor>, IFornecedorRepository
+    public class FornecedorRepository : Repository<Fornecedor>, IFornecedorRepository
   {
     public FornecedorRepository(MeuDbContext context) : base(context)
     {

@@ -15,7 +15,7 @@ namespace EasyList.Api.V1.Controllers
 #if !DEBUG
   [Authorize]
 #endif
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class FornecedorController : ControllerBase
