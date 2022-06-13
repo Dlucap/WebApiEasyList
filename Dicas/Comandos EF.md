@@ -6,7 +6,7 @@
   Context         | A classe DbContext a ser usada. 
   Projeto         | O projeto de destino. 
   StartupProject  | O projeto de inicialização.
- - Verbose         | Mostrar saída detalhada
+  Verbose         | Mostrar saída detalhada
  
  ## Add-Migration
   Adiciona noma migração
