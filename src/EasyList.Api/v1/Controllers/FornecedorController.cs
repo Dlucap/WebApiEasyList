@@ -214,7 +214,7 @@ namespace EasyList.Api.V1.Controllers
         #region Metodos Privados
         private async Task<FornecedorApiModel> ObterFornecedorPorId(Guid id)
         {
-            return _mapper.Map<FornecedorApiModel>(await _fornecedorService.ObterFornecedoresEndereco(id));
+            return _mapper.Map<FornecedorApiModel>(await _fornecedorService.ObterFornecedorEndereco(id));
         }
 
         private async Task<IEnumerable<FornecedorApiModel>> ObterAllFornecedores(int? pagina, int tamanho, bool ativo)
