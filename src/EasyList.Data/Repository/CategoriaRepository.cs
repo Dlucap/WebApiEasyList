@@ -21,7 +21,7 @@ namespace EasyList.Data.Repository
                                 .FirstOrDefaultAsync(cat => cat.Id == id);
     }
 
-    public virtual async Task<IList<Categoria>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
+    public virtual async Task<IEnumerable<Categoria>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
     {
       if (tamanho > 15)
         tamanho = 15;
