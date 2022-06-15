@@ -35,6 +35,7 @@ namespace EasyList.Api.Configurations
       #region Services
       services.AddScoped<IFornecedorService, FornecedorService>();
       services.AddScoped<ICategoriaService, CategoriaService>();
+      services.AddScoped<ICompraService, CompraService>();
       services.AddScoped<IItmCompraService, ItmCompraService>();
       #endregion Services
 

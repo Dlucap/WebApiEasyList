@@ -11,9 +11,9 @@ namespace EasyList.Business.Interfaces.IRepository
 
     Task<decimal> CalculaValorTotalCompra(Guid id);
 
-    //Task<Compra> ObterCompraPorData(DateTime dtCompra);
+    Task<Compra> ObterCompraPorData(DateTime dtCompra);
 
-    //Task<Compra> ObterCompraPorPeriodoCompra(DateTime dtInicio, DateTime dtFim);
+    Task<IEnumerable<Compra>> ObterCompraPorPeriodoCompra(DateTime dtInicio, DateTime dtFim);
 
   }
 }

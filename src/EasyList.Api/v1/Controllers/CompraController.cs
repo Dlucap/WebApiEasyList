@@ -21,13 +21,13 @@ namespace EasyList.Api.V1.Controllers
   [ApiController]
   public class CompraController : ControllerBase
   {
-    private readonly ICompraRepository _compraRepository;
+    private readonly ICompraService _compraService;
     private readonly IItmCompraService _itemCompraService;
     private readonly IMapper _mapper;
 
-    public CompraController(ICompraRepository compraRepository, IItmCompraService itemCompraService, IMapper mapper)
+    public CompraController(ICompraService compraService, IItmCompraService itemCompraService, IMapper mapper)
     {
-      _compraRepository = compraRepository;
+      _compraService = compraService;
       _itemCompraService = itemCompraService;
       _mapper = mapper;
     }
@@ -40,7 +40,7 @@ namespace EasyList.Api.V1.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompraApiModel>>> GetCompra()
     {
-      var compras = await _compraRepository.ObterTodasCompras();
+      var compras = await _compraService.ObterTodasCompras();
       var compra = _mapper.Map<IEnumerable<CompraApiModel>>(compras);
 
       if (compra == null)
@@ -116,7 +116,7 @@ namespace EasyList.Api.V1.Controllers
 
       var compraEntity = _mapper.Map<Compra>(compraApiModel);
 
-      await _compraRepository.Adicionar(compraEntity);
+      await _compraService.Adicionar(compraEntity);
       compraApiModel.Id = compraEntity.Id;
 
       foreach (var item in compraEntity.ItemsCompra)
@@ -152,7 +152,7 @@ namespace EasyList.Api.V1.Controllers
       if (!await CompraExists(id))
         return NotFound();
 
-      await _compraRepository.Atualizar(_mapper.Map<Compra>(compraApiModel));
+      await _compraService.Atualizar(_mapper.Map<Compra>(compraApiModel));
 
       return NoContent();
     }
@@ -182,7 +182,7 @@ namespace EasyList.Api.V1.Controllers
 
       patchDocument.ApplyTo(compra);
 
-      await _compraRepository.Atualizar(_mapper.Map<Compra>(compra));
+      await _compraService.Atualizar(_mapper.Map<Compra>(compra));
 
       return NoContent();
     }
@@ -202,7 +202,7 @@ namespace EasyList.Api.V1.Controllers
       if (compraApi == null)
         return NotFound();
 
-      await _compraRepository.Remover(id);
+      await _compraService.Remover(id);
 
       return NoContent();
     }
@@ -210,24 +210,24 @@ namespace EasyList.Api.V1.Controllers
 #region Métodos Privados
     private async Task<CompraApiModel> ObterCompraPorId(Guid id)
     {
-      var compra = await _compraRepository.ObterPorId(id);
+      var compra = await _compraService.ObterPorId(id);
       return _mapper.Map<CompraApiModel>(compra);
     }
 
     private async Task<decimal> CalculaValorTotalCompra(Guid id)
     {
-      var valorCompra = await _compraRepository.CalculaValorTotalCompra(id);
+      var valorCompra = await _compraService.CalculaValorTotalCompra(id);
       return valorCompra;
     }
 
     private async Task<bool> CompraExists(Guid id)
     {
-      return _compraRepository.Buscar(x => x.Id == id).Result.Any();
+       return await _compraService.CompraExists(id);
     }
 
     private async Task<IEnumerable<CompraApiModel>> ObterAllCompras(int? pagina, int tamanho)
     {
-      var listaFornecedores = await _compraRepository.ObterTodosPorPaginacao(pagina, tamanho);
+      var listaFornecedores = await _compraService.ObterTodosPorPaginacao(pagina, tamanho);
       return _mapper.Map<IEnumerable<CompraApiModel>>(listaFornecedores);
     }
        
