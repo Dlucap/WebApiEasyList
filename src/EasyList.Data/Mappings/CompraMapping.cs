@@ -4,43 +4,47 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EasyList.Data
 {
-  public class CompraMapping : IEntityTypeConfiguration<Compra>
-  {
-    public void Configure(EntityTypeBuilder<Compra> builder)
+    public class CompraMapping : IEntityTypeConfiguration<Compra>
     {
-      builder.HasKey(p => p.Id);
+        public void Configure(EntityTypeBuilder<Compra> builder)
+        {
+            builder.HasKey(p => p.Id);
 
-      builder.Property(p => p.Id)
-         .ValueGeneratedOnAdd();
+            builder.Property(p => p.Id)
+               .ValueGeneratedOnAdd();
 
-      builder.Property(p => p.FornecedorId)
-         .HasPrecision(5)
-          .IsRequired();
+            builder.Property(p => p.FornecedorId)
+               .HasPrecision(5)
+                .IsRequired();
 
-      builder.Property(p => p.FormaPagamentoId)
-         .HasPrecision(5)
-          .IsRequired();
+            builder.Property(p => p.FormaPagamentoId)
+               .HasPrecision(5)
+                .IsRequired();
 
-      builder.Property(p => p.Compartilhado);
+            builder.Property(p => p.Compartilhado);
 
-      builder.Property(p => p.StatusCompra);
+            builder.Property(p => p.StatusCompra);
 
-      //builder.Entity<Compra>()        
-      //  .HasMany(c => c.ItemCompra);
+            //builder.Entity<Compra>()        
+            //  .HasMany(c => c.ItemCompra);
 
-      builder.Property(p => p.DataCompra);
+            builder.Property(p => p.DataCompra);
 
-      builder.Property(p => p.UsuarioCriacao);
+            builder.Property(p => p.UsuarioCriacao)
+                      .HasMaxLength(80)
+                      .HasColumnType("varchar(80)");
 
-      builder.Property(p => p.DataCriacao);
+            builder.Property(p => p.DataCriacao);
 
-      builder.Property(p => p.UsuarioModificacao);
+            builder.Property(p => p.UsuarioModificacao)
+                      .HasMaxLength(80)
+                      .HasColumnType("varchar(80)");
 
-      builder.Property(p => p.DataModificacao);
+            builder.Property(p => p.DataModificacao);
 
-      builder.ToTable("COMPRA");
+            builder.ToTable("COMPRA");
+        }
     }
-  }
 }
 /**
  * Avaliar o mapping para que possa ser gerado da forma correta
