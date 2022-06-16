@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 namespace EasyList.Business.Interfaces.IServices
 {
     public interface IFornecedorService : IDisposable
-  {
-    Task<bool> Adicionar(Fornecedor fornecedor);
-    Task<bool> Atualizar(Fornecedor fornecedor);
-    Task<bool> Remover(Guid id);
-    Task<IList<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);   
-    Task AtualizarEndereco(Endereco endereco);
-        
-  }
+    {
+        Task<bool> Adicionar(Fornecedor fornecedor);
+        Task<bool> Atualizar(Fornecedor fornecedor);
+        Task<bool> Remover(Guid id);
+        Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco();
+        Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);
+        Task AtualizarEndereco(Endereco endereco);    
+        Task<Fornecedor> ObterFornecedorEndereco(Guid id);
+        Task<bool> FornecedorExists(Guid id);
+    }
 }

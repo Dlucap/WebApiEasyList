@@ -28,7 +28,6 @@ namespace EasyList.Data
       //builder.Entity<Compra>()        
       //  .HasMany(c => c.ItemCompra);
 
-
       builder.Property(p => p.DataCompra);
 
       builder.Property(p => p.UsuarioCriacao);
@@ -39,7 +38,7 @@ namespace EasyList.Data
 
       builder.Property(p => p.DataModificacao);
 
-      builder.ToTable("COMPRAR");
+      builder.ToTable("COMPRA");
     }
   }
 }

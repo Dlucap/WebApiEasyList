@@ -35,7 +35,9 @@ namespace EasyList.Api.Configurations
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IItmCompraService, ItmCompraService>();
-            services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IProdutoService, ProdutoService>();          
+            services.AddScoped<IEnderecoService, EnderecoService>();
+
             #endregion Services
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
