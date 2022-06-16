@@ -30,14 +30,14 @@ namespace EasyList.Api.Configurations
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             #endregion Repository
             //services.AddScoped<INotificador, Notificador>();
-
+              
             #region Services
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IItmCompraService, ItmCompraService>();
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
-
+            services.AddScoped<IFormaPagamentoService, FormaPagamentoService>();
             #endregion Services
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
