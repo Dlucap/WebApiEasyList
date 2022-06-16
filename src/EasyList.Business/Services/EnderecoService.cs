@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace EasyList.Business.Services
 {
-    public class EnderecoService : IEnderecoService
+    public class EnderecoService : Interfaces.IServices.IEnderecoService
     {
-        public IEnderecoRepository _enderecoRepository { get; set; }
-        public EnderecoService(IEnderecoRepository enderecoRepository)
+        public Interfaces.IRepository.IEnderecoRepository _enderecoRepository { get; set; }
+        public EnderecoService(Interfaces.IRepository.IEnderecoRepository enderecoRepository)
         {
             _enderecoRepository = enderecoRepository;
         }      
