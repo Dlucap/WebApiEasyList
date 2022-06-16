@@ -16,10 +16,12 @@ namespace EasyList.Api.Configurations
     {
         public static IServiceCollection ResolveDependecies(this IServiceCollection services)
         {
-            
-            #region Repository
-            //todo configurar a resolução de dependencia
+            #region DbContext
             services.AddScoped<MeuDbContext>();
+            #endregion DbContext
+
+            #region Repository
+            //todo configurar a resolução de dependencia           
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
@@ -27,8 +29,7 @@ namespace EasyList.Api.Configurations
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ICompraRepository, CompraRepository>();
             services.AddScoped<ICompraCompartilhadaRepository, CompraCompartilhadaRepository>();
-            services.AddScoped<IItmCompraRepository, ItmCompraRepository>();
-            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IItmCompraRepository, ItmCompraRepository>();           
             #endregion Repository
             //services.AddScoped<INotificador, Notificador>();
               
@@ -40,6 +41,7 @@ namespace EasyList.Api.Configurations
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IFormaPagamentoService, FormaPagamentoService>();
+            
             #endregion Services
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
