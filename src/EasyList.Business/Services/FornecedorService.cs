@@ -33,10 +33,8 @@ namespace EasyList.Business.Services
 
         public async Task<bool> Atualizar(Fornecedor fornecedor)
         {
-            if (_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj && f.Id == fornecedor.Id).Result.Any())
-            {
-                return false;
-            }
+            if (!_fornecedorRepository.Buscar(f => f.Cnpj == fornecedor.Cnpj && f.Id == fornecedor.Id).Result.Any())         
+                return false;         
 
             await _fornecedorRepository.Atualizar(fornecedor);
             return true;
@@ -85,8 +83,7 @@ namespace EasyList.Business.Services
             _enderecoService?.Dispose();
             _fornecedorRepository?.Dispose();
         }
-
-
     }
+
 }
 

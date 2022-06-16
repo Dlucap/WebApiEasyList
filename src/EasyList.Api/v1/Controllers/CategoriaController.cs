@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
-using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
@@ -16,7 +13,7 @@ namespace EasyList.Api.V1.Controllers
 #if !DEBUG
   [Authorize]
 #endif
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class CategoriaController : ControllerBase
@@ -196,7 +193,6 @@ namespace EasyList.Api.V1.Controllers
       var listaCategorias = await _categoriaService.ObterTodosPorPaginacao(pagina, tamanho, ativo);
       return _mapper.Map<IEnumerable<CategoriaApiModel>>(listaCategorias);
     }
-
 
     #endregion Métodos privados
 
