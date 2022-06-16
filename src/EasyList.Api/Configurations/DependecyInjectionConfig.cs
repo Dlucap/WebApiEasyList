@@ -16,6 +16,7 @@ namespace EasyList.Api.Configurations
     {
         public static IServiceCollection ResolveDependecies(this IServiceCollection services)
         {
+            
             #region Repository
             //todo configurar a resolução de dependencia
             services.AddScoped<MeuDbContext>();
@@ -34,6 +35,7 @@ namespace EasyList.Api.Configurations
             #region Services
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<ICompraService, CompraService>();
             services.AddScoped<IItmCompraService, ItmCompraService>();
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
