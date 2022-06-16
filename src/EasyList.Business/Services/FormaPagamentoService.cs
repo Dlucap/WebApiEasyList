@@ -27,7 +27,7 @@ namespace EasyList.Business.Services
 
         public async Task<bool> Atualizar(FormaPagamento formaPagamento)
         {
-            if (_formaPagamentoRepository.Buscar(fp => fp.Id == formaPagamento.Id).Result.Any())
+            if (!_formaPagamentoRepository.Buscar(fp => fp.Id == formaPagamento.Id).Result.Any())
                 return false;
 
             await _formaPagamentoRepository.Atualizar(formaPagamento);
@@ -36,7 +36,7 @@ namespace EasyList.Business.Services
 
         public async Task<bool> Remover(Guid id)
         {
-            if (_formaPagamentoRepository.Buscar(fp => fp.Id == id).Result.Any())
+            if (!_formaPagamentoRepository.Buscar(fp => fp.Id == id).Result.Any())
                 return false;
 
             await _formaPagamentoRepository.Remover(id);
@@ -71,8 +71,6 @@ namespace EasyList.Business.Services
         public void Dispose()
         {
             _formaPagamentoRepository?.Dispose();
-        }
-
-       
+        }       
     }
 }

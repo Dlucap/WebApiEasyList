@@ -103,7 +103,7 @@ namespace EasyList.Api.V1.Controllers
 
             formaPagamentoApiModel.Id = formaPagamentoEntity.Id;
 
-            return CreatedAtAction("GetFormaPagamento", new { id = formaPagamentoApiModel.Id }, formaPagamentoEntity);
+            return CreatedAtAction("GetFormaPagamento", new { id = formaPagamentoApiModel.Id }, formaPagamentoApiModel);
         }
 
         /// <summary>
