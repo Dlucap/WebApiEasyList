@@ -28,7 +28,7 @@ namespace EasyList.Business.Services
 
         public async Task<bool> Atualizar(Produto produto)
         {
-            if (_produtoRepository.Buscar(p => p.Id == produto.Id).Result.Any())
+            if (!_produtoRepository.Buscar(p => p.Id == produto.Id).Result.Any())
                 return false;
 
             await _produtoRepository.Atualizar(produto);
@@ -52,7 +52,7 @@ namespace EasyList.Business.Services
 
         public async Task<bool> Remover(Guid id)
         {
-            if (_produtoRepository.Buscar(p => p.Id == id).Result.Any())
+            if (!_produtoRepository.Buscar(p => p.Id == id).Result.Any())
                 return false;
 
             await _produtoRepository.Remover(id);
