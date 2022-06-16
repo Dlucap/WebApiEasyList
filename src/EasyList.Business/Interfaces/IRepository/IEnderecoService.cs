@@ -6,6 +6,6 @@ namespace EasyList.Business.Interfaces.IRepository
 {
   public interface IEnderecoRepository : IRepository<Endereco>
   {
-    Task<Endereco> ObterEnderecoPorFornecedor(Guid enderecoId);
+    Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId);
   }
 }
