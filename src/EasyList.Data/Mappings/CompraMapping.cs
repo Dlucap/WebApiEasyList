@@ -18,8 +18,7 @@ namespace EasyList.Data
                 .IsRequired();
 
             builder.Property(p => p.FormaPagamentoId)
-               .HasPrecision(5)
-                .IsRequired();
+               .HasPrecision(5);
 
             builder.Property(p => p.Compartilhado);
 

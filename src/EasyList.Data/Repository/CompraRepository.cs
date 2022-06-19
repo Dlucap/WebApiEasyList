@@ -22,7 +22,7 @@ namespace EasyList.Data.Repository
             {
                 Db.Database.BeginTransaction();
                 Db.Compra.Add(compra);
-                Db.SaveChanges();
+                await Db.SaveChangesAsync();
                 Db.Database.CommitTransaction();
             }
             catch (Exception ex)
