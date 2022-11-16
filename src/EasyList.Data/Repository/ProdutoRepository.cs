@@ -8,21 +8,26 @@ using System.Threading.Tasks;
 
 namespace EasyList.Data.Repository
 {
-  public class ProdutoRepository : Repository<Produto>, IProdutoRepository
-  {
-    public ProdutoRepository(MeuDbContext context) : base(context)
+    public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     {
-    }
-    public async Task<Produto> ObterProdutoPorNome(string nome)
-    {
-      return await Db.Produto.AsNoTracking()
-                    .FirstOrDefaultAsync(p => p.Nome.Contains(nome));
-    }
-    public async override Task<Produto> ObterPorId(Guid id)
-    {
-      return await Db.Produto.AsNoTracking()
-                                .FirstOrDefaultAsync(p => p.Id == id);
-    }
+        public ProdutoRepository(MeuDbContext context) : base(context)
+        {
+        }
+        public async Task<Produto> ObterProdutoPorNome(string nome)
+        {
+            return await Db.Produto.AsNoTracking()
+                          .FirstOrDefaultAsync(p => p.Nome.Contains(nome));
+        }
+        public async override Task<Produto> ObterPorId(Guid id)
+        {
+            return await Db.Produto.AsNoTracking()
+                                      .FirstOrDefaultAsync(p => p.Id == id);
+        }
 
-  }
+        public async Task<bool> ProdutoExiste(string nome)
+        {
+            return await Db.Produto.AsNoTracking()
+                                   .AnyAsync(p => p.Nome.Equals(nome));       
+        }
+    }
 }

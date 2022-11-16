@@ -22,6 +22,7 @@ namespace EasyList.Api.ApiModels
         public string Descricao { get; set; }
 
         public bool Ativo { get; set; }
+        public bool ControlaEtoque { get; set; } = false;
         public string UsuarioCriacao { get; set; }
         public DateTime DataCriacao { get; set; }
         public string UsuarioModificacao { get; set; }
