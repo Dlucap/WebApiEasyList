@@ -1,36 +1,31 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyList.Api.Data;
 using EasyList.Business.Interfaces.IServices;
 using AutoMapper;
 using EasyList.Api.ApiModels;
 using System;
 using EasyList.Business.Models;
-using EasyList.Business.Interfaces.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace EasyList.Api.V1.Controllers
 {
 #if !DEBUG
   [Authorize]
-#endif
+#endif 
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class ItmCompraController : ControllerBase
   {
     private readonly IItmCompraService _itmCompraService;
-    private readonly IItmCompraRepository _itmCompraRepository;
     private readonly IMapper _mapper;
      
-    public ItmCompraController(IItmCompraService itmCompraService, IItmCompraRepository itmCompraRepository, IMapper mapper)
+    public ItmCompraController(IItmCompraService itmCompraService, IMapper mapper)
     {
       _itmCompraService = itmCompraService;
-      _itmCompraRepository = itmCompraRepository;
       _mapper = mapper;
     }
 
@@ -62,7 +57,7 @@ namespace EasyList.Api.V1.Controllers
     [HttpGet("{pagina}/{tamanho}/{ativo}")]
     public async Task<ActionResult<ItmCompraApiModel>> GetItmCompra(int? pagina, int tamanho, bool ativo)
     {
-      var fornecedores = await ObterAllFornecedores(pagina, tamanho, ativo);
+      var fornecedores = await ObterAllItensCopraPorPaginacao(pagina, tamanho, ativo);
 
       if (fornecedores == null)
         return NotFound();
@@ -84,9 +79,7 @@ namespace EasyList.Api.V1.Controllers
         return BadRequest();
 
       foreach (var item in itemCompraApiModel)
-      {
         await _itmCompraService.Adicionar(_mapper.Map<ItmCompra>(item));
-      }
 
       return NoContent();
     }
@@ -185,13 +178,13 @@ namespace EasyList.Api.V1.Controllers
 
     private async Task<bool> ItmCompraExists(Guid id, Guid compraId)
     {
-      return _itmCompraRepository.Buscar(x => x.Id == id && x.CompraId == compraId).Result.Any();
+      return  await _itmCompraService.ItensCompraExists(id,compraId);
     }
 
-    private async Task<IEnumerable<ItmCompraApiModel>> ObterAllFornecedores(int? pagina, int tamanho, bool ativo)
+    private async Task<IEnumerable<ItmCompraApiModel>> ObterAllItensCopraPorPaginacao(int? pagina, int tamanho, bool ativo)
     {
-      var listaFornecedores = await _itmCompraRepository.ObterTodosPorPaginacao(pagina, tamanho);
-      return _mapper.Map<IEnumerable<ItmCompraApiModel>>(listaFornecedores);
+      var listaItensCompra = await _itmCompraService.ObterTodosPorPaginacao(pagina, tamanho, ativo);
+      return _mapper.Map<IEnumerable<ItmCompraApiModel>>(listaItensCompra);
     }
 
     #endregion Métodos privados

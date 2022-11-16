@@ -44,8 +44,8 @@ namespace EasyList.Data.Context
       {
         if (entry.State == EntityState.Added)
         {        
-          entry.Property("DataCriacao").CurrentValue = DateTime.Now;
-          entry.Property("DataModificacao").CurrentValue = DateTime.Now;
+          entry.Property("DataCriacao").CurrentValue = DateTime.UtcNow;
+          entry.Property("DataModificacao").CurrentValue = DateTime.UtcNow;
         }
       }
 
@@ -53,7 +53,7 @@ namespace EasyList.Data.Context
       {
         if (entry.State == EntityState.Modified)
         {
-          entry.Property("DataModificacao").CurrentValue = DateTime.Now;
+          entry.Property("DataModificacao").CurrentValue = DateTime.UtcNow;
         }
       }
 

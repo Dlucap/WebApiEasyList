@@ -15,7 +15,7 @@ namespace EasyList.Data.Repository
     {
     }
 
-    public async Task<IEnumerable<FormaPagamento>> ObterAllFormaPgamento(int? pagina, int tamanho, bool ativo)
+    public async Task<IEnumerable<FormaPagamento>> ObterFormasPgamento(int? pagina, int tamanho, bool ativo)
     {
       if (tamanho > 15)
         tamanho = 15;

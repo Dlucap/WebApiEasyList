@@ -10,6 +10,7 @@ namespace EasyList.Business.Models
     public decimal Preco { get; set; }
     public int Quantidade { get; set; }
     public DateTime Validade { get; set; }
+    public bool Ativo { get; set; }
     //public string UsuarioCriacao { get; set; }
     //public DateTime DataCriacao { get; set; }
     //public string UsuarioModificacao { get; set; }

@@ -9,6 +9,6 @@ namespace EasyList.Business.Interfaces.IRepository
   {
     Task<FormaPagamento> ObterFormaPagamentoPorNome(string nomeFormaPagamento);
 
-    Task<IEnumerable<FormaPagamento>> ObterAllFormaPgamento(int? pagina, int tamanho, bool ativo);
+    Task<IEnumerable<FormaPagamento>> ObterFormasPgamento(int? pagina, int tamanho, bool ativo);
   }
 }

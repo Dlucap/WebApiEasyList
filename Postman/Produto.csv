@@ -1,0 +1,5 @@
+CategoriaId;Marca;Nome;Descricao;Ativo;ControlaEstoque
+08d9546f-8ca6-434d-898e-9db28c65cfc6;Sadia;Batata Palito;Batata congelada;true;true
+7cb89893-5319-4c00-b875-52bba4cc083f;Padaria Pullman;Pão de forma;Pão de Forma Integral;true;true
+08d94cab-738e-4842-88a5-50fe0891ea72;Padaria Pullman;Pão de forma;Pão de Forma Integral;true;true
+08d94cab-738e-4842-88a5-50fe0891ea72;Vilma;Massa Bolo Chocolate;Mistura para bolo Chocolate;true;true
