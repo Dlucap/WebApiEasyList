@@ -1,4 +1,5 @@
 ﻿using EasyList.Business.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,5 +16,6 @@ namespace EasyList.Business.Interfaces.IServices
         Task<Produto> ObterPorId(Guid Id);
         Task<IEnumerable<Produto>> ObterTodosPorPaginacao(int? pagina, int tamanho);
         Task<bool> Buscar(Guid id);
+        Task<string> ImportarProdutos(IFormFile formFile, string user);        
     }
 }

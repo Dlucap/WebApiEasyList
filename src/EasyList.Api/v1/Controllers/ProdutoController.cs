@@ -2,11 +2,11 @@
 using EasyList.Api.ApiModels;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
@@ -104,6 +104,33 @@ namespace EasyList.Api.V1.Controllers
             await _produtoService.Adicionar(produtoEntity);
 
             return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoEntity);
+        }
+
+
+        /// <summary>
+        /// Insere o Produto via importação csv
+        /// </summary>
+        /// <param name="produtoApiModel"></param>
+        /// <returns></returns>
+        /// <response code="201"> Criado com Sucesso </response>
+        /// <response code="400">  Requisição Inválida  </response>
+        [HttpPost("importacaoProduto"), DisableRequestSizeLimit]
+        public async Task<ActionResult> Import([FromForm(Name = "File")] IFormFile file)
+        {
+            if (!ModelState.IsValid)
+                BadRequest();
+
+            if (file is null || file.Length <= 0)
+                return BadRequest("Arquivo Inexistente.");
+
+            var resultadoImportacao = await _produtoService.ImportarProdutos(file,"Importacao");
+
+            var retorno = new
+            {
+                Messagem = resultadoImportacao,
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>

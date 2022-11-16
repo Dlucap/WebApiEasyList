@@ -31,6 +31,10 @@ namespace EasyList.Data
             builder.Property(p => p.Ativo)
               .HasColumnType("bit");
 
+            builder.Property(p => p.ControlaEstoque)
+                 .HasColumnType("bit")
+                 .HasDefaultValue(false);
+
             builder.Property(p => p.UsuarioCriacao);
 
             builder.Property(p => p.DataCriacao);
