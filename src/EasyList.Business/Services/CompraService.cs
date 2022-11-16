@@ -46,8 +46,10 @@ namespace EasyList.Business.Services
 
         public async Task<bool> CompraExists(Guid id)
         {
-            return _compraRepository.Buscar(c => c.Id == id).Result.Any();
-        }          
+            var compra = await _compraRepository.Buscar(c => c.Id == id);
+
+            return compra.Any()
+;        }          
 
         public async Task<decimal> CalculaValorTotalCompra(Guid id)
         {     
