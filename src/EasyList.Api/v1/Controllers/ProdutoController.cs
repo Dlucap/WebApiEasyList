@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +13,11 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class ProdutoController : ApiControllerBase
     {
         private readonly IProdutoService _produtoService;
         private readonly ICategoriaService _categoriaService;
@@ -99,13 +99,14 @@ namespace EasyList.Api.V1.Controllers
             if (!await _categoriaService.CategoriaExists(produtoApiModel.CategoriaId))
                 return BadRequest();
 
+            produtoApiModel.UsuarioCriacao = ObterUsuarioSessao().UserName;
+
             var produtoEntity = _mapper.Map<Produto>(produtoApiModel);
 
             await _produtoService.Adicionar(produtoEntity);
 
             return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoEntity);
         }
-
 
         /// <summary>
         /// Insere o Produto via importação csv
@@ -123,7 +124,8 @@ namespace EasyList.Api.V1.Controllers
             if (file is null || file.Length <= 0)
                 return BadRequest("Arquivo Inexistente.");
 
-            var resultadoImportacao = await _produtoService.ImportarProdutos(file,"Importacao");
+            var usuario = ObterUsuarioSessao();
+            var resultadoImportacao = await _produtoService.ImportarProdutos(file, usuario.UserName);
 
             var retorno = new
             {
@@ -157,6 +159,8 @@ namespace EasyList.Api.V1.Controllers
             if (!await ProdutoExists(id))
                 return NotFound();
 
+            produtoApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
+
             await _produtoService.Atualizar(_mapper.Map<Produto>(produtoApiModel));
 
             return NoContent();
@@ -184,7 +188,7 @@ namespace EasyList.Api.V1.Controllers
                 return NotFound();
 
             var produto = await ObterProdutoPorId(id);
-
+            
             patchDocument.ApplyTo(produto);
 
             await _produtoService.Atualizar(_mapper.Map<Produto>(produto));
