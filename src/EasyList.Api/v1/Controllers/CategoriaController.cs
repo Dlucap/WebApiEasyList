@@ -3,6 +3,7 @@ using EasyList.Api.ApiModels;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

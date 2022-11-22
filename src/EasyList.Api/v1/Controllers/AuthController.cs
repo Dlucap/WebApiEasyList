@@ -49,9 +49,15 @@ namespace EasyList.Api.V1.Controllers
             var user = new IdentityUser
             {
                 UserName = registerUser.UserName,
+                NormalizedUserName = registerUser.Name,
                 Email = registerUser.Email,
                 EmailConfirmed = false
             };
+
+            var verificaUserNameJaExiste = await _userManager.FindByNameAsync(user.UserName);
+            
+            if(verificaUserNameJaExiste is not null)
+                return BadRequest($"Usuário ja cadastrado com o nome {user.UserName}");
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
 
@@ -77,7 +83,7 @@ namespace EasyList.Api.V1.Controllers
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
             var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
-
+         
             if (!result.Succeeded)
                 return BadRequest("Usuário ou senha inválidos");
 

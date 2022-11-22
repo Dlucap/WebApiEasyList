@@ -13,9 +13,7 @@ using EasyList.Api.v1.Controllers;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -141,7 +139,8 @@ namespace EasyList.Api.V1.Controllers
             var itmCompra = await ObterItemCompraPorId(id, compraId);
 
             patchDocument.ApplyTo(itmCompra);
-            // todo: identificar qual entidade esta sendo atualizada para adicionar o usuarioModificação
+            itmCompra.UsuarioModificacao = ObterUsuarioSessao().UserName;
+
             await _itmCompraService.Atualizar(_mapper.Map<ItmCompra>(itmCompra));
 
             return NoContent();

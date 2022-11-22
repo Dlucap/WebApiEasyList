@@ -3,6 +3,7 @@ using EasyList.Api.ApiModels;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -109,7 +108,6 @@ namespace EasyList.Api.V1.Controllers
             return CreatedAtAction("GetProduto", new { id = produtoApiModel.Id }, produtoEntity);
         }
 
-
         /// <summary>
         /// Insere o Produto via importação csv
         /// </summary>
@@ -125,8 +123,9 @@ namespace EasyList.Api.V1.Controllers
 
             if (file is null || file.Length <= 0)
                 return BadRequest("Arquivo Inexistente.");
-            // todo: aicionar usuario criação
-            var resultadoImportacao = await _produtoService.ImportarProdutos(file,"Importacao");
+
+            var usuario = ObterUsuarioSessao();
+            var resultadoImportacao = await _produtoService.ImportarProdutos(file, usuario.UserName);
 
             var retorno = new
             {
@@ -189,7 +188,7 @@ namespace EasyList.Api.V1.Controllers
                 return NotFound();
 
             var produto = await ObterProdutoPorId(id);
-            // todo: identificar qual entidade esta sendo atualizada para adicionar o usuarioModificação
+            
             patchDocument.ApplyTo(produto);
 
             await _produtoService.Atualizar(_mapper.Map<Produto>(produto));

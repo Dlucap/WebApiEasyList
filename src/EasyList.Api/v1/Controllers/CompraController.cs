@@ -3,6 +3,7 @@ using EasyList.Api.ApiModels;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -121,12 +120,12 @@ namespace EasyList.Api.V1.Controllers
             compraApiModel.Id = compraEntity.Id;
             // todo: Estudar como adiciona um pa e depois um filho na mesma entidade       
 
-            foreach (var item in compraEntity.ItemsCompra)
-            {
-                item.CompraId = compraEntity.Id;
-                item.UsuarioModificacao = usuarioCriacao.UserName;
-                await _itemCompraService.Adicionar(item);
-            }
+            //foreach (var item in compraEntity.ItemsCompra)
+            //{
+            //    item.CompraId = compraEntity.Id;
+            //    item.UsuarioModificacao = usuarioCriacao.UserName;
+            //    await _itemCompraService.Adicionar(item);
+            //}
 
             return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraApiModel);
         }

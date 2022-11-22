@@ -3,6 +3,7 @@ using EasyList.Api.ApiModels;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,7 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -105,6 +104,7 @@ namespace EasyList.Api.V1.Controllers
                 return BadRequest();
 
             fornecedorApiModel.Endereco.UsuarioCriacao = ObterUsuarioSessao().UserName;
+            fornecedorApiModel.UsuarioCriacao = ObterUsuarioSessao().UserName;
 
             var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
 
@@ -136,7 +136,6 @@ namespace EasyList.Api.V1.Controllers
 
             if (!await FornecedorExists(id))
                 return NotFound();
-
 
             fornecedorApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
             fornecedorApiModel.Endereco.UsuarioModificacao = ObterUsuarioSessao().UserName;
@@ -190,7 +189,7 @@ namespace EasyList.Api.V1.Controllers
                 return NotFound();
 
             var fornecedor = await ObterFornecedorPorId(id);
-
+          
             patchDocument.ApplyTo(fornecedor);
             // todo: identificar qual entidade esta sendo atualizada para adicionar o usuarioModificação
 
