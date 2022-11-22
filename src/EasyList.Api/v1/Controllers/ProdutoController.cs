@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,7 @@ namespace EasyList.Api.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class ProdutoController : ApiControllerBase
     {
         private readonly IProdutoService _produtoService;
         private readonly ICategoriaService _categoriaService;
@@ -99,6 +100,8 @@ namespace EasyList.Api.V1.Controllers
             if (!await _categoriaService.CategoriaExists(produtoApiModel.CategoriaId))
                 return BadRequest();
 
+            produtoApiModel.UsuarioCriacao = ObterUsuarioSessao().UserName;
+
             var produtoEntity = _mapper.Map<Produto>(produtoApiModel);
 
             await _produtoService.Adicionar(produtoEntity);
@@ -122,7 +125,7 @@ namespace EasyList.Api.V1.Controllers
 
             if (file is null || file.Length <= 0)
                 return BadRequest("Arquivo Inexistente.");
-
+            // todo: aicionar usuario criação
             var resultadoImportacao = await _produtoService.ImportarProdutos(file,"Importacao");
 
             var retorno = new
@@ -157,6 +160,8 @@ namespace EasyList.Api.V1.Controllers
             if (!await ProdutoExists(id))
                 return NotFound();
 
+            produtoApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
+
             await _produtoService.Atualizar(_mapper.Map<Produto>(produtoApiModel));
 
             return NoContent();
@@ -184,7 +189,7 @@ namespace EasyList.Api.V1.Controllers
                 return NotFound();
 
             var produto = await ObterProdutoPorId(id);
-
+            // todo: identificar qual entidade esta sendo atualizada para adicionar o usuarioModificação
             patchDocument.ApplyTo(produto);
 
             await _produtoService.Atualizar(_mapper.Map<Produto>(produto));

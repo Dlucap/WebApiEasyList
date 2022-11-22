@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
-using EasyList.Business.Interfaces.IRepository;
+using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
@@ -18,7 +17,7 @@ namespace EasyList.Api.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class FornecedorController : ControllerBase
+    public class FornecedorController : ApiControllerBase
     {
         private readonly IEnderecoService _enderecoService;
         private readonly IFornecedorService _fornecedorService;
@@ -105,6 +104,8 @@ namespace EasyList.Api.V1.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            fornecedorApiModel.Endereco.UsuarioCriacao = ObterUsuarioSessao().UserName;
+
             var fornecedorEntity = _mapper.Map<Fornecedor>(fornecedorApiModel);
 
             await _fornecedorService.Adicionar(fornecedorEntity);
@@ -136,6 +137,10 @@ namespace EasyList.Api.V1.Controllers
             if (!await FornecedorExists(id))
                 return NotFound();
 
+
+            fornecedorApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
+            fornecedorApiModel.Endereco.UsuarioModificacao = ObterUsuarioSessao().UserName;
+
             await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorApiModel));
 
             return NoContent();
@@ -155,6 +160,8 @@ namespace EasyList.Api.V1.Controllers
         {
             if (id != enderecoApiModel.Id)
                 return BadRequest();
+
+            enderecoApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
 
             await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoApiModel));
 
@@ -185,6 +192,7 @@ namespace EasyList.Api.V1.Controllers
             var fornecedor = await ObterFornecedorPorId(id);
 
             patchDocument.ApplyTo(fornecedor);
+            // todo: identificar qual entidade esta sendo atualizada para adicionar o usuarioModificação
 
             await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedor));
 
