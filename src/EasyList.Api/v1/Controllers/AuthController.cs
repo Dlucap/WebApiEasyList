@@ -82,18 +82,18 @@ namespace EasyList.Api.V1.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
+            var result = await _signInManager.PasswordSignInAsync(loginUser.UserName, loginUser.Password, false, true);
          
             if (!result.Succeeded)
                 return BadRequest("Usuário ou senha inválidos");
 
-            return Ok(await GerarJwt(loginUser.Email));
+            return Ok(await GerarJwt(loginUser.UserName));
         }
 
         #region Métodos privados
-        private async Task<string> GerarJwt(string email)
+        private async Task<string> GerarJwt(string userName)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByNameAsync(userName);
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(await _userManager.GetClaimsAsync(user));
 
