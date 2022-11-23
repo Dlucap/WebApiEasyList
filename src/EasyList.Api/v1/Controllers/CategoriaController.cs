@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,13 +12,11 @@ using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class CategoriaController : ApiControllerBase
     {
         private readonly ICategoriaService _categoriaService;
         private readonly IMapper _mapper;
@@ -93,6 +93,8 @@ namespace EasyList.Api.V1.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            categoriaApiModel.UsuarioCriacao = ObterUsuarioSessao().UserName;
+
             var categoriaEntity = _mapper.Map<Categoria>(categoriaApiModel);
 
             var retorno = await _categoriaService.Adicionar(categoriaEntity);
@@ -126,6 +128,7 @@ namespace EasyList.Api.V1.Controllers
             if (!await CategoriaExists(id))
                 return NotFound();
 
+            categoriaApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
             await _categoriaService.Atualizar(_mapper.Map<Categoria>(categoriaApiModel));
 
             return NoContent();
@@ -141,7 +144,7 @@ namespace EasyList.Api.V1.Controllers
         /// <response code="400"> Requisição Inválida </response>
         /// <response code="404"> Não Encontrado</response>
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchFornecedor(Guid id, JsonPatchDocument<CategoriaApiModel> patchDocument)
+        public async Task<IActionResult> PatchCategoria(Guid id, JsonPatchDocument<CategoriaApiModel> patchDocument)
         {
             if (patchDocument == null)
                 return BadRequest();
@@ -152,11 +155,12 @@ namespace EasyList.Api.V1.Controllers
             if (!await CategoriaExists(id))
                 return NotFound();
 
-            var produto = await ObterCategoriaPorId(id);
+            var categoria = await ObterCategoriaPorId(id);
 
-            patchDocument.ApplyTo(produto);
+            patchDocument.ApplyTo(categoria);
+            categoria.UsuarioModificacao = ObterUsuarioSessao().UserName;
 
-            await _categoriaService.Atualizar(_mapper.Map<Categoria>(produto));
+            await _categoriaService.Atualizar(_mapper.Map<Categoria>(categoria));
 
             return NoContent();
         }

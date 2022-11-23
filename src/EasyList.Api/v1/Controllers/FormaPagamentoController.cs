@@ -1,23 +1,22 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasyList.Api.V1.Controllers
 {
-#if !DEBUG
-  [Authorize]
-#endif
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class FormaPagamentoController : ControllerBase
+    public class FormaPagamentoController : ApiControllerBase
     {
         private readonly IFormaPagamentoService _formaPagamentoServices;
         private readonly IMapper _mapper;
@@ -97,6 +96,8 @@ namespace EasyList.Api.V1.Controllers
             if (!ModelState.IsValid)
                 BadRequest();
 
+            formaPagamentoApiModel.UsuarioCriacao = ObterUsuarioSessao().UserName;
+
             var formaPagamentoEntity = _mapper.Map<FormaPagamento>(formaPagamentoApiModel);
 
             await _formaPagamentoServices.Adicionar(formaPagamentoEntity);
@@ -124,6 +125,8 @@ namespace EasyList.Api.V1.Controllers
             if (!await FormaPagamentoExists(id))
                 return NotFound();
 
+            formaPagamentoApiModel.UsuarioModificacao = ObterUsuarioSessao().UserName;
+
             await _formaPagamentoServices.Atualizar(_mapper.Map<FormaPagamento>(formaPagamentoApiModel));
 
             return NoContent();
@@ -139,7 +142,7 @@ namespace EasyList.Api.V1.Controllers
         /// <response code="400"> Requisição Inválida </response>
         /// <response code="404"> Não Encontrado </response>
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchFornecedor(Guid id, JsonPatchDocument<FormaPagamentoApiModel> patchDocument)
+        public async Task<IActionResult> PatchFormaPagamento(Guid id, JsonPatchDocument<FormaPagamentoApiModel> patchDocument)
         {
             if (patchDocument == null)
                 return BadRequest();
@@ -150,11 +153,13 @@ namespace EasyList.Api.V1.Controllers
             if (!await FormaPagamentoExists(id))
                 return NotFound();
 
-            var fornecedor = await ObterFormaPagamentoPorId(id);
+            var formaPagamento = await ObterFormaPagamentoPorId(id);
 
-            patchDocument.ApplyTo(fornecedor);
+            patchDocument.ApplyTo(formaPagamento);
+          
+            formaPagamento.UsuarioModificacao = ObterUsuarioSessao().UserName;
 
-            await _formaPagamentoServices.Atualizar(_mapper.Map<FormaPagamento>(fornecedor));
+            await _formaPagamentoServices.Atualizar(_mapper.Map<FormaPagamento>(formaPagamento));
 
             return NoContent();
         }
