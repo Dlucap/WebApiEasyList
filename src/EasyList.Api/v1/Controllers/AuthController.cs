@@ -65,8 +65,16 @@ namespace EasyList.Api.V1.Controllers
                 return BadRequest(result.Errors);
 
             await _signInManager.SignInAsync(user, false);
+                        
+            var token = await GerarJwt(user.UserName);
+            
+            var response = new
+            {
+                token = token,
+                validade = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+            };
 
-            return Ok(await GerarJwt(registerUser.Email));
+            return Ok(response);
         }
 
         /// <summary>
@@ -87,8 +95,17 @@ namespace EasyList.Api.V1.Controllers
             if (!result.Succeeded)
                 return BadRequest("Usuário ou senha inválidos");
 
-            return Ok(await GerarJwt(loginUser.UserName));
+            var token = await GerarJwt(loginUser.UserName);
+
+            var response = new 
+            {
+                token = token,
+                validade = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+            };
+
+            return Ok(response);
         }
+            
 
         #region Métodos privados
         private async Task<string> GerarJwt(string userName)
