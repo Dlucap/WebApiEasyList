@@ -113,21 +113,16 @@ namespace EasyList.Api.V1.Controllers
 
             var usuarioCriacao = ObterUsuarioSessao();
             compraApiModel.UsuarioCriacao = usuarioCriacao.UserName;
+            
+            foreach (var item in compraApiModel.ItensCompra)
+                item.UsuarioCriacao = usuarioCriacao.UserName;
 
             var compraEntity = _mapper.Map<Compra>(compraApiModel);
 
             await _compraService.Adicionar(compraEntity);
             compraApiModel.Id = compraEntity.Id;
-            // todo: Estudar como adiciona um pa e depois um filho na mesma entidade       
-
-            //foreach (var item in compraEntity.ItemsCompra)
-            //{
-            //    item.CompraId = compraEntity.Id;
-            //    item.UsuarioModificacao = usuarioCriacao.UserName;
-            //    await _itemCompraService.Adicionar(item);
-            //}
-
-            return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraApiModel);
+           
+            return CreatedAtAction("GetCompra", new { id = compraApiModel.Id }, compraEntity);
         }
 
         /// <summary>
