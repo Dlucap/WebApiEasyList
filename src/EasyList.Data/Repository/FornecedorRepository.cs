@@ -42,6 +42,36 @@ namespace EasyList.Data.Repository
                               .ToListAsync();
         }
 
+        public override async Task<Paginado> ObterTodosPorPaginacaoNovo(int? pagina, int tamanho = 20, bool ativo = false)
+        {
+            if (tamanho > 20)
+                tamanho = 20;
+
+            var fornecedoresPaginados = await DbSet.AsNoTracking()
+                                                   .Include(f => f.Endereco)
+                                                   .OrderBy(f => f.DataCriacao)
+                                                   .Where(f => f.Ativo == ativo)
+                                                   .Skip(tamanho * (pagina.Value - 1)).Take(tamanho)
+                                                   .ToListAsync();
+
+            var totalFornecedores = await DbSet.AsNoTracking()
+                                               .Where(f => f.Ativo == ativo)
+                                               .ToListAsync();
+
+            var quantidade = totalFornecedores.Count;
+            var quantidadePorPagina = Convert.ToDecimal(quantidade) / tamanho;
+            var quantidadePorPaginaTruncado = Math.Ceiling(quantidadePorPagina);
+            var para = quantidadePorPaginaTruncado > 0 ? quantidadePorPaginaTruncado : 1;
+
+            return new Paginado()
+            {
+                PaginaAtual = $"{pagina}/{para}",
+                QuantidadePorPagina = fornecedoresPaginados.Count,
+                Total = totalFornecedores.Count,
+                Entidades = fornecedoresPaginados,
+            };
+        }
+
         public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
         {
             return await Db.Fornecedor.AsNoTracking()

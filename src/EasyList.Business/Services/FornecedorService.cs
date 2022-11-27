@@ -61,6 +61,12 @@ namespace EasyList.Business.Services
         public async Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false)
         {
             return await _fornecedorRepository.ObterTodosPorPaginacao(pagina, tamanho, ativo);
+
+        }
+
+        public async Task<Paginado> ObterTodosPorPaginacaoNovo(int? pagina, int tamanho = 20, bool ativo = false)
+        {
+            return await _fornecedorRepository.ObterTodosPorPaginacaoNovo(pagina, tamanho, ativo);
         }
 
         public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)

@@ -12,6 +12,7 @@ namespace EasyList.Business.Interfaces.IServices
         Task<bool> Remover(Guid id);
         Task<IEnumerable<Fornecedor>> ObterTodosFornecedoresEndereco();
         Task<IEnumerable<Fornecedor>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);
+        Task<Paginado> ObterTodosPorPaginacaoNovo(int? pagina, int tamanho = 15, bool ativo = false);
         Task AtualizarEndereco(Endereco endereco);    
         Task<Fornecedor> ObterFornecedorEndereco(Guid id);
         Task<bool> FornecedorExists(Guid id);

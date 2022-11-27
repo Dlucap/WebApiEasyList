@@ -49,6 +49,8 @@ namespace EasyList.Data.Repository
                               .ToListAsync();
         }
 
+        public abstract Task<Paginado> ObterTodosPorPaginacaoNovo(int? pagina, int tamanho = 20, bool ativo = false);
+       
         public virtual async Task Adicionar(TEntity entity)
         {
             DbSet.Add(entity);

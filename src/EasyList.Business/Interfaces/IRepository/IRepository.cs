@@ -13,6 +13,7 @@ namespace EasyList.Business.Interfaces.IRepository
         Task<TEntity> ObterPorId(Guid id);
         Task<IEnumerable<TEntity>> ObterTodos();
         Task<IEnumerable<TEntity>> ObterTodosPorPaginacao(int? pagina, int tamanho = 15, bool ativo = false);
+        Task<Paginado> ObterTodosPorPaginacaoNovo(int? pagina, int tamanho = 20, bool ativo = false);
         Task Atualizar(TEntity entity);
         Task Atualizar(List<TEntity> entity);
         Task Remover(Guid id);

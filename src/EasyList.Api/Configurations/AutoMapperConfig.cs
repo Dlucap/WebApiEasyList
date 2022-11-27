@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.ApiModels.Paginados;
 using EasyList.Business.Models;
 
 namespace EasyList.Api.Configurations
@@ -17,6 +18,9 @@ namespace EasyList.Api.Configurations
             CreateMap<Categoria, CategoriaApiModel>().ReverseMap();
             CreateMap<ItmCompra, ItmCompraApiModel>().ReverseMap();
             CreateMap<CompraCompartilhada, CompraCompartilhadaApiModel>().ReverseMap();
+            
+            CreateMap<FornecedorPaginado, Paginado>()
+                .ForMember(dest => dest.Entidades, opt => opt.MapFrom(src => src.Entidades)).ReverseMap();
 
             // Mapeando relações entre entidades
             CreateMap<CompraApiModel, Compra>()

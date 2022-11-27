@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EasyList.Api.ApiModels;
+using EasyList.Api.ApiModels.Paginados;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
@@ -38,9 +39,9 @@ namespace EasyList.Api.V1.Controllers
         /// <response code="200"> Sucesso </response>
         /// <response code="404"> Não Encontrado </response>
         [HttpGet("{pagina}/{tamanho}/{ativo}")]
-        public async Task<ActionResult<IEnumerable<FornecedorApiModel>>> GetFornecedor(int? pagina, int tamanho, bool ativo)
+        public async Task<ActionResult<FornecedorPaginado>> GetFornecedor(int? pagina, int tamanho, bool ativo)
         {
-            var fornecedoresModel = await ObterAllFornecedores(pagina, tamanho, ativo);
+            var fornecedoresModel = await ObterAllFornecedores(pagina, tamanho, ativo);           
 
             if (fornecedoresModel is null)
                 return NotFound();
@@ -48,6 +49,22 @@ namespace EasyList.Api.V1.Controllers
             var fornecedoresApiModel = _mapper.Map<IEnumerable<FornecedorApiModel>>(fornecedoresModel);
 
             return Ok(fornecedoresApiModel);
+        }
+
+        /// <summary>
+        /// Retorna todos os fornecedores (ativos e inativos) cadastrados no banco
+        /// </summary>
+        /// <response code="200"> Sucesso </response>
+        /// <response code="404"> Não Encontrado </response>
+        [HttpGet("Novo/{pagina}/{tamanho}/{ativo}")]
+        public async Task<ActionResult<FornecedorPaginado>> GetFornecedorNovo(int? pagina, int tamanho, bool ativo)
+        {
+            var fornecedoresModel = await ObterAllFornecedoresNovo(pagina, tamanho, ativo);
+
+            if (fornecedoresModel is null)
+                return NotFound();           
+
+            return Ok(fornecedoresModel);
         }
 
         /// <summary>
@@ -228,6 +245,12 @@ namespace EasyList.Api.V1.Controllers
         {
             var listaFornecedores = await _fornecedorService.ObterTodosPorPaginacao(pagina, tamanho, ativo);
             return _mapper.Map<IEnumerable<FornecedorApiModel>>(listaFornecedores);
+        }
+
+        private async Task<FornecedorPaginado> ObterAllFornecedoresNovo(int? pagina, int tamanho, bool ativo)
+        {
+            var listaFornecedores = await _fornecedorService.ObterTodosPorPaginacaoNovo(pagina, tamanho, ativo);
+            return _mapper.Map<FornecedorPaginado>(listaFornecedores);
         }
 
         private async Task<bool> FornecedorExists(Guid id)
