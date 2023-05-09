@@ -1,7 +1,9 @@
 ﻿using EasyList.Api.ApiModels;
 using EasyList.Api.Extensions;
+using EasyList.Business.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -23,14 +25,17 @@ namespace EasyList.Api.V1.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IEmailService _emailService;
 
         public AuthController(SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
-                              IOptions<AppSettings> appSettings)
+                              IOptions<AppSettings> appSettings,
+                              IEmailService emailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -55,8 +60,8 @@ namespace EasyList.Api.V1.Controllers
             };
 
             var verificaUserNameJaExiste = await _userManager.FindByNameAsync(user.UserName);
-            
-            if(verificaUserNameJaExiste is not null)
+
+            if (verificaUserNameJaExiste is not null)
                 return BadRequest($"Usuário ja cadastrado com o nome {user.UserName}");
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
@@ -64,16 +69,21 @@ namespace EasyList.Api.V1.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
+            var origin = Request.Headers["origin"];
+
+            var validacaoEmail = await VerificacaoEmail(user, origin);
+            await _emailService.EnviarEmailConfirmacaoAsync(user.Email, validacaoEmail);
+
             await _signInManager.SignInAsync(user, false);
-                        
+
             var token = await GerarJwt(user.UserName);
-            
+
             var response = new
             {
                 token = token,
                 validade = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
             };
-
+        
             return Ok(response);
         }
 
@@ -105,7 +115,33 @@ namespace EasyList.Api.V1.Controllers
 
             return Ok(response);
         }
-            
+
+        /// <summary>
+        /// Confirmar email cadastrado
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="code"></param>
+        /// <returns>Conta confirmada</returns>
+        /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
+        [HttpGet("confirm-email")]
+        public async Task<ActionResult> ConfirmEmail([FromQuery] string userId, [FromQuery] string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user is null)
+                return BadRequest($"Usuário não encontrado.");
+
+            if (user.EmailConfirmed)
+                return Ok($"Conta confirmada");
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+          
+            if (result.Succeeded)
+                return Ok($"Conta confirmada");
+            else
+                return BadRequest($"An error occured while confirming {user.Email}.");
+        }
 
         #region Métodos privados
         private async Task<string> GerarJwt(string userName)
@@ -132,6 +168,22 @@ namespace EasyList.Api.V1.Controllers
 
             return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 
+        }
+
+        private async Task<string> VerificacaoEmail(IdentityUser user, string origin)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var route = "api/v1/Auth/confirm-email";
+            
+            if (origin.EndsWith("/"))
+               origin = origin.Remove(origin.Length - 1);
+
+            var _enpointUri = new Uri(string.Concat($"{origin}/", route));
+            var verificationUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), "userId", user.Id);
+            verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
+            //Email Service Call Here
+            return verificationUri;
         }
         #endregion Métodos privados
     }

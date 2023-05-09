@@ -2,24 +2,28 @@
 using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
+using EasyList.Business.Models.Email;
 using EasyList.Business.Services;
 using EasyList.Data.Context;
 using EasyList.Data.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EasyList.Api.Configurations
 {
     public static class DependecyInjectionConfig
     {
-        public static IServiceCollection ResolveDependecies(this IServiceCollection services)
+        public static IServiceCollection ResolveDependecies(this IServiceCollection services, IConfiguration configuration)
         {
             #region DbContext
             services.AddScoped<MeuDbContext>();
             #endregion DbContext
-
+            services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
+            services.Configure<FeatureManagement>(configuration.GetSection("FeatureManagement"));
             #region Repository
             //todo configurar a resolução de dependencia           
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
@@ -41,12 +45,15 @@ namespace EasyList.Api.Configurations
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IFormaPagamentoService, FormaPagamentoService>();
-            
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddFeatureManagement();
+
             #endregion Services
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
-
+            
+            
             #region Swagger
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             #endregion Swagger
