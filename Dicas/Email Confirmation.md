@@ -115,6 +115,7 @@ Link de confirmação: https://localhost:5001/api/v1/Auth/confirmar-email?userId
   
   "teste@example.com"
   ```
+  **Nota**: A API espera uma string JSON simples no corpo da requisição.
 
 ## Configuração ASP.NET Identity
 
@@ -129,20 +130,39 @@ services.AddIdentity<IdentityUser, IdentityRole>()
 
 ## Segurança
 
+### Considerações de Segurança
 - Tokens de confirmação são gerados usando os provedores padrão do ASP.NET Identity
 - Tokens são codificados em URL para transporte seguro
 - Tokens expiram automaticamente (tempo configurável no Identity)
 - Email já confirmado não pode ser confirmado novamente
 
+### Nota sobre GET vs POST para Confirmação
+Esta implementação usa GET para confirmação de email para permitir que usuários cliquem em links diretos nos emails.
+Em ambientes de alta segurança, considere:
+- Usar POST com tokens no corpo da requisição
+- Implementar página intermediária que faça POST
+- Tokens de curta duração
+- Rate limiting para prevenir ataques de força bruta
+
+### Considerações para Produção
+Ao implementar serviços de email em produção, considere:
+- **Autenticação segura**: Armazenar credenciais de forma segura (Azure Key Vault, AWS Secrets Manager)
+- **Rate Limiting**: Limitar número de emails por IP/usuário para prevenir spam
+- **Validação de templates**: Validar e sanitizar templates de email
+- **Logging de auditoria**: Registrar todas as tentativas de envio e confirmação
+- **Monitoramento**: Alertas para falhas de envio ou padrões suspeitos
+
 ## Próximos Passos (Produção)
 
-1. Implementar serviço real de envio de emails
+1. Implementar serviço real de envio de emails (SendGrid, AWS SES, SMTP, etc.)
 2. Adicionar templates HTML para emails
 3. Configurar tempo de expiração dos tokens
 4. Adicionar página web para confirmação (em vez de apenas API)
 5. Implementar recuperação de senha com email
 6. Adicionar logs de auditoria
-7. Implementar throttling para reenvio de emails
+7. **Implementar rate limiting**: Throttling para reenvio de emails (ex: máximo 3 tentativas por hora por usuário)
+8. Implementar monitoramento de falhas de envio
+9. Adicionar testes de integração para fluxo completo
 
 ## Testes
 
