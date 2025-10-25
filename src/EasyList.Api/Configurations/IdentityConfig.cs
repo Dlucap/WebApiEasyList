@@ -32,7 +32,7 @@ namespace EasyList.Api.Configurations
       var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-      services.AddAuthentication(x =>
+      var authBuilder = services.AddAuthentication(x =>
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,17 +50,29 @@ namespace EasyList.Api.Configurations
           ValidAudience = appSettings.ValidoEm,
           ValidIssuer = appSettings.Emissor
         };
-      })
-      .AddGoogle(googleOptions =>
-      {
-        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-      })
-      .AddInstagram(instagramOptions =>
-      {
-        instagramOptions.ClientId = configuration["Authentication:Instagram:ClientId"];
-        instagramOptions.ClientSecret = configuration["Authentication:Instagram:ClientSecret"];
       });
+
+      var googleClientId = configuration["Authentication:Google:ClientId"];
+      var googleClientSecret = configuration["Authentication:Google:ClientSecret"];
+      if (!string.IsNullOrEmpty(googleClientId) && !string.IsNullOrEmpty(googleClientSecret))
+      {
+        authBuilder.AddGoogle(googleOptions =>
+        {
+          googleOptions.ClientId = googleClientId;
+          googleOptions.ClientSecret = googleClientSecret;
+        });
+      }
+
+      var instagramClientId = configuration["Authentication:Instagram:ClientId"];
+      var instagramClientSecret = configuration["Authentication:Instagram:ClientSecret"];
+      if (!string.IsNullOrEmpty(instagramClientId) && !string.IsNullOrEmpty(instagramClientSecret))
+      {
+        authBuilder.AddInstagram(instagramOptions =>
+        {
+          instagramOptions.ClientId = instagramClientId;
+          instagramOptions.ClientSecret = instagramClientSecret;
+        });
+      }
       #endregion  JWT
 
       return services;

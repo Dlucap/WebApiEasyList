@@ -104,6 +104,9 @@ namespace EasyList.Api.V1.Controllers
             if (string.IsNullOrEmpty(provider))
                 return BadRequest("Provider não especificado");
 
+            if (!string.IsNullOrEmpty(returnUrl) && !IsLocalUrl(returnUrl))
+                return BadRequest("URL de retorno inválida");
+
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Auth", new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
@@ -135,36 +138,8 @@ namespace EasyList.Api.V1.Controllers
             {
                 return BadRequest("Conta bloqueada");
             }
-            else
-            {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                
-                if (string.IsNullOrEmpty(email))
-                    return BadRequest("Email não fornecido pelo provedor");
 
-                var user = await _userManager.FindByEmailAsync(email);
-                
-                if (user == null)
-                {
-                    user = new IdentityUser
-                    {
-                        UserName = email,
-                        Email = email,
-                        EmailConfirmed = true
-                    };
-                    
-                    var createResult = await _userManager.CreateAsync(user);
-                    if (!createResult.Succeeded)
-                        return BadRequest(createResult.Errors);
-                }
-
-                var addLoginResult = await _userManager.AddLoginAsync(user, info);
-                if (!addLoginResult.Succeeded)
-                    return BadRequest(addLoginResult.Errors);
-
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok(await GerarJwt(user.UserName));
-            }
+            return await CriarOuVincularUsuarioExterno(info);
         }
 
         /// <summary>
@@ -181,6 +156,47 @@ namespace EasyList.Api.V1.Controllers
         }
 
         #region Métodos privados
+        private async Task<ActionResult> CriarOuVincularUsuarioExterno(ExternalLoginInfo info)
+        {
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            
+            if (string.IsNullOrEmpty(email))
+                return BadRequest("Email não fornecido pelo provedor");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            
+            if (user == null)
+            {
+                user = new IdentityUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+                
+                var createResult = await _userManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                    return BadRequest(createResult.Errors);
+            }
+
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+            if (!addLoginResult.Succeeded)
+                return BadRequest(addLoginResult.Errors);
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok(await GerarJwt(user.UserName));
+        }
+
+        private bool IsLocalUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            return Uri.TryCreate(url, UriKind.Relative, out _) ||
+                   (Uri.TryCreate(url, UriKind.Absolute, out var absoluteUri) && 
+                    string.Equals(Request.Host.Host, absoluteUri.Host, StringComparison.OrdinalIgnoreCase));
+        }
+
         private async Task<string> GerarJwt(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
