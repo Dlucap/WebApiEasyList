@@ -1,4 +1,3 @@
-using AutoMapper;
 using EasyList.Api.v1.Controllers;
 using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Models;
@@ -29,10 +28,14 @@ namespace EasyList.Api.V1.Controllers
         /// <param name="pagina"> Página </param>
         /// <param name="tamanho">Quantidade de registros por página </param>   
         /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
         /// <response code="404"> Não Encontrado </response>
         [HttpGet("{pagina}/{tamanho}")]
         public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogs(int? pagina, int tamanho)
         {
+            if (tamanho <= 0 || tamanho > 100)
+                return BadRequest("Tamanho deve ser entre 1 e 100");
+
             var logs = await _logRepository.ObterTodosPorPaginacao(pagina, tamanho);
 
             if (logs == null)
@@ -81,9 +84,14 @@ namespace EasyList.Api.V1.Controllers
         /// </summary>
         /// <param name="level">Nível do log</param>
         /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
         [HttpGet("nivel/{level}")]
         public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogsPorNivel(string level)
         {
+            var allowedLevels = new[] { "Information", "Warning", "Error" };
+            if (string.IsNullOrWhiteSpace(level) || !Array.Exists(allowedLevels, l => l.Equals(level, StringComparison.OrdinalIgnoreCase)))
+                return BadRequest("Nível deve ser: Information, Warning ou Error");
+
             var logs = await _logRepository.ObterLogsPorNivel(level);
 
             return Ok(logs);
@@ -94,9 +102,16 @@ namespace EasyList.Api.V1.Controllers
         /// </summary>
         /// <param name="userName">Nome do usuário</param>
         /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
         [HttpGet("usuario/{userName}")]
         public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogsPorUsuario(string userName)
         {
+            if (string.IsNullOrWhiteSpace(userName))
+                return BadRequest("Nome de usuário não pode ser vazio");
+
+            // Sanitize username to prevent potential issues
+            userName = userName.Trim();
+
             var logs = await _logRepository.ObterLogsPorUsuario(userName);
 
             return Ok(logs);

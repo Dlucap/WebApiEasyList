@@ -3,6 +3,7 @@ using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EasyList.Business.Services
@@ -18,6 +19,15 @@ namespace EasyList.Business.Services
       _logger = logger;
     }
 
+    private string SanitizeLogInput(string input)
+    {
+      if (string.IsNullOrEmpty(input))
+        return input;
+
+      // Remove newline characters to prevent log forging
+      return Regex.Replace(input, @"[\r\n]+", " ");
+    }
+
     public async Task LogInformacao(string message, string category = null, string additionalInfo = null)
     {
       try
@@ -25,9 +35,9 @@ namespace EasyList.Business.Services
         var logEntry = new LogEntry
         {
           Level = "Information",
-          Category = category,
-          Message = message,
-          AdditionalInfo = additionalInfo
+          Category = SanitizeLogInput(category),
+          Message = SanitizeLogInput(message),
+          AdditionalInfo = SanitizeLogInput(additionalInfo)
         };
 
         await _logRepository.Adicionar(logEntry);
@@ -46,9 +56,9 @@ namespace EasyList.Business.Services
         var logEntry = new LogEntry
         {
           Level = "Warning",
-          Category = category,
-          Message = message,
-          AdditionalInfo = additionalInfo
+          Category = SanitizeLogInput(category),
+          Message = SanitizeLogInput(message),
+          AdditionalInfo = SanitizeLogInput(additionalInfo)
         };
 
         await _logRepository.Adicionar(logEntry);
@@ -67,10 +77,10 @@ namespace EasyList.Business.Services
         var logEntry = new LogEntry
         {
           Level = "Error",
-          Category = category,
-          Message = message,
+          Category = SanitizeLogInput(category),
+          Message = SanitizeLogInput(message),
           Exception = exception?.ToString(),
-          AdditionalInfo = additionalInfo
+          AdditionalInfo = SanitizeLogInput(additionalInfo)
         };
 
         await _logRepository.Adicionar(logEntry);
@@ -90,14 +100,14 @@ namespace EasyList.Business.Services
         {
           Level = statusCode >= 400 ? "Warning" : "Information",
           Category = "HTTP",
-          Message = $"{httpMethod} {path} - Status: {statusCode} - Duration: {duration}ms",
-          HttpMethod = httpMethod,
-          Path = path,
+          Message = SanitizeLogInput($"{httpMethod} {path} - Status: {statusCode} - Duration: {duration}ms"),
+          HttpMethod = SanitizeLogInput(httpMethod),
+          Path = SanitizeLogInput(path),
           StatusCode = statusCode,
           Duration = duration,
-          UserId = userId,
-          UserName = userName,
-          IpAddress = ipAddress
+          UserId = SanitizeLogInput(userId),
+          UserName = SanitizeLogInput(userName),
+          IpAddress = SanitizeLogInput(ipAddress)
         };
 
         await _logRepository.Adicionar(logEntry);
@@ -113,16 +123,17 @@ namespace EasyList.Business.Services
     {
       try
       {
+        var sanitizedUserName = SanitizeLogInput(userName);
         var logEntry = new LogEntry
         {
           Level = sucesso ? "Information" : "Warning",
           Category = "Authentication",
           Message = sucesso 
-            ? $"Autenticação bem-sucedida para o usuário: {userName}"
-            : $"Tentativa de autenticação falhou para o usuário: {userName}",
-          UserName = userName,
-          IpAddress = ipAddress,
-          AdditionalInfo = additionalInfo
+            ? $"Autenticação bem-sucedida para o usuário: {sanitizedUserName}"
+            : $"Tentativa de autenticação falhou para o usuário: {sanitizedUserName}",
+          UserName = sanitizedUserName,
+          IpAddress = SanitizeLogInput(ipAddress),
+          AdditionalInfo = SanitizeLogInput(additionalInfo)
         };
 
         await _logRepository.Adicionar(logEntry);
@@ -142,8 +153,8 @@ namespace EasyList.Business.Services
         {
           Level = "Information",
           Category = "Database",
-          Message = $"Operação: {operacao} - Entidade: {entidade}",
-          AdditionalInfo = detalhes
+          Message = SanitizeLogInput($"Operação: {operacao} - Entidade: {entidade}"),
+          AdditionalInfo = SanitizeLogInput(detalhes)
         };
 
         await _logRepository.Adicionar(logEntry);
