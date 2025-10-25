@@ -59,6 +59,8 @@ dotnet user-secrets set "Authentication:Instagram:ClientId" "seu-instagram-app-i
 dotnet user-secrets set "Authentication:Instagram:ClientSecret" "seu-instagram-app-secret"
 ```
 
+**Nota:** Se você não configurar credenciais para um provedor específico, esse provedor simplesmente não será disponibilizado na lista de provedores externos. A API funcionará normalmente com os provedores configurados e com a autenticação tradicional por username/password.
+
 ## Endpoints Disponíveis
 
 ### 1. Listar Provedores Disponíveis
@@ -134,6 +136,8 @@ Para aplicações que não suportam redirecionamentos, considere:
 - Configure corretamente as URLs de redirecionamento nos consoles dos provedores
 - Considere implementar rate limiting para os endpoints de autenticação
 - Valide sempre os tokens JWT nas requisições protegidas
+- A API implementa validação de returnUrl para prevenir ataques de open redirect
+- Os provedores de autenticação são registrados apenas se as credenciais estiverem configuradas
 
 ## Observações
 
@@ -141,6 +145,8 @@ Para aplicações que não suportam redirecionamentos, considere:
 - O email do provedor social é usado como username
 - Se um usuário já existe com o mesmo email, o login externo é associado à conta existente
 - Os usuários podem ter múltiplos provedores de login associados à mesma conta
+- Se as credenciais do Google ou Instagram não estiverem configuradas, o provedor correspondente não será disponibilizado
+- A API valida URLs de retorno para prevenir redirecionamentos maliciosos
 
 ## Troubleshooting
 
