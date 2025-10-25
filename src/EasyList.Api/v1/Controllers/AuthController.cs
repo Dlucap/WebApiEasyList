@@ -90,7 +90,113 @@ namespace EasyList.Api.V1.Controllers
             return Ok(await GerarJwt(loginUser.UserName));
         }
 
+        /// <summary>
+        /// Login Social (Google ou Instagram)
+        /// </summary>
+        /// <param name="provider">Provedor de autenticação (Google ou Instagram)</param>
+        /// <param name="returnUrl">URL de retorno após autenticação</param>
+        /// <returns> Redireciona para o provedor de autenticação</returns>
+        /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
+        [HttpGet("external-login")]
+        public IActionResult ExternalLogin([FromQuery] string provider, [FromQuery] string returnUrl = null)
+        {
+            if (string.IsNullOrEmpty(provider))
+                return BadRequest("Provider não especificado");
+
+            if (!string.IsNullOrEmpty(returnUrl) && !IsLocalUrl(returnUrl))
+                return BadRequest("URL de retorno inválida");
+
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Auth", new { returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        /// <summary>
+        /// Callback de Login Social
+        /// </summary>
+        /// <param name="returnUrl">URL de retorno</param>
+        /// <returns> Token de Autenticação</returns>
+        /// <response code="200"> Sucesso </response>
+        /// <response code="400"> Requisição Inválida </response>
+        [HttpGet("external-login-callback")]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl = null)
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+                return BadRequest("Erro ao carregar informações de login externo");
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+                return Ok(await GerarJwt(user.UserName));
+            }
+            
+            if (result.IsLockedOut)
+            {
+                return BadRequest("Conta bloqueada");
+            }
+
+            return await CriarOuVincularUsuarioExterno(info);
+        }
+
+        /// <summary>
+        /// Lista os provedores de login externo disponíveis
+        /// </summary>
+        /// <returns> Lista de provedores</returns>
+        /// <response code="200"> Sucesso </response>
+        [HttpGet("external-login-providers")]
+        public async Task<ActionResult> GetExternalLoginProviders()
+        {
+            var schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
+            var providers = schemes.Select(s => new { Name = s.Name, DisplayName = s.DisplayName }).ToList();
+            return Ok(providers);
+        }
+
         #region Métodos privados
+        private async Task<ActionResult> CriarOuVincularUsuarioExterno(ExternalLoginInfo info)
+        {
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            
+            if (string.IsNullOrEmpty(email))
+                return BadRequest("Email não fornecido pelo provedor");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            
+            if (user == null)
+            {
+                user = new IdentityUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+                
+                var createResult = await _userManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                    return BadRequest(createResult.Errors);
+            }
+
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+            if (!addLoginResult.Succeeded)
+                return BadRequest(addLoginResult.Errors);
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok(await GerarJwt(user.UserName));
+        }
+
+        private bool IsLocalUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            return Uri.TryCreate(url, UriKind.Relative, out _) ||
+                   (Uri.TryCreate(url, UriKind.Absolute, out var absoluteUri) && 
+                    string.Equals(Request.Host.Host, absoluteUri.Host, StringComparison.OrdinalIgnoreCase));
+        }
+
         private async Task<string> GerarJwt(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

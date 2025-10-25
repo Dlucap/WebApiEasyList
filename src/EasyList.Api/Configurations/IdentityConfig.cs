@@ -32,11 +32,12 @@ namespace EasyList.Api.Configurations
       var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-      services.AddAuthentication(x =>
+      var authBuilder = services.AddAuthentication(x =>
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(x =>
+      })
+      .AddJwtBearer(x =>
       {
         x.RequireHttpsMetadata = true;
         x.SaveToken = true;
@@ -50,6 +51,28 @@ namespace EasyList.Api.Configurations
           ValidIssuer = appSettings.Emissor
         };
       });
+
+      var googleClientId = configuration["Authentication:Google:ClientId"];
+      var googleClientSecret = configuration["Authentication:Google:ClientSecret"];
+      if (!string.IsNullOrEmpty(googleClientId) && !string.IsNullOrEmpty(googleClientSecret))
+      {
+        authBuilder.AddGoogle(googleOptions =>
+        {
+          googleOptions.ClientId = googleClientId;
+          googleOptions.ClientSecret = googleClientSecret;
+        });
+      }
+
+      var instagramClientId = configuration["Authentication:Instagram:ClientId"];
+      var instagramClientSecret = configuration["Authentication:Instagram:ClientSecret"];
+      if (!string.IsNullOrEmpty(instagramClientId) && !string.IsNullOrEmpty(instagramClientSecret))
+      {
+        authBuilder.AddInstagram(instagramOptions =>
+        {
+          instagramOptions.ClientId = instagramClientId;
+          instagramOptions.ClientSecret = instagramClientSecret;
+        });
+      }
       #endregion  JWT
 
       return services;
