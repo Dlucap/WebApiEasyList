@@ -37,7 +37,13 @@ Esta funcionalidade implementa o fluxo de confirmação de email para novos usu�
 ## Serviço de Email
 
 ### EmailService
-Por ser uma API educativa, o serviço de email atual (`EmailService.cs`) apenas registra as informações no console/log.
+Por ser uma API educativa, o serviço de email atual (`EmailService.cs`) registra as informações no console/log com as seguintes medidas de segurança:
+- **Sanitização**: Remove caracteres de controle (newlines, tabs) para prevenir log forging
+- **Mascaramento**: Mascara parcialmente emails nos logs estruturados (ex: `u***r@example.com`)
+- **Console Output**: Mantido para fins educativos/demonstração (deve ser removido em produção)
+
+**Nota de Segurança**: O console output exibe dados completos apenas para facilitar o desenvolvimento e testes.
+Em produção, remova o console output e confie apenas nos logs estruturados com dados mascarados.
 
 Para implementar envio real de emails em produção:
 1. Substituir a implementação do `EmailService`
