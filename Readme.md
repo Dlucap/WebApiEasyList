@@ -4,7 +4,8 @@
 
 Descrição: Cadastrar uma lista de compra
 * Cadastros possíveis:
- - [X] Cadastrar usuário para logar na aplicação 
+ - [X] Cadastrar usuário para logar na aplicação
+ - [X] Confirmação de email para novos usuários
  - [x] Cadastrar produto 
  - [X] Cadastrar fornecedor
  - [X] Cadastrar categoria
