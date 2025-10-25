@@ -11,36 +11,61 @@ namespace EasyList.Business.Services
     public class CompraService : ICompraService
     {
         public readonly ICompraRepository _compraRepository;
+        private readonly ILogService _logService;
 
-        public CompraService(ICompraRepository compraRepository)
+        public CompraService(ICompraRepository compraRepository, ILogService logService)
         {
             _compraRepository = compraRepository;
+            _logService = logService;
         }
 
         public async Task<bool> Adicionar(Compra compra)
         {
             if (await CompraExists(compra.Id))
+            {
+                await _logService.LogAviso(
+                    $"Tentativa de adicionar Compra com ID já existente: {compra.Id}",
+                    "Database",
+                    $"Usuário: {compra.UsuarioCriacao}"
+                );
                 return false;
+            }
 
             await _compraRepository.Adicionar(compra);
+            await _logService.LogOperacaoBancoDados("INSERT", "Compra", $"ID: {compra.Id}, Usuário: {compra.UsuarioCriacao}");
             return true;
         }     
 
         public async Task<bool> Atualizar(Compra compra)
         {
             if (!await CompraExists(compra.Id))
+            {
+                await _logService.LogAviso(
+                    $"Tentativa de atualizar Compra inexistente: {compra.Id}",
+                    "Database",
+                    $"Usuário: {compra.UsuarioModificacao}"
+                );
                 return false;
+            }
 
             await _compraRepository.Atualizar(compra);
+            await _logService.LogOperacaoBancoDados("UPDATE", "Compra", $"ID: {compra.Id}, Usuário: {compra.UsuarioModificacao}");
             return true;
         }
         
         public async Task<bool> Remover(Guid id)
         {
             if (!await CompraExists(id))
+            {
+                await _logService.LogAviso(
+                    $"Tentativa de remover Compra inexistente: {id}",
+                    "Database"
+                );
                 return false;
+            }
 
             await _compraRepository.Remover(id);
+            await _logService.LogOperacaoBancoDados("DELETE", "Compra", $"ID: {id}");
             return true;
         }
 
