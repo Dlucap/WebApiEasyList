@@ -1,5 +1,6 @@
 using AutoMapper;
 using EasyList.Api.Configurations;
+using EasyList.Api.Middleware;
 using EasyList.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -54,6 +55,8 @@ namespace EasyList.Api
         app.UseDeveloperExceptionPage();
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseMiddleware<LoggingMiddleware>();
 
       app.UseMvcConfig();
       app.UseSwaggerConfig(provider);
