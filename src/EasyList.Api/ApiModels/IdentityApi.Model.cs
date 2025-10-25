@@ -34,4 +34,12 @@ namespace EasyList.Api.ApiModels
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Password { get; set; }
     }
+
+    public class ExternalLoginViewModel
+    {
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Provider { get; set; }
+
+        public string ReturnUrl { get; set; }
+    }
 }

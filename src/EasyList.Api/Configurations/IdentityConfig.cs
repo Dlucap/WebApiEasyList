@@ -36,7 +36,8 @@ namespace EasyList.Api.Configurations
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(x =>
+      })
+      .AddJwtBearer(x =>
       {
         x.RequireHttpsMetadata = true;
         x.SaveToken = true;
@@ -49,6 +50,16 @@ namespace EasyList.Api.Configurations
           ValidAudience = appSettings.ValidoEm,
           ValidIssuer = appSettings.Emissor
         };
+      })
+      .AddGoogle(googleOptions =>
+      {
+        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+      })
+      .AddInstagram(instagramOptions =>
+      {
+        instagramOptions.ClientId = configuration["Authentication:Instagram:ClientId"];
+        instagramOptions.ClientSecret = configuration["Authentication:Instagram:ClientSecret"];
       });
       #endregion  JWT
 
