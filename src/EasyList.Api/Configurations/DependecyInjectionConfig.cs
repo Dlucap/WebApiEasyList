@@ -1,4 +1,5 @@
-﻿using EasyList.Api.Extensions;
+using EasyList.Api.Extensions;
+using EasyList.Api.Services;
 using EasyList.Business.Interfaces.IRepository;
 using EasyList.Business.Interfaces.IServices;
 using EasyList.Business.Models;
@@ -41,6 +42,7 @@ namespace EasyList.Api.Configurations
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IFormaPagamentoService, FormaPagamentoService>();
+            services.AddScoped<IEmailService, EmailService>();
             
             #endregion Services
 

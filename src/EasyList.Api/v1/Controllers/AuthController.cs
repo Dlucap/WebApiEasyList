@@ -1,5 +1,6 @@
-﻿using EasyList.Api.ApiModels;
+using EasyList.Api.ApiModels;
 using EasyList.Api.Extensions;
+using EasyList.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -23,21 +24,24 @@ namespace EasyList.Api.V1.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IEmailService _emailService;
 
         public AuthController(SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
-                              IOptions<AppSettings> appSettings)
+                              IOptions<AppSettings> appSettings,
+                              IEmailService emailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _emailService = emailService;
         }
 
         /// <summary>
         /// Registrar Novo Usuário
         /// </summary>
         /// <param name="registerUser"></param>
-        /// <returns> Token de Autenticação</returns>
+        /// <returns> Mensagem de sucesso</returns>
         /// <response code="200"> Sucesso </response>
         /// <response code="400"> Requisição Inválida </response>
         [HttpPost("nova-conta")]
@@ -64,9 +68,20 @@ namespace EasyList.Api.V1.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            await _signInManager.SignInAsync(user, false);
+            // Gerar token de confirmação de email
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedToken = System.Net.WebUtility.UrlEncode(token);
+            
+            // Criar link de confirmação
+            var confirmationLink = $"{Request.Scheme}://{Request.Host}/api/v1/Auth/confirmar-email?userId={user.Id}&token={encodedToken}";
+            
+            // Enviar email de confirmação
+            await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
 
-            return Ok(await GerarJwt(registerUser.Email));
+            return Ok(new { 
+                message = "Usuário registrado com sucesso. Por favor, verifique seu email para confirmar sua conta.",
+                userId = user.Id
+            });
         }
 
         /// <summary>
@@ -82,12 +97,79 @@ namespace EasyList.Api.V1.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
+            var user = await _userManager.FindByNameAsync(loginUser.UserName);
+            
+            if (user != null && !user.EmailConfirmed)
+                return BadRequest("Email não confirmado. Por favor, confirme seu email antes de fazer login.");
+
             var result = await _signInManager.PasswordSignInAsync(loginUser.UserName, loginUser.Password, false, true);
          
             if (!result.Succeeded)
                 return BadRequest("Usuário ou senha inválidos");
 
             return Ok(await GerarJwt(loginUser.UserName));
+        }
+
+        /// <summary>
+        /// Confirmar Email
+        /// </summary>
+        /// <param name="userId">ID do usuário</param>
+        /// <param name="token">Token de confirmação</param>
+        /// <returns> Mensagem de sucesso</returns>
+        /// <response code="200"> Email confirmado com sucesso </response>
+        /// <response code="400"> Token inválido ou expirado </response>
+        [HttpGet("confirmar-email")]
+        public async Task<ActionResult> ConfirmarEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+                return BadRequest("Usuário ou token inválido");
+
+            var user = await _userManager.FindByIdAsync(userId);
+            
+            if (user == null)
+                return BadRequest("Usuário não encontrado");
+
+            if (user.EmailConfirmed)
+                return Ok("Email já confirmado anteriormente");
+
+            var decodedToken = System.Net.WebUtility.UrlDecode(token);
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+            if (!result.Succeeded)
+                return BadRequest("Erro ao confirmar email. Token inválido ou expirado.");
+
+            return Ok("Email confirmado com sucesso! Você já pode fazer login.");
+        }
+
+        /// <summary>
+        /// Reenviar Email de Confirmação
+        /// </summary>
+        /// <param name="email">Email do usuário</param>
+        /// <returns> Mensagem de sucesso</returns>
+        /// <response code="200"> Email reenviado com sucesso </response>
+        /// <response code="400"> Requisição inválida </response>
+        [HttpPost("reenviar-confirmacao")]
+        public async Task<ActionResult> ReenviarEmailConfirmacao([FromBody] string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return BadRequest("Email é obrigatório");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            
+            if (user == null)
+                return BadRequest("Usuário não encontrado");
+
+            if (user.EmailConfirmed)
+                return Ok("Email já confirmado anteriormente");
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedToken = System.Net.WebUtility.UrlEncode(token);
+            
+            var confirmationLink = $"{Request.Scheme}://{Request.Host}/api/v1/Auth/confirmar-email?userId={user.Id}&token={encodedToken}";
+            
+            await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
+
+            return Ok("Email de confirmação reenviado com sucesso. Por favor, verifique sua caixa de entrada.");
         }
 
         #region Métodos privados
