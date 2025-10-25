@@ -29,7 +29,8 @@ namespace EasyList.Api.Configurations
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ICompraRepository, CompraRepository>();
             services.AddScoped<ICompraCompartilhadaRepository, CompraCompartilhadaRepository>();
-            services.AddScoped<IItmCompraRepository, ItmCompraRepository>();           
+            services.AddScoped<IItmCompraRepository, ItmCompraRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
             #endregion Repository
             //services.AddScoped<INotificador, Notificador>();
               
@@ -41,7 +42,7 @@ namespace EasyList.Api.Configurations
             services.AddScoped<IProdutoService, ProdutoService>();          
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IFormaPagamentoService, FormaPagamentoService>();
-            
+            services.AddScoped<ILogService, LogService>();
             #endregion Services
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

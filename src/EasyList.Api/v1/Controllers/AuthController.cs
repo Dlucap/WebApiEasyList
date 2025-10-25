@@ -1,5 +1,6 @@
 ﻿using EasyList.Api.ApiModels;
 using EasyList.Api.Extensions;
+using EasyList.Business.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -23,14 +24,17 @@ namespace EasyList.Api.V1.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly ILogService _logService;
 
         public AuthController(SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
-                              IOptions<AppSettings> appSettings)
+                              IOptions<AppSettings> appSettings,
+                              ILogService logService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _logService = logService;
         }
 
         /// <summary>
@@ -57,14 +61,36 @@ namespace EasyList.Api.V1.Controllers
             var verificaUserNameJaExiste = await _userManager.FindByNameAsync(user.UserName);
             
             if(verificaUserNameJaExiste is not null)
+            {
+                await _logService.LogAviso(
+                    $"Tentativa de criar conta com username já existente: {user.UserName}",
+                    "Authentication",
+                    $"Email: {registerUser.Email}"
+                );
                 return BadRequest($"Usuário ja cadastrado com o nome {user.UserName}");
+            }
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
 
             if (!result.Succeeded)
+            {
+                await _logService.LogErro(
+                    $"Falha ao criar conta para o usuário: {user.UserName}",
+                    null,
+                    "Authentication",
+                    $"Erros: {string.Join(", ", result.Errors.Select(e => e.Description))}"
+                );
                 return BadRequest(result.Errors);
+            }
 
             await _signInManager.SignInAsync(user, false);
+
+            await _logService.LogAutenticacao(
+                user.UserName,
+                true,
+                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                "Nova conta criada e login automático realizado"
+            );
 
             return Ok(await GerarJwt(registerUser.Email));
         }
@@ -85,7 +111,22 @@ namespace EasyList.Api.V1.Controllers
             var result = await _signInManager.PasswordSignInAsync(loginUser.UserName, loginUser.Password, false, true);
          
             if (!result.Succeeded)
+            {
+                await _logService.LogAutenticacao(
+                    loginUser.UserName,
+                    false,
+                    HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    $"Tentativa de login falhou. Locked: {result.IsLockedOut}, NotAllowed: {result.IsNotAllowed}"
+                );
                 return BadRequest("Usuário ou senha inválidos");
+            }
+
+            await _logService.LogAutenticacao(
+                loginUser.UserName,
+                true,
+                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                "Login realizado com sucesso"
+            );
 
             return Ok(await GerarJwt(loginUser.UserName));
         }

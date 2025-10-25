@@ -22,6 +22,7 @@ namespace EasyList.Data.Context
     public DbSet<Fornecedor> Fornecedor { get; set; }
     public DbSet<ItmCompra> ItmCompra { get; set; }
     public DbSet<Produto> Produto { get; set; }
+    public DbSet<LogEntry> LogEntry { get; set; }
     #endregion DBSet
 
     protected override void OnModelCreating(ModelBuilder builder)
